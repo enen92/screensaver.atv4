@@ -19,10 +19,15 @@
 
 import sys
 import xbmc
+import json
 from resources.lib import playlist
 
+
 if __name__ == '__main__':
-    if not xbmc.getCondVisibility('Player.HasMedia'):
+    try: screensavertime = int(json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.GetSettingValue","params":{"setting":"screensaver.time"},"id":4}'))["value"])*60;print "coiso"
+    except : screensavertime = 60
+
+    if not xbmc.getCondVisibility('Player.HasMedia') and xbmc.getGlobalIdleTime() > screensavertime:
         print("ATV4 Screensaver called and player has no media. Started")
     	atvPlaylist = playlist.AtvPlaylist()
     	playlist = atvPlaylist.getPlaylist()
@@ -30,3 +35,4 @@ if __name__ == '__main__':
             xbmc.Player().play(playlist)
     else:
         print("ATV4 Screensaver called but media is playing. Ignoring call.")
+        sys.exit(0)
