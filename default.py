@@ -20,7 +20,6 @@
 import sys
 import xbmc
 from resources.lib import playlist
-from resources.lib import player
 
 if __name__ == '__main__':
     if not xbmc.getCondVisibility('Player.HasMedia'):

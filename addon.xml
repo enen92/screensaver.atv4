@@ -6,8 +6,8 @@
 	<extension point="xbmc.ui.screensaver" library="default.py" />
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
-		<source>https://github.com/enen92/script.screensaver.cocktail</source>
-		<forum>http://forum.kodi.tv/showthread.php?tid=238039</forum>
+		<source>https://github.com/enen92/screensaver.atv4</source>
+		<forum>http://forum.kodi.tv/showthread.php?tid=246655</forum>
 		<summary lang="en">Apple TV 4 Screensavers in Kodi</summary>
 		<description lang="en">This screensaver addon enables the new Apple TV4 screensavers in Kodi</description>
     </extension>
