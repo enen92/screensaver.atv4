@@ -24,7 +24,7 @@ from resources.lib import playlist
 
 
 if __name__ == '__main__':
-    try: screensavertime = int(json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.GetSettingValue","params":{"setting":"screensaver.time"},"id":4}'))["value"])*60;print "coiso"
+    try: screensavertime = int(json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.GetSettingValue","params":{"setting":"screensaver.time"},"id":4}'))["result"]["value"])
     except : screensavertime = 60
 
     if not xbmc.getCondVisibility('Player.HasMedia') and xbmc.getGlobalIdleTime() > screensavertime:
