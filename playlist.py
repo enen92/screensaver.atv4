@@ -23,7 +23,7 @@ import xbmcaddon
 import xbmcgui
 import os
 
-addon = xbmcaddon.Addon(id='screensaver.atv3')
+addon = xbmcaddon.Addon(id='screensaver.atv4')
 addon_path = addon.getAddonInfo('path')
 
 

@@ -1,8 +1,8 @@
 
-# screensaver.atv3
-## Apple TV3 screensavers in Kodi
+# screensaver.atv4
+## Apple TV4 screensavers in Kodi
 
-This addon lets you add the new apple tv 3 screensavers to Kodi Entertainment Center
+This addon lets you add the new apple tv 4 screensavers to Kodi Entertainment Center
 
 # Screenshots
 
