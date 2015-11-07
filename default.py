@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-    screensaver.atv3
+    screensaver.atv4
     Copyright (C) 2015 enen92
 
     This program is free software: you can redistribute it and/or modify
@@ -18,13 +18,16 @@
 '''
 
 import sys
-import playlist
 import xbmc
-
+from resources.lib import playlist
+from resources.lib import player
 
 if __name__ == '__main__':
-	atvPlaylist = playlist.AtvPlaylist()
-	playlist = atvPlaylist.getPlaylist()
-	if playlist:
-		xbmc.Player().play(playlist)
-	sys.modules.clear()
+    if not xbmc.getCondVisibility('Player.HasMedia'):
+        print("ATV4 Screensaver called and player has no media. Started")
+    	atvPlaylist = playlist.AtvPlaylist()
+    	playlist = atvPlaylist.getPlaylist()
+    	if playlist:
+            xbmc.Player().play(playlist)
+    else:
+        print("ATV4 Screensaver called but media is playing. Ignoring call.")

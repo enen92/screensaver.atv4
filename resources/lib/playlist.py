@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-    screensaver.atv3
+    screensaver.atv4
     Copyright (C) 2015 enen92
 
     This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@ class AtvPlaylist:
 		try:
 			response = urllib2.urlopen(url)
 			self.html = json.loads(response.read())
-		except: self.html = json.loads('')
+		except: self.html = {}
 
 	def getPlaylist(self,):
 		self.playlist = xbmc.PlayList(1)
@@ -50,7 +50,7 @@ class AtvPlaylist:
 										item = xbmcgui.ListItem(label)
 										item.setLabel(label)
 										item.setInfo('video', {'Title': label })
-										item.setArt({'thumb': os.path.join(addon_path,'resources','art','thumb.jpg')})
+										item.setArt({'thumb': os.path.join(addon_path,'icon.png')})
 										url = video['url']
 										item.setPath(url)
 										self.playlist.add(url,item)
