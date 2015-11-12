@@ -28,11 +28,11 @@ if __name__ == '__main__':
     except : screensavertime = 60
 
     if not xbmc.getCondVisibility('Player.HasMedia') and xbmc.getGlobalIdleTime() > screensavertime:
-        print("ATV4 Screensaver called and player has no media. Started")
+        xbmc.log(msg='ATV4 Screensaver called and player has no media. Started', level=xbmc.LOGDEBUG)
     	atvPlaylist = playlist.AtvPlaylist()
     	playlist = atvPlaylist.getPlaylist()
     	if playlist:
             xbmc.Player().play(playlist)
     else:
-        print("ATV4 Screensaver called but media is playing. Ignoring call.")
+        xbmc.log(msg="ATV4 Screensaver called but media is playing. Ignoring call.", level=xbmc.LOGDEBUG)
         sys.exit(0)
