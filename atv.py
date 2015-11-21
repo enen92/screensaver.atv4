@@ -32,25 +32,23 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         pass
     
     def onInit(self):
-        if 1==1:
-            xbmc.sleep(400)
-            xbmc.executebuiltin("SetProperty(loading,1,home)")
-            atvPlaylist = playlist.AtvPlaylist()
-            self.videoplaylist = atvPlaylist.getPlaylist()
-            if self.videoplaylist:
-                xbmc.executebuiltin("ClearProperty(loading,Home)")
-                self.getControl(1).setImage("black.jpg")
-                self.atv4player = atvplayer.ATVPlayer()
-                if not xbmc.getCondVisibility("Player.HasMedia"):
-                    self.atv4player.play(self.videoplaylist,windowed=True)
-            else:
-                xbmc.executebuiltin("ClearProperty(loading,Home)")
-                self.getControl(3).setLabel("No videos that match your criteria have been found")
+        xbmc.sleep(400)
+        self.getControl(4).setLabel(translate(32008))
+        xbmc.executebuiltin("SetProperty(loading,1,home)")
+        atvPlaylist = playlist.AtvPlaylist()
+        self.videoplaylist = atvPlaylist.getPlaylist()
+        if self.videoplaylist:
+            xbmc.executebuiltin("ClearProperty(loading,Home)")
+            self.getControl(1).setImage("black.jpg")
+            self.atv4player = atvplayer.ATVPlayer()
+            if not xbmc.getCondVisibility("Player.HasMedia"):
+                self.atv4player.play(self.videoplaylist,windowed=True)
         else:
-            xbmc.log(msg='ATV4 Screensaver was already running....')
+            xbmc.executebuiltin("ClearProperty(loading,Home)")
+            self.getControl(3).setLabel(translate(32007))
+
 
     def onAction(self,action):
-        addon.setSetting("isrunning","false")
         xbmc.PlayList(1).clear()
         xbmc.Player().stop()
         self.close()

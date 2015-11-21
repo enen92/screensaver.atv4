@@ -32,7 +32,7 @@
 				<visible>!IsEmpty(Window(home).Property(loading))</visible>
 			</control>
 		
-		<control type="label">
+		<control type="label" id ="4">
 				<top>655</top>
 				<left>90</left>
 				<width>600</width>
@@ -41,7 +41,7 @@
 				<textcolor>88FFFFFF</textcolor>
 				<aligny>center</aligny>
 				<align>left</align>
-				<label>Getting video list...</label>
+				<label></label>
 				<visible>!IsEmpty(Window(home).Property(loading))</visible>
 		</control>
 		<control type="label" id="3">

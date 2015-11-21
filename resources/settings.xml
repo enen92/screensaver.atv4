@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
 	<category label="ScreenSavers">
-		<setting id="isrunning" type="bool" label="" default="false" visible="true" />
-		<setting id="enable-hawaii" type="bool" label="Enable Hawaii" default="true" />
-		<setting id="enable-london" type="bool" label="Enable London" default="true" />
-		<setting id="enable-nyork" type="bool" label="Enable New York" default="true" />
-		<setting id="enable-sfrancisco" type="bool" label="Enable San Francisco" default="true" />
-		<setting id="enable-china" type="bool" label="Enable China" default="true" />
-		<setting id="time-of-day" type="enum" values="All|Day only|Night only|Smart" label="Time of day for videos" visible="true" default="0"/>
+		<setting id="enable-hawaii" type="bool" label="32001" default="true" />
+		<setting id="enable-london" type="bool" label="32002" default="true" />
+		<setting id="enable-nyork" type="bool" label="32003" default="true" />
+		<setting id="enable-sfrancisco" type="bool" label="32004" default="true" />
+		<setting id="enable-china" type="bool" label="32005" default="true" />
+		<setting id="time-of-day" type="enum" values="All|Day only|Night only|Smart" label="32006" visible="true" default="0"/>
 	</category>
 </settings>
