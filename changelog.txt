@@ -1,2 +1,5 @@
 1.0.0 - 7/11/2015
 -First version
+
+1.2.0 - 21/11/2015
+-New window without OSD, fix screensaver preview, add smart mode and new settings

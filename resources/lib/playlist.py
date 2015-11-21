@@ -22,11 +22,7 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 import os
-
-addon = xbmcaddon.Addon(id='screensaver.atv4')
-addon_path = addon.getAddonInfo('path')
-
-
+from commonatv import *
 
 class AtvPlaylist:
 
@@ -38,23 +34,106 @@ class AtvPlaylist:
 		except: self.html = {}
 
 	def getPlaylist(self,):
+		current_time = xbmc.getInfoLabel("System.Time")
+		am_pm = xbmc.getInfoLabel("System.Time(xx)")
+		current_hour = current_time.split(":")[0]
+		if am_pm == "PM": 
+			if int(current_hour) < 12: current_hour = int(current_hour) + 12
+			else: current_hour = int(current_hour)
+		else: current_hour = int(current_hour)
+		day_night = ''
+		if current_hour < 19:
+			if current_hour > 7: day_night = 'day'
+			else: day_night = 'night'
+		if current_hour > 19:
+			day_night = 'night'
+	
+
 		self.playlist = xbmc.PlayList(1)
+		self.playlist.clear()
 		if self.html:
-			for i in range(1,11):
-				for j in range(1,5):
-					for block in self.html:
-							for video in block['assets']:
-								try:
-									if video["id"] == 'b'+str(i)+'-'+str(j) and addon.getSetting('b'+str(i)+'-'+str(j)) == 'true':
-										label = video['accessibilityLabel'] + ' by ' + str(video['timeOfDay'])
-										item = xbmcgui.ListItem(label)
-										item.setLabel(label)
-										item.setInfo('video', {'Title': label })
-										item.setArt({'thumb': os.path.join(addon_path,'icon.png')})
-										url = video['url']
-										item.setPath(url)
-										self.playlist.add(url,item)
-								except: pass
+			for block in self.html:
+				for video in block['assets']:
+
+					label = video['accessibilityLabel'] + ' by ' + str(video['timeOfDay'])
+					item = xbmcgui.ListItem(label)
+					item.setLabel(label)
+					item.setInfo('video', {'Title': label })
+					item.setArt({'thumb': os.path.join(addon_path,'icon.png')})
+					url = video['url']
+					item.setPath(url)
+
+					if video['accessibilityLabel'].lower() == "hawaii" and addon.getSetting("enable-hawaii") == "true":
+						if video['timeOfDay'] == 'day':
+							if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '1':
+								self.playlist.add(url,item)
+							if addon.getSetting("time-of-day") == '3':
+								if day_night == 'day':
+									self.playlist.add(url,item)
+						if video['timeOfDay'] == 'night':
+							if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '2':
+								self.playlist.add(url,item)
+							if addon.getSetting("time-of-day") == '3':
+								if day_night=='night':
+									self.playlist.add(url,item)
+
+					elif video['accessibilityLabel'].lower() == "london" and addon.getSetting("enable-london") == "true":
+						if video['timeOfDay'] == 'day':
+							if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '1':
+								self.playlist.add(url,item)
+							if addon.getSetting("time-of-day") == '3':
+								if day_night=='day':
+									self.playlist.add(url,item)
+						if video['timeOfDay'] == 'night':
+							if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '2':
+								self.playlist.add(url,item)
+							if addon.getSetting("time-of-day") == '3':
+								if day_night=='night':
+									self.playlist.add(url,item)
+
+					elif video['accessibilityLabel'].lower() == "new york city" and addon.getSetting("enable-nyork") == "true":
+						if video['timeOfDay'] == 'day':
+							if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '1':
+								self.playlist.add(url,item)
+							if addon.getSetting("time-of-day") == '3':
+								if day_night == 'day':
+									self.playlist.add(url,item)
+						if video['timeOfDay'] == 'night':
+							if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '2':
+								self.playlist.add(url,item)
+							if addon.getSetting("time-of-day") == '3':
+								if day_night=='night':
+									self.playlist.add(url,item)
+
+					elif video['accessibilityLabel'].lower() == "san francisco" and addon.getSetting("enable-sfrancisco") == "true":
+						if video['timeOfDay'] == 'day':
+							if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '1':
+								self.playlist.add(url,item)
+							if addon.getSetting("time-of-day") == '3':
+								if day_night == 'day':
+									self.playlist.add(url,item)
+						if video['timeOfDay'] == 'night':
+							if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '2':
+								self.playlist.add(url,item)
+							if addon.getSetting("time-of-day") == '3':
+								if day_night == 'night':
+									self.playlist.add(url,item)
+
+					elif video['accessibilityLabel'].lower() == "china" and addon.getSetting("enable-china") == "true":
+						if video['timeOfDay'] == 'day':
+							if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '1':
+								self.playlist.add(url,item)
+							if addon.getSetting("time-of-day") == '3':
+								if day_night == 'day':
+									self.playlist.add(url,item)
+						if video['timeOfDay'] == 'night':
+							if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '2':
+								self.playlist.add(url,item)
+							if addon.getSetting("time-of-day") == '3':
+								if day_night == 'night':
+									self.playlist.add(url,item)
+				
+			self.playlist.shuffle()
 			return self.playlist
 		else:
 			return None
