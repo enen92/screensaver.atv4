@@ -27,11 +27,19 @@ from commonatv import *
 class AtvPlaylist:
 
 	def __init__(self,):
-		url = 'http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/entries.json'
-		try:
-			response = urllib2.urlopen(url)
-			self.html = json.loads(response.read())
-		except: self.html = {}
+		if not xbmc.getCondVisibility("Player.HasMedia"):
+			url = 'http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/entries.json'
+			try:
+				response = urllib2.urlopen(url)
+				self.html = json.loads(response.read())
+			except: 
+				f = open(os.path.join(addon_path,"resources","entries.json"),"r")
+				self.html = json.loads(f.read())
+				f.close()
+		else: self.html = {}
+
+	def getPlaylistJson(self,):
+		return self.html
 
 	def getPlaylist(self,):
 		current_time = xbmc.getInfoLabel("System.Time")
@@ -62,6 +70,12 @@ class AtvPlaylist:
 					item.setArt({'thumb': os.path.join(addon_path,'icon.png')})
 					url = video['url']
 					item.setPath(url)
+
+					#check if file exists on disk
+					movie = url.split("/")[-1]
+					localfile = os.path.join(addon.getSetting("download-folder"),movie)
+					if os.path.exists(localfile):
+						url = localfile
 
 					if video['accessibilityLabel'].lower() == "hawaii" and addon.getSetting("enable-hawaii") == "true":
 						if video['timeOfDay'] == 'day':

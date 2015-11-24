@@ -1,7 +1,7 @@
 # Kodi Media Center language file
-# Addon Name: Cocktail
-# Addon id: script.screensaver.cocktail
-# Addon Provider: enen92,Zag
+# Addon Name: Screensaver ATV4
+# Addon id: screensaver.atv4
+# Addon Provider: enen92
 msgid ""
 msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -15,7 +15,7 @@ msgstr ""
 #settings labels
 
 msgctxt "#32000"
-msgid "ATV4 Screensaver"
+msgid "ATV4 Screensavers"
 msgstr ""
 
 msgctxt "#32001"
@@ -50,3 +50,34 @@ msgctxt "#32008"
 msgid "Getting video list..."
 msgstr ""
 
+msgctxt "#32009"
+msgid "Offline mode"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Download folder"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Download Videos"
+msgstr ""
+
+msgctxt "#32012"
+msgid "No videos found"
+msgstr ""
+
+msgctxt "#32013"
+msgid "You need to define a download folder."
+msgstr ""
+
+msgctxt "#32014"
+msgid "Choose locations to download videos for:"
+msgstr ""
+
+msgctxt "#32015"
+msgid "downloaded"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Time left:"
+msgstr ""

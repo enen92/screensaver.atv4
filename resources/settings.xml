@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-	<category label="ScreenSavers">
+	<category label="32000">
 		<setting id="enable-hawaii" type="bool" label="32001" default="true" />
 		<setting id="enable-london" type="bool" label="32002" default="true" />
 		<setting id="enable-nyork" type="bool" label="32003" default="true" />
 		<setting id="enable-sfrancisco" type="bool" label="32004" default="true" />
 		<setting id="enable-china" type="bool" label="32005" default="true" />
 		<setting id="time-of-day" type="enum" values="All|Day only|Night only|Smart" label="32006" visible="true" default="0"/>
+	</category>
+	<category label="32009">
+		<setting id="download-folder" type="folder" label="32010"/>
+		<setting type="action" label="32011" action="RunScript(screensaver.atv4,,/offline)" />
 	</category>
 </settings>

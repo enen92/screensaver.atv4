@@ -18,9 +18,11 @@
 '''
 
 import xbmcaddon
+import xbmcgui
 
 addon = xbmcaddon.Addon(id='screensaver.atv4')
 addon_path = addon.getAddonInfo('path')
+dialog = xbmcgui.Dialog()
 
 def translate(text):
 	return addon.getLocalizedString(text).encode('utf-8')

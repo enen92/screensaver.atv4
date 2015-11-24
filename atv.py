@@ -25,36 +25,77 @@ import os
 import urllib
 from resources.lib import playlist
 from resources.lib import atvplayer
+from resources.lib import offline as off
 from resources.lib.commonatv import *
 
 class Screensaver(xbmcgui.WindowXMLDialog):
     def __init__( self, *args, **kwargs ):
-        pass
+        self.monitor = ScreensaverExitMonitor()
     
     def onInit(self):
-        xbmc.sleep(400)
         self.getControl(4).setLabel(translate(32008))
         xbmc.executebuiltin("SetProperty(loading,1,home)")
         atvPlaylist = playlist.AtvPlaylist()
         self.videoplaylist = atvPlaylist.getPlaylist()
         if self.videoplaylist:
             xbmc.executebuiltin("ClearProperty(loading,Home)")
-            self.getControl(1).setImage("black.jpg")
             self.atv4player = atvplayer.ATVPlayer()
             if not xbmc.getCondVisibility("Player.HasMedia"):
+                self.blackbackground()
                 self.atv4player.play(self.videoplaylist,windowed=True)
         else:
-            xbmc.executebuiltin("ClearProperty(loading,Home)")
-            self.getControl(3).setLabel(translate(32007))
+            self.screensaver.novideos()            
 
+    def blackbackground(self):
+        self.getControl(1).setImage("black.jpg")
+        return
+
+    def novideos(self):
+        xbmc.executebuiltin("ClearProperty(loading,Home)")
+        self.getControl(3).setLabel(translate(32007))
 
     def onAction(self,action):
-        xbmc.PlayList(1).clear()
-        xbmc.Player().stop()
-        self.close()
+        stop = self.monitor.isStopScreensaver()
+        if stop:
+            try: xbmc.PlayList(1).clear()
+            except: pass
+            xbmc.executebuiltin("PlayerControl(Stop)")
+            try: self.close()
+            except: pass
+
+class ScreensaverExitMonitor(xbmc.Monitor):
+    def __init__(self):
+        self.stopScreensaver = False
+
+    def onScreensaverDeactivated(self):
+        self.stopScreensaver = True
+
+    def onScreensaverActivated(self):
+        self.stopScreensaver = False
+
+    def isStopScreensaver(self):
+        return self.stopScreensaver
 
 
-if __name__ == '__main__':
+def get_params():
+    param=[]
+    try: paramstring=sys.argv[2]
+    except: paramstring = ''
+    if len(paramstring)>=2:
+        params=sys.argv[2]
+        if (params[len(params)-1]=='/'):
+            params=params[0:len(params)-2]
+        pairsofparams=params.split('/')
+        for parm in pairsofparams:
+            if parm == '':
+                pairsofparams.remove(parm)      
+    return pairsofparams
+
+try: params=get_params()
+except: params = []
+
+
+if not params:
     screensaver = Screensaver(
         'screensaver-atv4.xml',
         addon_path,
@@ -63,3 +104,6 @@ if __name__ == '__main__':
     )
     screensaver.doModal()
     del screensaver
+else:
+    if params[0] == "offline":
+        off.offline()
