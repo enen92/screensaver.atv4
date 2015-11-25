@@ -7,6 +7,8 @@
 		<setting id="enable-sfrancisco" type="bool" label="32004" default="true" />
 		<setting id="enable-china" type="bool" label="32005" default="true" />
 		<setting id="time-of-day" type="enum" values="All|Day only|Night only|Smart" label="32006" visible="true" default="0"/>
+		<setting label="" type="lsep" />
+		<setting id="show-notifications" type="bool" label="32018" default="true" />
 	</category>
 	<category label="32009">
 		<setting id="download-folder" type="folder" label="32010"/>

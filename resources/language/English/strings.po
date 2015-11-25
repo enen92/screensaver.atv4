@@ -85,3 +85,8 @@ msgstr ""
 msgctxt "#32017"
 msgid "Instantiated. Please wait..."
 msgstr ""
+
+msgctxt "#32018"
+msgid "Show start notification"
+msgstr ""
+

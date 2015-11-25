@@ -96,10 +96,11 @@ except: params = []
 if not params:
     #Thanks to videoscreensaver. Hit a key, wait for monitor.onDeactivate, start the "screensaver" after that.
     xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
-    xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % (translate(32000), translate(32017),1,os.path.join(addon_path,"icon.png")))
+    if addon.getSetting("show-notifications") == "true":
+        xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % (translate(32000), translate(32017),1,os.path.join(addon_path,"icon.png")))
 
     exitMon = ScreensaverExitMonitor()
-    maxWait = 48
+    maxWait = 50
 
     while (not exitMon.isStopScreensaver()) and (maxWait > 0):
         xbmc.sleep(100)
