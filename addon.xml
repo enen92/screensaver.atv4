@@ -6,6 +6,7 @@
 	<extension point="xbmc.ui.screensaver" library="atv.py" />
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
 		<source>https://github.com/enen92/screensaver.atv4</source>
 		<forum>http://forum.kodi.tv/showthread.php?tid=246655</forum>
 		<summary lang="en">Apple TV 4 Screensavers in Kodi</summary>
