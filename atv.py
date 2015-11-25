@@ -30,8 +30,8 @@ from resources.lib.commonatv import *
 
 class Screensaver(xbmcgui.WindowXMLDialog):
     def __init__( self, *args, **kwargs ):
-        self.monitor = ScreensaverExitMonitor()
-    
+        pass
+
     def onInit(self):
         self.getControl(4).setLabel(translate(32008))
         xbmc.executebuiltin("SetProperty(loading,1,home)")
@@ -55,13 +55,11 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.getControl(3).setLabel(translate(32007))
 
     def onAction(self,action):
-        stop = self.monitor.isStopScreensaver()
-        if stop:
-            try: xbmc.PlayList(1).clear()
-            except: pass
-            xbmc.executebuiltin("PlayerControl(Stop)")
-            try: self.close()
-            except: pass
+        try: xbmc.PlayList(1).clear()
+        except: pass
+        xbmc.executebuiltin("PlayerControl(Stop)")
+        try: self.close()
+        except: pass
 
 class ScreensaverExitMonitor(xbmc.Monitor):
     def __init__(self):
@@ -96,6 +94,17 @@ except: params = []
 
 
 if not params:
+    #Thanks to videoscreensaver. Hit a key, wait for monitor.onDeactivate, start the "screensaver" after that.
+    xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
+    xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % (translate(32000), translate(32017),1,os.path.join(addon_path,"icon.png")))
+
+    exitMon = ScreensaverExitMonitor()
+    maxWait = 48
+
+    while (not exitMon.isStopScreensaver()) and (maxWait > 0):
+        xbmc.sleep(100)
+        maxWait = maxWait - 1
+
     screensaver = Screensaver(
         'screensaver-atv4.xml',
         addon_path,
