@@ -44,7 +44,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 self.blackbackground()
                 self.atv4player.play(self.videoplaylist,windowed=True)
         else:
-            self.screensaver.novideos()            
+            self.novideos()            
 
     def blackbackground(self):
         self.getControl(1).setImage("black.jpg")
