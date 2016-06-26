@@ -124,6 +124,7 @@ if not params:
             '',
         )
         screensaver.doModal()
+        xbmc.sleep(100)
         del screensaver
 else:
     if params[0] == "offline":
