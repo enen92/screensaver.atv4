@@ -33,6 +33,8 @@ class ATVPlayer(xbmc.Player):
         self.onPlayBackStopped()
 
     def onPlayBackStopped(self):
-        xbmc.log(msg='ATV4 Screensaver player has been stopped', level=xbmc.LOGDEBUG)
-        xbmc.executebuiltin("PlayerControl(RepeatOff)", True)
-        return
+        try:
+            xbmc.log(msg='ATV4 Screensaver player has been stopped', level=xbmc.LOGDEBUG)
+            xbmc.executebuiltin("PlayerControl(RepeatOff)", True)
+        except:
+            pass

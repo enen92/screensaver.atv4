@@ -56,6 +56,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
     def onAction(self,action):
         try: xbmc.PlayList(1).clear()
         except: pass
+        xbmc.executebuiltin("PlayerControl(RepeatOff)", True)
         xbmc.executebuiltin("PlayerControl(Stop)")
         try: self.close()
         except: pass
