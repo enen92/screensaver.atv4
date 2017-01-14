@@ -29,7 +29,6 @@ from commonatv import *
 
 def offline():
     if addon.getSetting("download-folder") != "":
-    	places = ["All", "London", "Hawaii", "New York City", "San Francisco", "China"]
     	choose=dialog.select(translate(32014),places)
     	if choose > -1:
     		atvPlaylist = playlist.AtvPlaylist()
