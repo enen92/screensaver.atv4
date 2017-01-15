@@ -19,6 +19,7 @@
 import json
 import urllib2
 import xbmc
+import xbmcvfs
 import xbmcaddon
 import xbmcgui
 import os
@@ -72,12 +73,12 @@ class AtvPlaylist:
 					#check if file exists on disk
 					movie = url.split("/")[-1]
 					localfilemov = os.path.join(addon.getSetting("download-folder"),movie)
-					if os.path.exists(localfilemov):
+					if xbmcvfs.exists(localfilemov):
 						url = localfilemov
 
 					#check for existence of the trancoded file .mp4 only
 					localfilemp4 = os.path.join(addon.getSetting("download-folder"),movie.replace('.mov','.mp4'))
-					if os.path.exists(localfilemp4):
+					if xbmcvfs.exists(localfilemp4):
 						url = localfilemp4
 
 					#build setting
