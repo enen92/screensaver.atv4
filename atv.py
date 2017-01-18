@@ -23,56 +23,86 @@ import xbmc
 import sys
 import os
 import urllib
+import time
+import json
 from resources.lib import playlist
 from resources.lib import atvplayer
 from resources.lib import offline as off
 from resources.lib.commonatv import *
 
-class Screensaver(xbmcgui.WindowXMLDialog):
+class Screensaver(xbmcgui.WindowXML):
     def __init__( self, *args, **kwargs ):
-        pass
+        self.DPMStime = json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.GetSettingValue","params":{"setting":"powermanagement.displaysoff"},"id":2}'))['result']['value']*60
+        self.isDPMSactive = bool(self.DPMStime>0)
+        self.active = True
+        self.start_time = time.time()
 
     def onInit(self):
         self.getControl(4).setLabel(translate(32008))
-        xbmc.executebuiltin("SetProperty(loading,1,home)")
+        xbmc.executebuiltin("SetProperty(screensaver-atv4-loading,1,home)")
         atvPlaylist = playlist.AtvPlaylist()
         self.videoplaylist = atvPlaylist.getPlaylist()
+        
         if self.videoplaylist:
-            xbmc.executebuiltin("ClearProperty(loading,Home)")
+            xbmc.executebuiltin("ClearProperty(screensaver-atv4-loading,Home)")
             self.atv4player = atvplayer.ATVPlayer()
-            self.blackbackground()
+            self.nobackground()
             self.atv4player.play(self.videoplaylist,windowed=True)
-        else:
-            self.novideos()            
 
-    def blackbackground(self):
-        self.getControl(1).setImage("black.jpg")
+            #DPMS logic
+
+            if self.isDPMSactive and addon.getSetting("check-dpms") == "true":
+                start_time = time.time()
+                while self.active:
+                    delta = time.time() - self.start_time
+                    if delta >= self.DPMStime:
+                        self.activateDPMS()
+                    xbmc.sleep(1000)
+                    
+        else:
+            self.novideos() 
+
+    def checkTimeout(self):
+        if time.time()-start_time >= 15:
+            return self.activateDPMS()
+        else:
+            return False
+
+    def activateDPMS(self):
+        xbmc.log(msg="[Aerial Screensaver] Manually activating DPMS!",level=xbmc.LOGDEBUG)
+        self.clearAll()
+        xbmc.sleep(1000)
+
+        if addon.getSetting("toggle-displayoff") == "true":
+            try: xbmc.executebuiltin('ToggleDPMS')
+            except Exception, e: xbmc.log(msg="[Aerial Screensaver] Failed to toggle DPMS: %s" % (str(e)),level=xbmc.LOGDEBUG)
+
+        if addon.getSetting("toggle-cecoff") == "true":
+            try: xbmc.executebuiltin('CECStandby')
+            except Exception, e: xbmc.log(msg="[Aerial Screensaver] Failed to toggle device off via CEC: %s" % (str(e)),level=xbmc.LOGDEBUG) 
+        return          
+
+    def nobackground(self):
+        control_list = [self.getControl(1), self.getControl(4), self.getControl(5)]
+        self.removeControls(control_list)
         return
 
     def novideos(self):
-        xbmc.executebuiltin("ClearProperty(loading,Home)")
+        xbmc.executebuiltin("ClearProperty(screensaver-atv4-loading,Home)")
         self.getControl(3).setLabel(translate(32007))
 
-    def onAction(self,action):
+    def clearAll(self):
+        self.active = False
         try: xbmc.PlayList(1).clear()
         except: pass
         xbmc.executebuiltin("PlayerControl(RepeatOff)", True)
         xbmc.executebuiltin("PlayerControl(Stop)")
         try: self.close()
         except: pass
+        return
 
-class ScreensaverExitMonitor(xbmc.Monitor):
-    def __init__(self):
-        self.stopScreensaver = False
-
-    def onScreensaverDeactivated(self):
-        self.stopScreensaver = True
-
-    def onScreensaverActivated(self):
-        self.stopScreensaver = False
-
-    def isStopScreensaver(self):
-        return self.stopScreensaver
+    def onAction(self,action):
+        self.clearAll()
 
 
 def get_params():
@@ -94,39 +124,17 @@ except: params = []
 
 
 if not params:
-    
-    exitMon = ScreensaverExitMonitor()
-    #Thanks to videoscreensaver. Hit a key, wait for monitor.onDeactivate, start the "screensaver" after that.
-    xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
-    if addon.getSetting("show-notifications") == "true":
-        xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % (translate(32000), translate(32017),1,os.path.join(addon_path,"icon.png")))
 
-    
-    maxWait = 30
+    screensaver = Screensaver(
+        'screensaver-atv4.xml',
+        addon_path,
+        'default',
+        '',
+    )
+    screensaver.doModal()
+    xbmc.sleep(100)
+    del screensaver
 
-    if not xbmc.getCondVisibility("Player.HasMedia"):
-        start_screensaver = True
-    else:
-        start_screensaver = False
-
-    while not exitMon.isStopScreensaver():
-        if (maxWait > 0):
-            xbmc.sleep(100)
-            maxWait = maxWait - 1
-        else:
-            start_screensaver = False
-            break
-
-    if start_screensaver:
-        screensaver = Screensaver(
-            'screensaver-atv4.xml',
-            addon_path,
-            'default',
-            '',
-        )
-        screensaver.doModal()
-        xbmc.sleep(100)
-        del screensaver
 else:
     if params[0] == "offline":
         off.offline()
