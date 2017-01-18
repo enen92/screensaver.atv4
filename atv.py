@@ -62,12 +62,6 @@ class Screensaver(xbmcgui.WindowXML):
         else:
             self.novideos() 
 
-    def checkTimeout(self):
-        if time.time()-start_time >= 15:
-            return self.activateDPMS()
-        else:
-            return False
-
     def activateDPMS(self):
         xbmc.log(msg="[Aerial Screensaver] Manually activating DPMS!",level=xbmc.LOGDEBUG)
         self.clearAll()
