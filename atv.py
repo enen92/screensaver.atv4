@@ -50,12 +50,19 @@ class Screensaver(xbmcgui.WindowXML):
             self.atv4player.play(self.videoplaylist,windowed=True)
 
             #DPMS logic
+            self.max_allowed_time = None
 
-            if self.isDPMSactive and addon.getSetting("check-dpms") == "true":
+            if self.isDPMSactive and addon.getSetting("check-dpms") == "1":
+                self.max_allowed_time = self.DPMStime
+
+            elif addon.getSetting("check-dpms") == "2":
+                self.max_allowed_time = int(addon.getSetting("manual-dpms"))*60
+
+            if self.max_allowed_time:
                 start_time = time.time()
                 while self.active:
                     delta = time.time() - self.start_time
-                    if delta >= self.DPMStime:
+                    if delta >= self.max_allowed_time:
                         self.activateDPMS()
                     xbmc.sleep(1000)
                     

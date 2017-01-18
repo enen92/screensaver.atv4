@@ -123,8 +123,8 @@ msgid "DPMS*"
 msgstr "DPMS*"
 
 msgctxt "#32027"
-msgid "Enable DPMS"
-msgstr "Ativar DPMS"
+msgid "DPMS"
+msgstr "DPMS"
 
 msgctxt "#32028"
 msgid "Toggle display off"
@@ -153,3 +153,19 @@ msgstr "* O DPMS irá verificar as definiçoes de gestão de energia do kodi e p
 msgctxt "#32034"
 msgid "if the maximum allowed time to put the display to sleep is exceeded"
 msgstr "se o tempo máximo permitido para desligar o monitor for atingido"
+
+msgctxt "#32035"
+msgid "Off"
+msgstr "Desligado"
+
+msgctxt "#32036"
+msgid "Kodi"
+msgstr "Kodi"
+
+msgctxt "#32037"
+msgid "Manual"
+msgstr "Manual"
+
+msgctxt "#32038"
+msgid "Manual timeout to activate DPMS (min)"
+msgstr "Timeout para ativar o DPMS manual (min)"

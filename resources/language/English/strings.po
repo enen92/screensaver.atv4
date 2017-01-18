@@ -123,7 +123,7 @@ msgid "DPMS*"
 msgstr ""
 
 msgctxt "#32027"
-msgid "Enable DPMS"
+msgid "DPMS"
 msgstr ""
 
 msgctxt "#32028"
@@ -153,4 +153,21 @@ msgstr ""
 msgctxt "#32034"
 msgid "if the maximum allowed time to put the display to sleep is exceeded"
 msgstr ""
+
+msgctxt "#32035"
+msgid "Off"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Kodi"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Manual"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Manual timeout to activate DPMS (min)"
+msgstr ""
+
 
