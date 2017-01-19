@@ -23,7 +23,6 @@ import xbmc
 import sys
 import os
 import urllib
-import time
 import json
 from resources.lib import playlist
 from resources.lib import atvplayer
@@ -35,7 +34,6 @@ class Screensaver(xbmcgui.WindowXML):
         self.DPMStime = json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.GetSettingValue","params":{"setting":"powermanagement.displaysoff"},"id":2}'))['result']['value']*60
         self.isDPMSactive = bool(self.DPMStime>0)
         self.active = True
-        self.start_time = time.time()
 
     def onInit(self):
         self.getControl(4).setLabel(translate(32008))
@@ -59,12 +57,12 @@ class Screensaver(xbmcgui.WindowXML):
                 self.max_allowed_time = int(addon.getSetting("manual-dpms"))*60
 
             if self.max_allowed_time:
-                start_time = time.time()
+                delta = 0
                 while self.active:
-                    delta = time.time() - self.start_time
                     if delta >= self.max_allowed_time:
                         self.activateDPMS()
                     xbmc.sleep(1000)
+                    delta += 1
                     
         else:
             self.novideos() 
