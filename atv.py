@@ -36,7 +36,7 @@ class Screensaver(xbmcgui.WindowXML):
         self.active = True
 
     def onInit(self):
-        self.getControl(4).setLabel(translate(32008))
+        self.getControl(32502).setLabel(translate(32008))
         xbmc.executebuiltin("SetProperty(screensaver-atv4-loading,1,home)")
         atvPlaylist = playlist.AtvPlaylist()
         self.videoplaylist = atvPlaylist.getPlaylist()
@@ -82,13 +82,15 @@ class Screensaver(xbmcgui.WindowXML):
         return          
 
     def nobackground(self):
-        control_list = [self.getControl(1), self.getControl(4), self.getControl(5)]
+        control_list = [self.getControl(32500),self.getControl(32501),self.getControl(32502)]
         self.removeControls(control_list)
         return
 
     def novideos(self):
         xbmc.executebuiltin("ClearProperty(screensaver-atv4-loading,Home)")
-        self.getControl(3).setLabel(translate(32007))
+        self.getControl(32503).setVisible(True)
+        self.getControl(32503).setLabel(translate(32007))
+        return
 
     def clearAll(self):
         self.active = False
