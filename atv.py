@@ -44,7 +44,7 @@ class Screensaver(xbmcgui.WindowXML):
         if self.videoplaylist:
             xbmc.executebuiltin("ClearProperty(screensaver-atv4-loading,Home)")
             self.atv4player = atvplayer.ATVPlayer()
-            self.nobackground()
+            #self.nobackground()
             self.atv4player.play(self.videoplaylist,windowed=True)
 
             #DPMS logic
