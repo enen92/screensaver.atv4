@@ -11,15 +11,8 @@
             <width>1280</width>
             <height>720</height>
             <texture>sanfrancisco.jpg</texture>
+            <visible>!IsEmpty(Window(home).Property(screensaver-atv4-loading))</visible>
         </control>
-        <control type="videowindow">
-			<description>VideoWindow</description>
-		    <posx>0</posx>
-		    <posy>0</posy>
-		    <width>1280</width>
-		    <height>720</height>
-		    <visible>true</visible>
-		</control>
 		<control type="image" id ="32501">
 				<description>Busy animation</description>
 				<posx>40</posx>
@@ -56,6 +49,13 @@
 				<label></label>
 				<visible>false</visible>
 		</control>
-		
+		<control type="videowindow">
+			<description>VideoWindow</description>
+		    <posx>0</posx>
+		    <posy>0</posy>
+		    <width>1280</width>
+		    <height>720</height>
+		    <visible>true</visible>
+		</control>
    </controls>
 </window>
