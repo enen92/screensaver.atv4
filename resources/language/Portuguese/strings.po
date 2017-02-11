@@ -169,3 +169,15 @@ msgstr "Manual"
 msgctxt "#32038"
 msgid "Manual timeout to activate DPMS (min)"
 msgstr "Timeout para ativar o DPMS manual (min)"
+
+msgctxt "#32039"
+msgid "DPMS action"
+msgstr "Acção após DPMS"
+
+msgctxt "#32040"
+msgid "Pause Video"
+msgstr "Pausar Video"
+
+msgctxt "#32041"
+msgid "Stop Video"
+msgstr "Parar Video"

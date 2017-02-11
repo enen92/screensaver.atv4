@@ -27,9 +27,11 @@ import json
 from resources.lib import playlist
 from resources.lib import atvplayer
 from resources.lib import offline as off
+from trans import ScreensaverTrans
 from resources.lib.commonatv import *
 
 class Screensaver(xbmcgui.WindowXML):
+    
     def __init__( self, *args, **kwargs ):
         self.DPMStime = json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.GetSettingValue","params":{"setting":"powermanagement.displaysoff"},"id":2}'))['result']['value']*60
         self.isDPMSactive = bool(self.DPMStime>0)
@@ -67,6 +69,7 @@ class Screensaver(xbmcgui.WindowXML):
                     if delta >= self.max_allowed_time:
                         xbmc.log(msg="calling dpms",level=xbmc.LOGDEBUG)
                         self.activateDPMS()
+                        break
                     xbmc.sleep(1000)
                     delta += 1
                     xbmc.log(msg="supervisor loop:"+str(delta),level=xbmc.LOGDEBUG)
@@ -76,8 +79,18 @@ class Screensaver(xbmcgui.WindowXML):
 
     def activateDPMS(self):
         xbmc.log(msg="[Aerial Screensaver] Manually activating DPMS!",level=xbmc.LOGDEBUG)
-        self.clearAll()
-        xbmc.sleep(1000)
+        self.active = False
+
+        #take action on the video
+        enable_window_placeholder = False
+        if addon.getSetting("dpms-action") == "0":
+            self.atv4player.pause()
+        else:
+            self.clearAll()
+            enable_window_placeholder = True
+        
+        if addon.getSetting("toggle-displayoff") == "true" or addon.getSetting("toggle-cecoff") == "true":
+            xbmc.sleep(1000)
 
         if addon.getSetting("toggle-displayoff") == "true":
             try: xbmc.executebuiltin('ToggleDPMS')
@@ -86,6 +99,11 @@ class Screensaver(xbmcgui.WindowXML):
         if addon.getSetting("toggle-cecoff") == "true":
             try: xbmc.executebuiltin('CECStandby')
             except Exception, e: xbmc.log(msg="[Aerial Screensaver] Failed to toggle device off via CEC: %s" % (str(e)),level=xbmc.LOGDEBUG) 
+
+        #enable placeholder window
+        if enable_window_placeholder:
+            self.toTransparent()
+        
         return          
 
     #def nobackground(self):
@@ -99,7 +117,18 @@ class Screensaver(xbmcgui.WindowXML):
         self.getControl(32503).setLabel(translate(32007))
         return
 
-    def clearAll(self):
+    def toTransparent(self):
+        trans = ScreensaverTrans(
+            'screensaver-atv4-trans.xml',
+            addon_path,
+            'default',
+            '',
+        )
+        trans.doModal()
+        xbmc.sleep(100)
+        del trans
+
+    def clearAll(self,close=True):
         self.active = False
         try: xbmc.PlayList(1).clear()
         except: pass
@@ -110,6 +139,7 @@ class Screensaver(xbmcgui.WindowXML):
         return
 
     def onAction(self,action):
+        addon.setSetting("is_locked","false")
         self.clearAll()
 
 
@@ -132,7 +162,7 @@ except: params = []
 
 
 if not params:
-
+    addon.setSetting("is_locked","true")
     screensaver = Screensaver(
         'screensaver-atv4.xml',
         addon_path,

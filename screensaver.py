@@ -17,6 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 import xbmc
+from trans import ScreensaverTrans
 from resources.lib.commonatv import *
 
 
@@ -45,17 +46,28 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
 
 
 if __name__ == '__main__':
-    if addon.getSetting("show-notifications") == "true":
-        xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % (translate(32000), translate(32017),1,os.path.join(addon_path,"icon.png")))
-    
-    #Start window
-    screensaver = ScreensaverPreview(
-        'screensaver-atv4.xml',
-        addon_path,
-        'default',
-        '',
-    )
-    screensaver.doModal()
-    xbmc.sleep(100)
-    del screensaver
-
+    if addon.getSetting("is_locked") == "false":
+        if addon.getSetting("show-notifications") == "true":
+            xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % (translate(32000), translate(32017),1,os.path.join(addon_path,"icon.png")))
+        
+        #Start window
+        screensaver = ScreensaverPreview(
+            'screensaver-atv4.xml',
+            addon_path,
+            'default',
+            '',
+        )
+        screensaver.doModal()
+        xbmc.sleep(100)
+        del screensaver
+    else:
+        #Transparent placeholder
+        trans = ScreensaverTrans(
+            'screensaver-atv4-trans.xml',
+            addon_path,
+            'default',
+            '',
+        )
+        trans.doModal()
+        xbmc.sleep(100)
+        del trans
