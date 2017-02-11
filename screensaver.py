@@ -35,6 +35,7 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
         self.exit_monitor = self.ExitMonitor(self.exit)
         self.getControl(32502).setLabel(translate(32025))
         xbmc.executebuiltin("SetProperty(screensaver-atv4-loading,1,home)")
+        xbmc.sleep(1000)
         xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
 
     def exit(self):
