@@ -1,3 +1,11 @@
+v1.4.0  11/2/2007 (thanks graysky2)
+- Improve DPMS logic [CR]
+- New settings for DPMS  [CR]
+- Fix windows [CR]
+- Video part turned into video addon [CR]
+- New screensaver init logic [CR]
+- Added service [CR]
+
 v1.3.4 - 18/1/2017
 -New initialization logic - screensaver/script
 - Added DPMS settings
