@@ -1,4 +1,4 @@
-v1.4.0  11/2/2007 (thanks graysky2)
+v1.4.0  11/2/2017 (thanks graysky2)
 - Improve DPMS logic [CR]
 - New settings for DPMS  [CR]
 - Fix windows [CR]
