@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
     screensaver.atv4
-    Copyright (C) 2015 enen92
+    Copyright (C) 2015-2017 enen92
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
