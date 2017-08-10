@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
     screensaver.atv4
     Copyright (C) 2015 enen92
 
@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
+"""
 import xbmc
 import sys
 from resources.lib.commonatv import *

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
     screensaver.atv4
     Copyright (C) 2015 enen92
 
@@ -15,8 +15,8 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
-from resources.lib.commonatv import *
+"""
+from resources.lib.commonatv import addon
 
-#set locked setting back to false on startup just in case kodi had crashed during playback
-addon.setSetting("is_locked","false")
+# set locked setting back to false on startup just in case kodi had crashed during playback
+addon.setSetting("is_locked", "false")

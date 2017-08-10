@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
     screensaver.atv4
     Copyright (C) 2015 enen92
 
@@ -15,10 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
+"""
 import xbmc
+import os
+import xbmcgui
 from trans import ScreensaverTrans
-from resources.lib.commonatv import *
+from resources.lib.commonatv import translate, addon, addon_path
 
 
 class ScreensaverPreview(xbmcgui.WindowXMLDialog):
@@ -42,7 +44,7 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
         xbmc.executebuiltin("ClearProperty(screensaver-atv4-loading,Home)")
         self.close()
 
-        #Call the script and die
+        # Call the script and die
         xbmc.executebuiltin('RunAddon(screensaver.atv4)')
 
 
