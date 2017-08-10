@@ -17,8 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import xbmc
-import sys
-from resources.lib.commonatv import *
+import xbmcgui
+from resources.lib.commonatv import addon
 
 
 class ScreensaverTrans(xbmcgui.WindowXMLDialog):
