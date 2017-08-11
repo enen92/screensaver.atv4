@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.atv4" name="Aerial" version="1.4.1" provider-name="enen92">
+<addon id="screensaver.atv4" name="Aerial" version="1.4.2" provider-name="enen92">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 	</requires>
@@ -15,8 +15,10 @@
 	    <forum>http://forum.kodi.tv/showthread.php?tid=246655</forum>
 	    <summary lang="en">Apple TV 4 Screensavers in Kodi</summary>
 	    <description lang="en">This screensaver addon enables the new Apple TV4 aerial screensavers in Kodi</description>
-        <news>v1.4.1  (2017-7-4) [CR]
-        	- Fix wrong setting [CR]
+        <news>v1.4.2  (11/08/2017) [CR]
+        	- Code refactoring [CR]
+			- Fix screensaver starting on party mode [CR]
+            - Add option to start the screensaver without the preview window [CR]
         </news>
         <assets>
 	        <icon>icon.png</icon>
