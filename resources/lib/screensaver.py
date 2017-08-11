@@ -23,7 +23,8 @@ from commonatv import translate, addon, addon_path, notification
 
 
 class ScreensaverPreview(xbmcgui.WindowXMLDialog):
-    
+
+    @staticmethod
     class ExitMonitor(xbmc.Monitor):
 
         def __init__(self, exit_callback):
@@ -43,12 +44,16 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
     def send_input():
         xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
 
+    @staticmethod
+    def runAddon():
+        xbmc.executebuiltin('RunAddon(screensaver.atv4)')
+
     def exit(self):
         self.clearProperty("screensaver-atv4-loading")
         self.close()
-
         # Call the script and die
-        xbmc.executebuiltin('RunAddon(screensaver.atv4)')
+        self.runAddon()
+
 
 
 def run():
@@ -57,16 +62,21 @@ def run():
             if addon.getSetting("show-notifications") == "true":
                 notification(translate(32000), translate(32017))
 
-            #Start window
-            screensaver = ScreensaverPreview(
-                'screensaver-atv4.xml',
-                addon_path,
-                'default',
-                '',
-            )
-            screensaver.doModal()
-            xbmc.sleep(100)
-            del screensaver
+            if addon.getSetting("show-previewwindow") == "true":
+                #Start window
+                screensaver = ScreensaverPreview(
+                    'screensaver-atv4.xml',
+                    addon_path,
+                    'default',
+                    '',
+                )
+                screensaver.doModal()
+                xbmc.sleep(100)
+                del screensaver
+            else:
+                monitor = ScreensaverPreview.ExitMonitor(ScreensaverPreview.runAddon())
+                ScreensaverPreview.send_input()
+
         else:
             #Transparent placeholder
             trans = ScreensaverTrans(
