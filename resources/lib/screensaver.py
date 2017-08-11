@@ -17,10 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import xbmc
-import os
 import xbmcgui
 from trans import ScreensaverTrans
-from commonatv import translate, addon, addon_path
+from commonatv import translate, addon, addon_path, notification
 
 
 class ScreensaverPreview(xbmcgui.WindowXMLDialog):
@@ -36,12 +35,12 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
     def onInit(self):
         self.exit_monitor = self.ExitMonitor(self.exit)
         self.getControl(32502).setLabel(translate(32025))
-        xbmc.executebuiltin("SetProperty(screensaver-atv4-loading,1,home)")
+        self.setProperty("screensaver-atv4-loading", "1")
         xbmc.sleep(1000)
         xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
 
     def exit(self):
-        xbmc.executebuiltin("ClearProperty(screensaver-atv4-loading,Home)")
+        self.clearProperty("screensaver-atv4-loading")
         self.close()
 
         # Call the script and die
@@ -51,8 +50,8 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
 def run():
     if addon.getSetting("is_locked") == "false":
         if addon.getSetting("show-notifications") == "true":
-            xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % (translate(32000), translate(32017), 1, os.path.join(addon_path,"icon.png")))
-        
+            notification(translate(32000), translate(32017))
+
         #Start window
         screensaver = ScreensaverPreview(
             'screensaver-atv4.xml',

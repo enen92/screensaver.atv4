@@ -18,7 +18,6 @@
 '''
 
 import json
-import sys
 import xbmc
 import xbmcgui
 import atvplayer
@@ -32,7 +31,7 @@ class Screensaver(xbmcgui.WindowXML):
     
     def __init__( self, *args, **kwargs ):
         self.DPMStime = json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.GetSettingValue","params":{"setting":"powermanagement.displaysoff"},"id":2}'))['result']['value']*60
-        self.isDPMSactive = bool(self.DPMStime>0)
+        self.isDPMSactive = bool(self.DPMStime > 0)
         self.active = True
         atvPlaylist = playlist.AtvPlaylist()
         self.videoplaylist = atvPlaylist.getPlaylist()
@@ -41,10 +40,10 @@ class Screensaver(xbmcgui.WindowXML):
 
     def onInit(self):
         self.getControl(32502).setLabel(translate(32008))
-        xbmc.executebuiltin("SetProperty(screensaver-atv4-loading,1,home)")
-        
+        self.setProperty("screensaver-atv4-loading", "1")
+
         if self.videoplaylist:
-            xbmc.executebuiltin("ClearProperty(screensaver-atv4-loading,Home)")
+            self.clearProperty("screensaver-atv4-loading")
             self.atv4player = atvplayer.ATVPlayer()
             self.atv4player.play(self.videoplaylist,windowed=True)
 
@@ -100,7 +99,7 @@ class Screensaver(xbmcgui.WindowXML):
         return
 
     def novideos(self):
-        xbmc.executebuiltin("ClearProperty(screensaver-atv4-loading,Home)")
+        self.clearProperty("screensaver-atv4-loading")
         self.getControl(32503).setVisible(True)
         self.getControl(32503).setLabel(translate(32007))
         return
@@ -121,7 +120,7 @@ class Screensaver(xbmcgui.WindowXML):
         try: xbmc.PlayList(1).clear()
         except: pass
         xbmc.executebuiltin("PlayerControl(RepeatOff)", True)
-        xbmc.executebuiltin("PlayerControl(Stop)")
+        self.atv4player.stop()
         try: self.close()
         except: pass
         return

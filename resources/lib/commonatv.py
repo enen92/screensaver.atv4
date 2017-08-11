@@ -33,3 +33,7 @@ places = ["All", "London", "Hawaii", "New York City", "San Francisco",
 
 def translate(text):
     return addon.getLocalizedString(text).encode('utf-8')
+
+
+def notification(header, message, time=2000, icon=addon.getAddonInfo('icon'), sound=True):
+    xbmcgui.Dialog().notification(header, message, icon, time, sound)
