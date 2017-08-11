@@ -36,7 +36,11 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
         self.exit_monitor = self.ExitMonitor(self.exit)
         self.getControl(32502).setLabel(translate(32025))
         self.setProperty("screensaver-atv4-loading", "1")
-        xbmc.sleep(1000)
+        self.exit_monitor.waitForAbort(1)
+        self.send_input()
+
+    @staticmethod
+    def send_input():
         xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
 
     def exit(self):
@@ -48,28 +52,32 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
 
 
 def run():
-    if addon.getSetting("is_locked") == "false":
-        if addon.getSetting("show-notifications") == "true":
-            notification(translate(32000), translate(32017))
+    if not xbmc.getCondVisibility("Player.HasMedia"):
+        if addon.getSetting("is_locked") == "false":
+            if addon.getSetting("show-notifications") == "true":
+                notification(translate(32000), translate(32017))
 
-        #Start window
-        screensaver = ScreensaverPreview(
-            'screensaver-atv4.xml',
-            addon_path,
-            'default',
-            '',
-        )
-        screensaver.doModal()
-        xbmc.sleep(100)
-        del screensaver
+            #Start window
+            screensaver = ScreensaverPreview(
+                'screensaver-atv4.xml',
+                addon_path,
+                'default',
+                '',
+            )
+            screensaver.doModal()
+            xbmc.sleep(100)
+            del screensaver
+        else:
+            #Transparent placeholder
+            trans = ScreensaverTrans(
+                'screensaver-atv4-trans.xml',
+                addon_path,
+                'default',
+                '',
+            )
+            trans.doModal()
+            xbmc.sleep(100)
+            del trans
     else:
-        #Transparent placeholder
-        trans = ScreensaverTrans(
-            'screensaver-atv4-trans.xml',
-            addon_path,
-            'default',
-            '',
-        )
-        trans.doModal()
-        xbmc.sleep(100)
-        del trans
+        # Just call deactivate
+        ScreensaverPreview.send_input()
