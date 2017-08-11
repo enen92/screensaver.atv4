@@ -3,8 +3,8 @@
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 	</requires>
-	<extension point="xbmc.ui.screensaver" library="screensaver.py" />
-	<extension point="xbmc.python.script" library="atv.py">
+	<extension point="xbmc.ui.screensaver" library="entrypointscreensaver.py" />
+	<extension point="xbmc.python.script" library="entrypointscript.py">
 		<provides>video</provides> 
 	</extension>
 	<extension point="xbmc.service" library="service.py" start="login"/>

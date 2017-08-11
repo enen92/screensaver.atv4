@@ -20,7 +20,7 @@ import xbmc
 import os
 import xbmcgui
 from trans import ScreensaverTrans
-from resources.lib.commonatv import translate, addon, addon_path
+from commonatv import translate, addon, addon_path
 
 
 class ScreensaverPreview(xbmcgui.WindowXMLDialog):
@@ -48,10 +48,10 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
         xbmc.executebuiltin('RunAddon(screensaver.atv4)')
 
 
-if __name__ == '__main__':
+def run():
     if addon.getSetting("is_locked") == "false":
         if addon.getSetting("show-notifications") == "true":
-            xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % (translate(32000), translate(32017),1,os.path.join(addon_path,"icon.png")))
+            xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % (translate(32000), translate(32017), 1, os.path.join(addon_path,"icon.png")))
         
         #Start window
         screensaver = ScreensaverPreview(
