@@ -28,14 +28,20 @@ from commonatv import applefeed, applelocalfeed, addon, addon_path
 class AtvPlaylist:
     def __init__(self, ):
         if not xbmc.getCondVisibility("Player.HasMedia"):
-            try:
-                response = urllib2.urlopen(applefeed)
-                self.html = json.loads(response.read())
-            except:
-                with open(applelocalfeed, "r") as f:
-                    self.html = json.loads(f.read())
+            if addon.getSetting("download-folder") == "":
+                try:
+                    response = urllib2.urlopen(applefeed)
+                    self.html = json.loads(response.read())
+                except:
+                    self.local_feed()
+            else:
+                self.local_feed()
         else:
             self.html = {}
+
+    def local_feed(self):
+        with open(applelocalfeed, "r") as f:
+            self.html = json.loads(f.read())
 
     def getPlaylistJson(self, ):
         return self.html
