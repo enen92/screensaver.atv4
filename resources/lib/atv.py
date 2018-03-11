@@ -140,7 +140,7 @@ class Screensaver(xbmcgui.WindowXML):
         while self.active and not monitor.abortRequested():
             monitor.waitForAbort(1)
             if not self.atv4player.isPlaying() and self.active:
-                if self.playindex < len(self.videoplaylist)-1:
+                if self.playindex < len(self.videoplaylist) - 1:
                     self.playindex += 1
                 else:
                     self.playindex = 0
