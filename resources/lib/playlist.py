@@ -22,6 +22,7 @@ import xbmc
 import xbmcgui
 import os
 import xbmcvfs
+from random import shuffle
 from commonatv import applefeed, applelocalfeed, addon, addon_path
 
 
@@ -43,10 +44,10 @@ class AtvPlaylist:
         with open(applelocalfeed, "r") as f:
             self.html = json.loads(f.read())
 
-    def getPlaylistJson(self, ):
+    def getPlaylistJson(self):
         return self.html
 
-    def getPlaylist(self, ):
+    def getPlaylist(self):
         current_time = xbmc.getInfoLabel("System.Time")
         am_pm = xbmc.getInfoLabel("System.Time(xx)")
         current_hour = current_time.split(":")[0]
@@ -66,8 +67,7 @@ class AtvPlaylist:
         if current_hour > 19:
             day_night = 'night'
 
-        self.playlist = xbmc.PlayList(1)
-        self.playlist.clear()
+        self.playlist = []
         if self.html:
             for block in self.html:
                 for video in block['assets']:
@@ -97,18 +97,18 @@ class AtvPlaylist:
                     if addon.getSetting(thisvideosetting) == "true":
                         if video['timeOfDay'] == 'day':
                             if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '1':
-                                self.playlist.add(url, item)
+                                self.playlist.append(url)
                             if addon.getSetting("time-of-day") == '3':
                                 if day_night == 'day':
-                                    self.playlist.add(url, item)
+                                    self.playlist.append(url)
                         if video['timeOfDay'] == 'night':
                             if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '2':
-                                self.playlist.add(url, item)
+                                self.playlist.append(url)
                             if addon.getSetting("time-of-day") == '3':
                                 if day_night == 'night':
-                                    self.playlist.add(url, item)
+                                    self.playlist.append(url)
 
-            self.playlist.shuffle()
+            shuffle(self.playlist)
             return self.playlist
         else:
             return None

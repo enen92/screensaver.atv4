@@ -38,5 +38,5 @@ class ScreensaverTrans(xbmcgui.WindowXMLDialog):
         addon.setSetting("is_locked", "false")
         self.close()
 
-    def onAction(self,action):
+    def onAction(self, action):
         self.exit()
