@@ -73,7 +73,7 @@ def run():
                 xbmc.sleep(100)
                 del screensaver
             else:
-                monitor = ScreensaverPreview.ExitMonitor(ScreensaverPreview.runAddon())
+                ScreensaverPreview.ExitMonitor(ScreensaverPreview.runAddon())
                 ScreensaverPreview.send_input()
 
         else:

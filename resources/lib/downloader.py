@@ -92,7 +92,7 @@ class Downloader:
             f.write(buffer)
             file_size_dl += len(buffer)
             numblocks += 1
-            self.dialogdown(name,numblocks,block_sz,file_size,self.dp,start_time)
+            self.dialogdown(name, numblocks, block_sz, file_size, self.dp, start_time)
 
         f.close()
         return
@@ -108,11 +108,11 @@ class Downloader:
                 eta = 0
             kbps_speed = kbps_speed / 1024
             total = float(filesize) / (1024 * 1024)
-            mbs = '%.02f MB %s %.02f MB' % (currently_downloaded,translate(32015), total)
+            mbs = '%.02f MB %s %.02f MB' % (currently_downloaded, translate(32015), total)
             e = ' (%.0f Kb/s) ' % kbps_speed
             tempo = translate(32016) + ' %02d:%02d' % divmod(eta, 60)
             dp.update(percent, name + ' - ' + mbs + e, tempo)
-        except:
+        except Exception:
             percent = 100
             dp.update(percent)
 
@@ -121,6 +121,6 @@ class Downloader:
             dp.close()
             try:
                 xbmcvfs.delete(self.path)
-            except:
+            except Exception:
                 xbmc.log(msg='[Aerial ScreenSavers] Could not remove file', level=xbmc.LOGERROR)
             xbmc.log(msg='[Aerial ScreenSavers] Download canceled', level=xbmc.LOGDEBUG)

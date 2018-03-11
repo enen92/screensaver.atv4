@@ -32,7 +32,7 @@ class AtvPlaylist:
                 try:
                     response = urllib2.urlopen(applefeed)
                     self.html = json.loads(response.read())
-                except:
+                except Exception:
                     self.local_feed()
             else:
                 self.local_feed()
@@ -71,7 +71,6 @@ class AtvPlaylist:
             for block in self.html:
                 for video in block['assets']:
 
-                    label = video['accessibilityLabel'] + ' by ' + str(video['timeOfDay'])
                     url = video['url']
 
                     # check if file exists on disk
