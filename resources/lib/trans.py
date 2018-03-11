@@ -22,7 +22,7 @@ from commonatv import addon
 
 
 class ScreensaverTrans(xbmcgui.WindowXMLDialog):
-    
+
     class ExitMonitor(xbmc.Monitor):
 
         def __init__(self, activated_callback):
