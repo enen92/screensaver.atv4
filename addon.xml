@@ -19,6 +19,7 @@
 			- Code refactoring
 			- Remove playlist and control it manually (avoid setting repeat modes)
 			- Option to avoid streaming (use only local files)
+			- Fixes for Leia
 		</news>
 		<assets>
 			<icon>icon.png</icon>
