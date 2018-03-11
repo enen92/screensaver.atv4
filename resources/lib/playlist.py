@@ -28,7 +28,7 @@ from commonatv import applefeed, applelocalfeed, addon
 class AtvPlaylist:
     def __init__(self, ):
         if not xbmc.getCondVisibility("Player.HasMedia"):
-            if addon.getSetting("download-force-offline") == "false":
+            if addon.getSetting("force-offline") == "false":
                 try:
                     req = urllib2.request.Request(applefeed)
                     with urllib2.urlopen(req) as response:

@@ -9,24 +9,24 @@
 	</extension>
 	<extension point="xbmc.service" library="service.py" start="login"/>
 	<extension point="xbmc.addon.metadata">
-	    <platform>all</platform>
-	    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-	    <source>https://github.com/enen92/screensaver.atv4</source>
-	    <forum>http://forum.kodi.tv/showthread.php?tid=246655</forum>
-	    <summary lang="en">Apple TV 4 Screensavers in Kodi</summary>
-	    <description lang="en">This screensaver addon enables the new Apple TV4 aerial screensavers in Kodi</description>
-        <news>v1.5.0  (11/03/2018)
-        	- Code refactoring
-        	- Remove playlist and control it manually (avoid setting repeat modes)
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<source>https://github.com/enen92/screensaver.atv4</source>
+		<forum>http://forum.kodi.tv/showthread.php?tid=246655</forum>
+		<summary lang="en">Apple TV 4 Screensavers in Kodi</summary>
+		<description lang="en">This screensaver addon enables the new Apple TV4 aerial screensavers in Kodi</description>
+		<news>v1.5.0  (11/03/2018)
+			- Code refactoring
+			- Remove playlist and control it manually (avoid setting repeat modes)
 			- Option to avoid streaming (use only local files)
-        </news>
-        <assets>
-	        <icon>icon.png</icon>
-	        <fanart>fanart.jpg</fanart>
-	        <screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
-	        <screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
-	        <screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
-	        <screenshot>resources/screenshots/screenshot-04.jpg</screenshot>
-        </assets>
-    </extension>
+		</news>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+			<screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
+			<screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
+			<screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
+			<screenshot>resources/screenshots/screenshot-04.jpg</screenshot>
+		</assets>
+	</extension>
 </addon>
