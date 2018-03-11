@@ -74,16 +74,25 @@ class AtvPlaylist:
 
                     url = video['url']
 
+                    exists_on_disk = False
+
                     # check if file exists on disk
                     movie = url.split("/")[-1]
                     localfilemov = os.path.join(addon.getSetting("download-folder"), movie)
                     if xbmcvfs.exists(localfilemov):
                         url = localfilemov
+                        exists_on_disk = True
 
                     # check for existence of the trancoded file .mp4 only
                     localfilemp4 = os.path.join(addon.getSetting("download-folder"), movie.replace('.mov', '.mp4'))
                     if xbmcvfs.exists(localfilemp4):
                         url = localfilemp4
+                        exists_on_disk = True
+
+                    # Continue to next item if the file is not in disk and the
+                    # setting refuse-stream is enabled
+                    if not exists_on_disk and addon.getSetting("refuse-stream") == "true":
+                        continue
 
                     # build setting
                     thisvideosetting = "enable-" + video['accessibilityLabel'].lower().replace(" ", "")
