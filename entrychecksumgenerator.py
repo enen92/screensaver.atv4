@@ -35,7 +35,7 @@ tmpfolder = "tmpvideos"
 def generate_entries_and_checksums():
     try:
         response = urllib2.urlopen(applefeed)
-    except:
+    except Exception:
         print("Failed to open Apple Feed, aborting")
         return
 
@@ -48,7 +48,8 @@ def generate_entries_and_checksums():
 
         # generating checksums
         print("Starting checksum generator...")
-        if not os.path.exists(tmpfolder): os.mkdir(tmpfolder)
+        if not os.path.exists(tmpfolder):
+            os.mkdir(tmpfolder)
         checksums = {}
         failed = []
 
@@ -80,7 +81,7 @@ def generate_entries_and_checksums():
 def get_locations():
     try:
         response = urllib2.urlopen(applefeed)
-    except:
+    except Exception:
         print("Failed to open Apple Feed, aborting")
         return
 
@@ -110,11 +111,11 @@ def tmpdownload(url):
     block_sz = 8192
     with open(os.path.join(tmpfolder, file_name), 'wb') as f:
         while True:
-            buffer = u.read(block_sz)
-            if not buffer:
+            _buffer = u.read(block_sz)
+            if not _buffer:
                 return file_name
-            file_size_dl += len(buffer)
-            f.write(buffer)
+            file_size_dl += len(_buffer)
+            f.write(_buffer)
             status = r"%10d [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
             status = status + chr(8) * (len(status) + 1)
             print status,

@@ -113,7 +113,8 @@ class Screensaver(xbmcgui.WindowXML):
         self.getControl(32503).setVisible(True)
         self.getControl(32503).setLabel(translate(32007))
 
-    def toTransparent(self):
+    @classmethod
+    def toTransparent():
         trans = ScreensaverTrans(
             'screensaver-atv4-trans.xml',
             addon_path,
@@ -138,7 +139,6 @@ class Screensaver(xbmcgui.WindowXML):
         self.atv4player.play(self.videoplaylist[self.playindex], windowed=True)
         while self.active and not monitor.abortRequested():
             monitor.waitForAbort(1)
-            print "benfica"
             if not self.atv4player.isPlaying() and self.active:
                 if self.playindex < len(self.videoplaylist)-1:
                     self.playindex += 1

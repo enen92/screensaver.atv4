@@ -30,8 +30,9 @@ class AtvPlaylist:
         if not xbmc.getCondVisibility("Player.HasMedia"):
             if addon.getSetting("download-folder") == "":
                 try:
-                    response = urllib2.urlopen(applefeed)
-                    self.html = json.loads(response.read())
+                    req = urllib2.request.Request(applefeed)
+                    with urllib2.urlopen(req) as response:
+                        self.html = json.loads(response.read())
                 except Exception:
                     self.local_feed()
             else:
