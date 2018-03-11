@@ -114,7 +114,7 @@ class Screensaver(xbmcgui.WindowXML):
         self.getControl(32503).setLabel(translate(32007))
 
     @classmethod
-    def toTransparent():
+    def toTransparent(self):
         trans = ScreensaverTrans(
             'screensaver-atv4-trans.xml',
             addon_path,

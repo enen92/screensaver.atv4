@@ -34,7 +34,8 @@ tmpfolder = "tmpvideos"
 
 def generate_entries_and_checksums():
     try:
-        response = urllib2.urlopen(applefeed)
+        req = urllib2.request.Request(applefeed)
+        response = urllib2.urlopen(req)
     except Exception:
         print("Failed to open Apple Feed, aborting")
         return
@@ -80,7 +81,8 @@ def generate_entries_and_checksums():
 
 def get_locations():
     try:
-        response = urllib2.urlopen(applefeed)
+        req = urllib2.request.Request(applefeed)
+        response = urllib2.urlopen(req)
     except Exception:
         print("Failed to open Apple Feed, aborting")
         return
@@ -101,7 +103,8 @@ def get_locations():
 
 def tmpdownload(url):
     file_name = url.split('/')[-1]
-    u = urllib2.urlopen(url)
+    req = urllib2.request.Request(url)
+    u = urllib2.urlopen(req)
 
     meta = u.info()
     file_size = int(meta.getheaders("Content-Length")[0])
