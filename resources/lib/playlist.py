@@ -28,7 +28,7 @@ from commonatv import applefeed, applelocalfeed, addon
 class AtvPlaylist:
     def __init__(self, ):
         if not xbmc.getCondVisibility("Player.HasMedia"):
-            if addon.getSetting("download-folder") == "":
+            if addon.getSetting("download-force-offline") == "false":
                 try:
                     req = urllib2.request.Request(applefeed)
                     with urllib2.urlopen(req) as response:
@@ -91,7 +91,7 @@ class AtvPlaylist:
 
                     # Continue to next item if the file is not in disk and the
                     # setting refuse-stream is enabled
-                    if not exists_on_disk and addon.getSetting("refuse-stream") == "true":
+                    if not exists_on_disk and addon.getSetting("force-offline") == "true":
                         continue
 
                     # build setting
