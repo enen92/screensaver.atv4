@@ -1,6 +1,6 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e5d8dc168cf940a385d1a47837fe7596)](https://www.codacy.com/app/92enen/screensaver.atv4?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=enen92/screensaver.atv4&amp;utm_campaign=Badge_Grade)
 
 # screensaver.atv4
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e5d8dc168cf940a385d1a47837fe7596)](https://www.codacy.com/app/92enen/screensaver.atv4?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=enen92/screensaver.atv4&amp;utm_campaign=Badge_Grade)
 
 ## Apple Aerial screensavers for Kodi
 
