@@ -19,11 +19,10 @@
 import json
 import urllib2
 import xbmc
-import xbmcgui
 import os
 import xbmcvfs
 from random import shuffle
-from commonatv import applefeed, applelocalfeed, addon, addon_path
+from commonatv import applefeed, applelocalfeed, addon
 
 
 class AtvPlaylist:
@@ -73,12 +72,7 @@ class AtvPlaylist:
                 for video in block['assets']:
 
                     label = video['accessibilityLabel'] + ' by ' + str(video['timeOfDay'])
-                    item = xbmcgui.ListItem(label)
-                    item.setLabel(label)
-                    item.setInfo('video', {'Title': label})
-                    item.setArt({'thumb': os.path.join(addon_path, 'icon.png')})
                     url = video['url']
-                    item.setPath(url)
 
                     # check if file exists on disk
                     movie = url.split("/")[-1]
