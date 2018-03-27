@@ -14,7 +14,9 @@
 		<source>https://github.com/enen92/screensaver.atv4</source>
 		<forum>http://forum.kodi.tv/showthread.php?tid=246655</forum>
 		<summary lang="en_GB">Apple TV 4 Screensavers in Kodi</summary>
+		<summary lang="es_ES">El salvapantallas de Apple TV 4 en Kodi</summary>
 		<description lang="en_GB">This screensaver addon enables the new Apple TV4 aerial screensavers in Kodi</description>
+		<description lang="es_ES">Este complemento habilita el salvapantallas aerial del nuevo Apple TV 4 en Kodi</description>
 		<news>v1.5.0  (11/03/2018)
 			- Code refactoring
 			- Remove playlist and control it manually (avoid setting repeat modes)
