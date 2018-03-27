@@ -40,15 +40,15 @@ msgstr "Habilitar China"
 
 msgctxt "#32006"
 msgid "Time of day for videos"
-msgstr "Momento del dÌa para videos"
+msgstr "Momento del d√≠a para videos"
 
 msgctxt "#32007"
 msgid "No videos that match your criteria have been found"
-msgstr "No se han encontrado videos con su criterio de b˙squeda"
+msgstr "No se han encontrado videos con su criterio de b√∫squeda"
 
 msgctxt "#32008"
 msgid "Getting video list..."
-msgstr "Obteniendo lista de videos"
+msgstr "Obteniendo lista de videos..."
 
 msgctxt "#32009"
 msgid "Offline mode"
@@ -72,7 +72,7 @@ msgstr "Necesitas definir una carpeta de descarga."
 
 msgctxt "#32014"
 msgid "Choose locations to download videos for:"
-msgstr "Seleccione una localizaciÛn para descargar sus videos:"
+msgstr "Seleccione una localizaci√≥n para descargar sus videos:"
 
 msgctxt "#32015"
 msgid "downloaded"
@@ -88,11 +88,11 @@ msgstr "Procesando. Por favor, espere..."
 
 msgctxt "#32018"
 msgid "Show start notification"
-msgstr "Mostrar notificaciÛn de arranque"
+msgstr "Mostrar notificaci√≥n de arranque"
 
 msgctxt "#32019"
 msgid "Checking which videos to download..."
-msgstr "Verificando quÈ videos descargar..."
+msgstr "Verificando qu√© videos descargar..."
 
 msgctxt "#32020"
 msgid "Enable Greenland"
@@ -132,11 +132,11 @@ msgstr "Conmutar a apagado de pantalla"
 
 msgctxt "#32029"
 msgid "Put playing device on standby via a CEC"
-msgstr "Poner el dispositivo en modo espera a travÈs de CEC"
+msgstr "Poner el dispositivo en modo espera a trav√©s de CEC"
 
 msgctxt "#32030"
 msgid "Disable checksum verification"
-msgstr "Deshabilitar verificaciÛn checksum"
+msgstr "Deshabilitar verificaci√≥n checksum"
 
 msgctxt "#32031"
 msgid "Videos"
@@ -148,15 +148,15 @@ msgstr "Ajustes Generales"
 
 msgctxt "#32033"
 msgid "* DPMS will check for the Power Saving Kodi settings and stop the screensaver"
-msgstr "* DPMS verificar· la configuraciÛn de ahorro de energÌa de Kodi y detendr· el protector de pantalla"
+msgstr "* DPMS verificar√° la configuraci√≥n de ahorro de energ√≠a de Kodi y detendr√° el protector de pantalla"
 
 msgctxt "#32034"
 msgid "if the maximum allowed time to put the display to sleep is exceeded"
-msgstr "si se excede el tiempo m·ximo permitido para poner la pantalla a dormir"
+msgstr "si se excede el tiempo m√°ximo permitido para poner la pantalla a dormir"
 
 msgctxt "#32035"
 msgid "Off"
-msgstr ""
+msgstr "Apagado"
 
 msgctxt "#32036"
 msgid "Kodi"
@@ -172,7 +172,7 @@ msgstr "Tiempo de espera para activar DPMS (min)"
 
 msgctxt "#32039"
 msgid "DPMS action"
-msgstr "AcciÛn de DPMS"
+msgstr "Acci√≥n de DPMS"
 
 msgctxt "#32040"
 msgid "Pause Video"
@@ -189,4 +189,3 @@ msgstr "Mostrar ventana de vista previa"
 msgctxt "#32043"
 msgid "Use local files only (avoid external requests)"
 msgstr "Usar solo archivos locales (evita solicitudes externas)"
-
