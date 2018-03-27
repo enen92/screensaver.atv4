@@ -68,7 +68,7 @@ msgstr "Videos no encontrados"
 
 msgctxt "#32013"
 msgid "You need to define a download folder."
-msgstr "Necesitas definir una carpeta de descarga."
+msgstr "Debe definir una carpeta de descarga."
 
 msgctxt "#32014"
 msgid "Choose locations to download videos for:"
@@ -76,7 +76,7 @@ msgstr "Seleccione una localización para descargar sus videos:"
 
 msgctxt "#32015"
 msgid "downloaded"
-msgstr "descargado"
+msgstr "descargados de"
 
 msgctxt "#32016"
 msgid "Time left:"
