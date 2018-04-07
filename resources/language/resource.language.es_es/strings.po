@@ -192,7 +192,7 @@ msgstr "Usar solo archivos locales (evita solicitudes externas)"
 
 msgctxt "#32044"
 msgid "All"
-msgstr "Todo"
+msgstr "Siempre"
 
 msgctxt "#32045"
 msgid "Day only"
