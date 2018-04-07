@@ -24,7 +24,7 @@ msgstr "Habilitar Hawaai"
 
 msgctxt "#32002"
 msgid "Enable London"
-msgstr "Habilitar London"
+msgstr "Habilitar Londres"
 
 msgctxt "#32003"
 msgid "Enable New York"
@@ -104,7 +104,7 @@ msgstr "Habilitar Dubai"
 
 msgctxt "#32022"
 msgid "Enable Los Angeles"
-msgstr "Habilitar Los Angeles"
+msgstr "Habilitar Los Ángeles"
 
 msgctxt "#32023"
 msgid "Enable Liwa"
@@ -148,7 +148,7 @@ msgstr "Ajustes Generales"
 
 msgctxt "#32033"
 msgid "* DPMS will check for the Power Saving Kodi settings and stop the screensaver"
-msgstr "* DPMS verificará la configuración de ahorro de energía de Kodi y detendrá el protector de pantalla"
+msgstr "* DPMS verificará los ajustes de ahorro de energía de Kodi y detendrá el protector de pantalla"
 
 msgctxt "#32034"
 msgid "if the maximum allowed time to put the display to sleep is exceeded"
@@ -192,16 +192,16 @@ msgstr "Usar solo archivos locales (evita solicitudes externas)"
 
 msgctxt "#32044"
 msgid "All"
-msgstr ""
+msgstr "Todo"
 
 msgctxt "#32045"
 msgid "Day only"
-msgstr ""
+msgstr "Solo día"
 
 msgctxt "#32046"
 msgid "Night only"
-msgstr ""
+msgstr "Solo noche"
 
 msgctxt "#32047"
 msgid "Smart mode"
-msgstr ""
+msgstr "Modo inteligente"
