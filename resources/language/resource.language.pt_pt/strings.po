@@ -189,3 +189,19 @@ msgstr "Mostrar janela de pre-visualização"
 msgctxt "#32043"
 msgid "Use local files only (avoid external requests)"
 msgstr "Usar apenas ficheiros locais (evitar pedidos externos)"
+
+msgctxt "#32044"
+msgid "All"
+msgstr "Todos"
+
+msgctxt "#32045"
+msgid "Day only"
+msgstr "Apenas dia"
+
+msgctxt "#32046"
+msgid "Night only"
+msgstr "Apenas noite"
+
+msgctxt "#32047"
+msgid "Smart mode"
+msgstr "Modo inteligente"
