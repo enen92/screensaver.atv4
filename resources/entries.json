@@ -160,13 +160,6 @@
       "id" : "b1",
       "assets" : [
          {
-            "url" : "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b1-1.mov",
-            "accessibilityLabel" : "Hawaii",
-            "type" : "video",
-            "id" : "b1-1",
-            "timeOfDay" : "day"
-         },
-         {
             "url" : "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b1-2.mov",
             "accessibilityLabel" : "London",
             "type" : "video",
@@ -200,24 +193,10 @@
             "timeOfDay" : "day"
          },
          {
-            "url" : "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b2-2.mov",
-            "accessibilityLabel" : "Hawaii",
-            "type" : "video",
-            "id" : "b2-2",
-            "timeOfDay" : "day"
-         },
-         {
             "url" : "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b2-3.mov",
             "accessibilityLabel" : "New York City",
             "type" : "video",
             "id" : "b2-3",
-            "timeOfDay" : "night"
-         },
-         {
-            "url" : "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b2-4.mov",
-            "accessibilityLabel" : "San Francisco",
-            "type" : "video",
-            "id" : "b2-4",
             "timeOfDay" : "night"
          }
       ]
@@ -396,13 +375,6 @@
             "timeOfDay" : "day"
          },
          {
-            "url" : "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b9-2.mov",
-            "accessibilityLabel" : "London",
-            "type" : "video",
-            "id" : "b9-2",
-            "timeOfDay" : "night"
-         },
-         {
             "url" : "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b9-3.mov",
             "accessibilityLabel" : "San Francisco",
             "type" : "video",
@@ -420,13 +392,6 @@
             "type" : "video",
             "id" : "b10-1",
             "timeOfDay" : "day"
-         },
-         {
-            "url" : "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b10-2.mov",
-            "accessibilityLabel" : "New York City",
-            "type" : "video",
-            "id" : "b10-2",
-            "timeOfDay" : "night"
          },
          {
             "url" : "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/b10-3.mov",
