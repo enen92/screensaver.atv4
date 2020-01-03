@@ -26,9 +26,7 @@ from .commonatv import applefeed, applelocalfeed, addon, PY3
 if PY3:
     from urllib.request import Request, urlopen
 else:
-    from urllib2 import urlopen
-    from urllib2.request import Request
-
+    from urllib2 import Request, urlopen
 
 
 class AtvPlaylist:
