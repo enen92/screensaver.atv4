@@ -17,16 +17,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import xbmcvfs
-import playlist
-import downloader
-from commonatv import dialog, addon, translate, places
-
+from .commonatv import dialog, addon, translate, places
+from .playlist import AtvPlaylist
+from .downloader import Downloader
 
 def offline():
     if addon.getSetting("download-folder") != "" and xbmcvfs.exists(addon.getSetting("download-folder")):
         choose = dialog.select(translate(32014),places)
         if choose > -1:
-            atv_playlist = playlist.AtvPlaylist()
+            atv_playlist = AtvPlaylist()
             playlist_dict = atv_playlist.getPlaylistJson()
             download_list = []
             if playlist_dict:
@@ -39,7 +38,7 @@ def offline():
                                 download_list.append(video['url'])
             # call downloader
             if download_list:
-                down = downloader.Downloader()
+                down = Downloader()
                 down.downloadall(download_list)
             else:
                 dialog.ok(translate(32000), translate(32012))

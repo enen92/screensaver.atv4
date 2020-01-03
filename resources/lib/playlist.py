@@ -17,12 +17,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import json
-import urllib2
 import xbmc
 import os
 import xbmcvfs
 from random import shuffle
-from commonatv import applefeed, applelocalfeed, addon
+from .commonatv import applefeed, applelocalfeed, addon, PY3
+
+if PY3:
+    from urllib.request import Request, urlopen
+else:
+    from urllib2 import urlopen
+    from urllib2.request import Request
+
 
 
 class AtvPlaylist:
@@ -30,8 +36,8 @@ class AtvPlaylist:
         if not xbmc.getCondVisibility("Player.HasMedia"):
             if addon.getSetting("force-offline") == "false":
                 try:
-                    req = urllib2.request.Request(applefeed)
-                    with urllib2.urlopen(req) as response:
+                    req = Request(applefeed)
+                    with urlopen(req) as response:
                         self.html = json.loads(response.read())
                 except Exception:
                     self.local_feed()

@@ -18,8 +18,8 @@
 """
 import xbmc
 import xbmcgui
-from trans import ScreensaverTrans
-from commonatv import translate, addon, addon_path, notification
+from .trans import ScreensaverTrans
+from .commonatv import translate, addon, addon_path, notification
 
 
 class ScreensaverPreview(xbmcgui.WindowXMLDialog):

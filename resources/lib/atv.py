@@ -21,11 +21,11 @@
 import json
 import xbmc
 import xbmcgui
-import offline as off
-import playlist
 import threading
-from commonatv import translate, addon, addon_path
-from trans import ScreensaverTrans
+from .playlist import AtvPlaylist
+from .offline import offline as off
+from .commonatv import translate, addon, addon_path
+from .trans import ScreensaverTrans
 
 monitor = xbmc.Monitor()
 
@@ -36,7 +36,7 @@ class Screensaver(xbmcgui.WindowXML):
         self.DPMStime = json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.GetSettingValue","params":{"setting":"powermanagement.displaysoff"},"id":2}'))['result']['value'] * 60
         self.isDPMSactive = bool(self.DPMStime > 0)
         self.active = True
-        self.videoplaylist = playlist.AtvPlaylist().getPlaylist()
+        self.videoplaylist = AtvPlaylist().getPlaylist()
         xbmc.log(msg="kodi dpms time:" + str(self.DPMStime), level=xbmc.LOGDEBUG)
         xbmc.log(msg="kodi dpms active:" + str(self.isDPMSactive), level=xbmc.LOGDEBUG)
 

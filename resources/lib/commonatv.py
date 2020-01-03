@@ -19,6 +19,7 @@
 """
 
 import os
+import sys
 import xbmcaddon
 import xbmcgui
 
@@ -30,6 +31,9 @@ applefeed = "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/a
 applelocalfeed = os.path.join(addon_path, "resources", "entries.json")
 places = ["All", "London", "Hawaii", "New York City", "San Francisco",
           "China", "Greenland", "Dubai", "Los Angeles", "Liwa", "Hong Kong"]
+
+
+PY3 = sys.version_info.major >= 3
 
 
 def translate(text):

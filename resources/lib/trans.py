@@ -18,7 +18,7 @@
 """
 import xbmc
 import xbmcgui
-from commonatv import addon
+from .commonatv import addon
 
 
 class ScreensaverTrans(xbmcgui.WindowXMLDialog):

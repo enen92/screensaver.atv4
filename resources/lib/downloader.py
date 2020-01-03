@@ -16,13 +16,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-import urllib2
 import xbmc
 import xbmcvfs
 import time
 import json
 import hashlib
-from commonatv import *
+
+from .commonatv import *
+
+if PY3:
+    from urllib.request import urlopen
+else:
+    from urllib2 import urlopen
 
 
 class Downloader:
@@ -71,7 +76,7 @@ class Downloader:
         xbmc.sleep(500)
         start_time = time.time()
 
-        u = urllib2.urlopen(url)
+        u = urlopen(url)
         meta = u.info()
         meta_func = meta.getheaders if hasattr(meta, 'getheaders') else meta.get_all
         meta_length = meta_func("Content-Length")
