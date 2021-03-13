@@ -32,7 +32,7 @@ applelocalfeed = os.path.join("resources", "entries.json")
 tmpfolder = "tmpvideos"
 
 
-def generate_entries_and_checksums():
+def generate_entries():
     try:
         req = request.Request(applefeed)
         response = request.urlopen(req)
@@ -46,43 +46,48 @@ def generate_entries_and_checksums():
         with open(applelocalfeed, "wb") as f:
             f.write(html)
         print("Offline feed file updated!")
-
-        # generating checksums
-        print("Starting checksum generator...")
-        if not os.path.exists(tmpfolder):
-            os.mkdir(tmpfolder)
-        checksums = {}
-        failed = []
-
-        video_feed = json.loads(html)
-        for block in video_feed:
-            for asset in block["assets"]:
-                asset_url = asset["url"]
-                print(f"Processing video {asset_url}...")
-                file_name = tmpdownload(asset_url)
-                if file_name:
-                    with open(os.path.join(tmpfolder, file_name), "rb") as f:
-                        checksum = hashlib.md5(f.read()).hexdigest()
-                        checksums[file_name] = checksum
-                        os.remove(os.path.join(tmpfolder, file_name))
-                        print(f"File processed. Checksum={checksum}")
-                else:
-                    failed.append(asset_url)
-
-        shutil.rmtree(tmpfolder)
-        print("Updating checksum file")
-        with open(os.path.join("resources", "checksums.json"), "w") as f:
-            f.write(json.dumps(checksums))
-            print("All done")
-        print(f"Failed items: {failed}")
     else:
         print("Failed to open Apple Feed - Wrong status code, aborting")
 
 
+def generate_checksums():
+    with open(applelocalfeed, "rb") as f:
+        html = f.read()
+
+    # generating checksums
+    print("Starting checksum generator...")
+    if not os.path.exists(tmpfolder):
+        os.mkdir(tmpfolder)
+    checksums = {}
+    failed = []
+
+    video_feed = json.loads(html)
+    for block in video_feed:
+        for asset in block["assets"]:
+            asset_url = asset["url"]
+            print(f"Processing video {asset_url}...")
+            file_name = tmpdownload(asset_url)
+            if file_name:
+                with open(os.path.join(tmpfolder, file_name), "rb") as f:
+                    checksum = hashlib.md5(f.read()).hexdigest()
+                    checksums[file_name] = checksum
+                    os.remove(os.path.join(tmpfolder, file_name))
+                    print(f"File processed. Checksum={checksum}")
+            else:
+                failed.append(asset_url)
+
+    shutil.rmtree(tmpfolder)
+    print("Updating checksum file")
+    with open(os.path.join("resources", "checksums.json"), "w") as f:
+        f.write(json.dumps(checksums))
+        print("All done")
+    print(f"Failed items: {failed}")
+
+
 def get_locations():
     try:
-        req = urllib2.request.Request(applefeed)
-        response = urllib2.urlopen(req)
+        req = request.Request(applefeed)
+        response = request.urlopen(req)
     except Exception:
         print("Failed to open Apple Feed, aborting")
         return
@@ -128,8 +133,11 @@ def tmpdownload(url):
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         if sys.argv[1] == "1":
-            generate_entries_and_checksums()
-        elif sys.argv[1] == "2":
+            generate_checksums()
+        if sys.argv[1] == "2":
+            generate_entries()
+            generate_checksums()
+        elif sys.argv[1] == "3":
             get_locations()
     else:
-        print("Please specify option.\n 1) update entries and timestamps \n 2) Get locations")
+        print("Please specify option.\n 1) update checksums based on the already existing entries.json file 2) update entries and checksums \n 3) Get locations")
