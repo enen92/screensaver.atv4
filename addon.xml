@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.atv4" name="Aerial" version="1.5.1" provider-name="enen92">
+<addon id="screensaver.atv4" name="Aerial" version="3.0.0" provider-name="enen92">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
@@ -17,9 +17,13 @@
 		<summary lang="es_ES">Protector de pantalla Apple TV 4 para Kodi</summary>
 		<description lang="en_GB">This screensaver addon enables the new Apple TV4 aerial screensavers in Kodi</description>
     <description lang="es_ES">Este complemento habilita el protector de pantalla Aerial de Apple TV 4 para Kodi</description>
-		<news>v1.5.1  (08/04/2018)
-			- Add spanish translation
-			- Add missing strings
+		<news>v3.0.0  (13/03/2021)
+			- Transition to python 3
+			- Autosubmissions to the Kodi repo
+			- Deprecate all python2 references
+			- Fixes for Kodi python api (v19)
+			- Fixes for the skinning engine
+			- Updated settings format
 		</news>
 		<assets>
 			<icon>icon.png</icon>

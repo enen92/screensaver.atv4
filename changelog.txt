@@ -1,3 +1,11 @@
+v3.0.0  (13/03/2021)
+- Transition to python 3
+- Autosubmissions to the Kodi repo
+- Deprecate all python2 references
+- Fixes for Kodi python api (v19)
+- Fixes for the skinning engine
+- Updated settings format
+
 v1.5.1  (08/04/2018)
 - Add spanish translation
 - Add missing strings
