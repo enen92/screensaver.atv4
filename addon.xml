@@ -18,8 +18,9 @@
 		<description lang="en_GB">This screensaver addon provides Apple TV aerial screensavers in Kodi</description>
     <description lang="es_ES">Este complemento habilita el protector de pantalla Aerial de Apple TV para Kodi</description>
 		<news>v3.0.1  (2021-04-01)
-			- 4K screensavers available
-			- Day Night toggle removed
+			- 4K, HDR, and HEVC versions available
+			- New scenes added (ISS, undersea, recolored, extended)
+			- Day/night toggle removed, Apple no longer supports this
 		</news>
 		<assets>
 			<icon>icon.png</icon>
