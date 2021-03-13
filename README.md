@@ -8,7 +8,7 @@ This addon lets you add the apple tv 4 screensavers to Kodi Entertainment Center
 
 ## Supported versions
 
-Aerial is available for Kodi Matrix and above
+Aerial is available for Kodi Matrix and above. It can be installed via the Kodi official repository.
 
 # Screenshots
 
