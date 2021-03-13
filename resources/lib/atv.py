@@ -23,7 +23,7 @@ import xbmc
 import xbmcgui
 import threading
 from .playlist import AtvPlaylist
-from .offline import offline as off
+from .offline import offline
 from .commonatv import translate, addon, addon_path
 from .trans import ScreensaverTrans
 
@@ -161,4 +161,4 @@ def run(params=False):
         del screensaver
 
     else:
-        off.offline()
+        offline()
