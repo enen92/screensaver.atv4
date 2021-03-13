@@ -13,7 +13,7 @@
 		<setting id="toggle-cecoff" type="bool" label="32029" default="false" visible="eq(-4,1)|eq(-4,2)"/>
 		<setting label="32033" type="lsep" />
 		<setting label="32034" type="lsep" />
-		<setting id="is_locked" visible="false" default="false" />
+		<setting id="is_locked" type="bool" visible="false" default="false" />
 	</category>
 	<category label="32031">
 		<setting id="enable-hawaii" type="bool" label="32001" default="true" />

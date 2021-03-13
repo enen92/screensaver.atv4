@@ -55,7 +55,6 @@
 				<aligny>center</aligny>
 				<align>left</align>
 				<label></label>
-				<visible>false</visible>
 		</control>
 		<control type="videowindow">
 			<description>VideoWindow</description>

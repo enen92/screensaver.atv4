@@ -24,6 +24,7 @@ class Screensaver(xbmcgui.WindowXML):
         self.DPMStime = json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.GetSettingValue","params":{"setting":"powermanagement.displaysoff"},"id":2}'))['result']['value'] * 60
         self.isDPMSactive = bool(self.DPMStime > 0)
         self.active = True
+        self.atv4player = None
         self.videoplaylist = AtvPlaylist().getPlaylist()
         xbmc.log(msg=f"kodi dpms time: {self.DPMStime}", level=xbmc.LOGDEBUG)
         xbmc.log(msg=f"kodi dpms active: {self.isDPMSactive}", level=xbmc.LOGDEBUG)
@@ -99,8 +100,8 @@ class Screensaver(xbmcgui.WindowXML):
 
     def novideos(self):
         self.setProperty("screensaver-atv4-loading", "false")
+        self.getControl(32503).setLabel(translate(32048))
         self.getControl(32503).setVisible(True)
-        self.getControl(32503).setLabel(translate(32007))
 
     @classmethod
     def toTransparent(self):
@@ -116,7 +117,8 @@ class Screensaver(xbmcgui.WindowXML):
 
     def clearAll(self, close=True):
         self.active = False
-        self.atv4player.stop()
+        if self.atv4player:
+            self.atv4player.stop()
         self.close()
 
     def onAction(self, action):
@@ -138,7 +140,7 @@ class Screensaver(xbmcgui.WindowXML):
 
 def run(params=False):
     if not params:
-        addon.setSetting("is_locked", "true")
+        addon.setSettingBool("is_locked", True)
         screensaver = Screensaver(
             'screensaver-atv4.xml',
             addon_path,

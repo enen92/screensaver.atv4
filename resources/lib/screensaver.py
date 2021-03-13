@@ -47,7 +47,7 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
 
 def run():
     if not xbmc.getCondVisibility("Player.HasMedia"):
-        if addon.getSetting("is_locked") == "false":
+        if not addon.getSettingBool("is_locked"):
             if addon.getSettingBool("show-notifications"):
                 notification(translate(32000), translate(32017))
 

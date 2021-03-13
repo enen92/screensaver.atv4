@@ -9,4 +9,4 @@
 from resources.lib.commonatv import addon
 
 # set locked setting back to false on startup just in case kodi had crashed during playback
-addon.setSetting("is_locked", "false")
+addon.setSettingBool("is_locked", False)
