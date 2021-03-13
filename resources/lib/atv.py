@@ -25,8 +25,8 @@ class Screensaver(xbmcgui.WindowXML):
         self.isDPMSactive = bool(self.DPMStime > 0)
         self.active = True
         self.videoplaylist = AtvPlaylist().getPlaylist()
-        xbmc.log(msg="kodi dpms time:" + str(self.DPMStime), level=xbmc.LOGDEBUG)
-        xbmc.log(msg="kodi dpms active:" + str(self.isDPMSactive), level=xbmc.LOGDEBUG)
+        xbmc.log(msg=f"kodi dpms time: {self.DPMStime}", level=xbmc.LOGDEBUG)
+        xbmc.log(msg=f"kodi dpms active: {self.isDPMSactive}", level=xbmc.LOGDEBUG)
 
     def onInit(self):
         self.getControl(32502).setLabel(translate(32008))
@@ -42,15 +42,15 @@ class Screensaver(xbmcgui.WindowXML):
             # DPMS logic
             self.max_allowed_time = None
 
-            if self.isDPMSactive and addon.getSetting("check-dpms") == "1":
+            if self.isDPMSactive and addon.getSettingInt("check-dpms") == 1:
                 self.max_allowed_time = self.DPMStime
 
-            elif addon.getSetting("check-dpms") == "2":
-                self.max_allowed_time = int(addon.getSetting("manual-dpms")) * 60
+            elif addon.getSettingInt("check-dpms") == 2:
+                self.max_allowed_time = addon.getSettingInt("manual-dpms") * 60
 
-            xbmc.log(msg="check dpms:" + str(addon.getSetting("check-dpms")),
+            xbmc.log(msg=f"check dpms: {addon.getSetting('check-dpms')}",
                      level=xbmc.LOGDEBUG)
-            xbmc.log(msg="before supervision:" + str(self.max_allowed_time),
+            xbmc.log(msg=f"before supervision: {self.max_allowed_time}",
                      level=xbmc.LOGDEBUG)
 
             if self.max_allowed_time:
@@ -70,27 +70,28 @@ class Screensaver(xbmcgui.WindowXML):
 
         # Take action on the video
         enable_window_placeholder = False
-        if addon.getSetting("dpms-action") == "0":
+        if addon.getSettingInt("dpms-action") == 0:
             self.atv4player.pause()
         else:
             self.clearAll()
             enable_window_placeholder = True
 
-        if addon.getSetting("toggle-displayoff") == "true" or addon.getSetting("toggle-cecoff") == "true":
+        if addon.getSettingBool("toggle-displayoff") or addon.getSettingBool("toggle-cecoff"):
             monitor.waitForAbort(1)
 
-        if addon.getSetting("toggle-displayoff") == "true":
+        if addon.getSettingBool("toggle-displayoff"):
             try:
                 xbmc.executebuiltin('ToggleDPMS')
             except Exception as e:
-                xbmc.log(msg="[Aerial Screensaver] Failed to toggle DPMS: %s" %
-                         (str(e)), level=xbmc.LOGDEBUG)
+                xbmc.log(msg=f"[Aerial Screensaver] Failed to toggle DPMS: {e}",
+                         level=xbmc.LOGDEBUG)
 
         if addon.getSetting("toggle-cecoff") == "true":
             try:
                 xbmc.executebuiltin('CECStandby')
             except Exception as e:
-                xbmc.log(msg="[Aerial Screensaver] Failed to toggle device off via CEC: %s" % (str(e)), level=xbmc.LOGDEBUG)
+                xbmc.log(msg=f"[Aerial Screensaver] Failed to toggle device off via CEC: {e}",
+                         level=xbmc.LOGDEBUG)
 
         # Enable placeholder window
         if enable_window_placeholder:
@@ -119,7 +120,7 @@ class Screensaver(xbmcgui.WindowXML):
         self.close()
 
     def onAction(self, action):
-        addon.setSetting("is_locked", "false")
+        addon.setSettingBool("is_locked", False)
         self.clearAll()
 
     def start_playback(self):
