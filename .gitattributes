@@ -6,4 +6,4 @@ test-requirements.txt export-ignore
 .pytest_cache export-ignore
 __pycache__ export-ignore
 .log export-ignore
-entrychecksumgenerator.py
+entrychecksumgenerator.py export-ignore
