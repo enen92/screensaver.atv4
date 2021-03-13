@@ -83,6 +83,15 @@ class AtvPlaylist:
         if self.top_level_json:
             # Top-level JSON has assets array, initialAssetCount, version. Inspect each block in "assets"
             for block in self.top_level_json["assets"]:
+                # Each block contains a location/scene whose name is stored in accessibilityLabel. These may recur
+                # Retrieve a copy of the location
+                location = block["accessibilityLabel"]
+                # Construct the corresponding setting name with "enable-" plus all lowercase with whitespace stripped
+                # Skip the rest of the loop if the current block's location setting has been disabled
+                if not addon.getSettingBool("enable-" + location.lower().replace(" ", "")):
+                    print("Location {} was disabled, not adding it to playlist".format(location))
+                    continue
+
                 # TODO grab only 4K SDR for now, but later fall back to others
                 url = block["url-4K-SDR"]
 
@@ -93,9 +102,6 @@ class AtvPlaylist:
 
                 # Get just the file's name, without the Apple HTTP URL part
                 file_name = url.split("/")[-1]
-
-                # Each block contains a location/scene whose name is stored in accessibilityLabel. These may recur
-                # location = block["accessibilityLabel"]
 
                 # By default, we assume a local copy of the file doesn't exist
                 exists_on_disk = False
@@ -110,11 +116,6 @@ class AtvPlaylist:
                 # If the file exists locally or we're not in offline mode, add it to the playlist
                 if exists_on_disk or not self.force_offline:
                     self.playlist.append(url)
-                    # # build setting
-                    # TODO add back location enable/disable
-                    # thisvideosetting = "enable-" + location.lower().replace(" ", "")
-                    # if addon.getSetting(thisvideosetting) == "true":
-                    #     self.playlist.append(url)
 
             # Now that we're done building the playlist, shuffle and return to the caller
             shuffle(self.playlist)

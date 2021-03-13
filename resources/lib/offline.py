@@ -49,7 +49,6 @@ def offline():
                             continue
 
                     # TODO grab only 4K SDR for now, but later fall back to others
-                    # TODO add place filtering here as well
                     url = block["url-4K-SDR"]
 
                     # If the URL contains HTTPS, we need revert to HTTP to avoid bad SSL cert

@@ -209,3 +209,109 @@ msgstr "Modo inteligente"
 msgctxt "#32048"
 msgid "Offline mode is enforced but there are no videos on disk"
 msgstr "Modo offline ativo mas não existem videos no disco"
+
+
+msgctxt "#32049"
+msgid "Enable Africa and the Middle East"
+msgstr "Ativar Africa and the Middle East"
+
+msgctxt "#32050"
+msgid "Enable Africa Night"
+msgstr "Ativar Africa Night"
+
+msgctxt "#32051"
+msgid "Enable Antarctica"
+msgstr "Ativar Antarctica"
+
+msgctxt "#32052"
+msgid "Enable California to Vegas"
+msgstr "Ativar California to Vegas"
+
+msgctxt "#32053"
+msgid "Enable Caribbean"
+msgstr "Ativar Caribbean"
+
+msgctxt "#32054"
+msgid "Enable Caribbean Day"
+msgstr "Ativar Caribbean Day"
+
+msgctxt "#32055"
+msgid "Enable China"
+msgstr "Ativar China"
+
+msgctxt "#32056"
+msgid "Enable Dubai"
+msgstr "Ativar Dubai"
+
+msgctxt "#32057"
+msgid "Enable Greenland"
+msgstr "Ativar Greenland"
+
+msgctxt "#32058"
+msgid "Enable Hawaii"
+msgstr "Ativar Hawaii"
+
+msgctxt "#32059"
+msgid "Enable Hong Kong"
+msgstr "Ativar Hong Kong"
+
+msgctxt "#32060"
+msgid "Enable Iran and Afghanistan"
+msgstr "Ativar Iran and Afghanistan"
+
+msgctxt "#32061"
+msgid "Enable Ireland to Asia"
+msgstr "Ativar Ireland to Asia"
+
+msgctxt "#32062"
+msgid "Enable Italy to Asia"
+msgstr "Ativar Italy to Asia"
+
+msgctxt "#32063"
+msgid "Enable Korean and Japan Night"
+msgstr "Ativar Korean and Japan Night"
+
+msgctxt "#32064"
+msgid "Enable Liwa"
+msgstr "Ativar Liwa"
+
+msgctxt "#32065"
+msgid "Enable London"
+msgstr "Ativar London"
+
+msgctxt "#32066"
+msgid "Enable Los Angeles"
+msgstr "Ativar Los Angeles"
+
+msgctxt "#32067"
+msgid "Enable New York"
+msgstr "Ativar New York"
+
+msgctxt "#32068"
+msgid "Enable New York Night"
+msgstr "Ativar New York Night"
+
+msgctxt "#32069"
+msgid "Enable New Zealand"
+msgstr "Ativar New Zealand"
+
+msgctxt "#32070"
+msgid "Enable North America Aurora"
+msgstr "Ativar North America Aurora"
+
+msgctxt "#32071"
+msgid "Enable Sahara and Italy"
+msgstr "Ativar Sahara and Italy"
+
+msgctxt "#32072"
+msgid "Enable San Francisco"
+msgstr "Ativar San Francisco"
+
+msgctxt "#32073"
+msgid "Enable Southern California to Baja"
+msgstr "Ativar Southern California to Baja"
+
+msgctxt "#32074"
+msgid "Enable West Africa to the Alps"
+msgstr "Ativar West Africa to the Alps"
+
