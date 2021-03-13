@@ -24,7 +24,7 @@ jobs:
       env: # Make sure you create the below secrets (GH_TOKEN and EMAIL)
         GH_USERNAME: ${{ github.repository_owner }}
         GH_TOKEN: ${{secrets.GH_TOKEN}}
-        EMAIL: ${{secrets.EMAIL}}
+        EMAIL: ${{secrets.GH_EMAIL}}
 
     - name: Create Github Release
       id: create_release
