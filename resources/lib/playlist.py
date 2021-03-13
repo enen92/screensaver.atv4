@@ -21,12 +21,9 @@ import xbmc
 import os
 import xbmcvfs
 from random import shuffle
-from .commonatv import applefeed, applelocalfeed, addon, PY3
+from .commonatv import applefeed, applelocalfeed, addon
 
-if PY3:
-    from urllib.request import Request, urlopen
-else:
-    from urllib2 import Request, urlopen
+from urllib.request import Request, urlopen
 
 
 class AtvPlaylist:

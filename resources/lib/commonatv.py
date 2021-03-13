@@ -33,11 +33,8 @@ places = ["All", "London", "Hawaii", "New York City", "San Francisco",
           "China", "Greenland", "Dubai", "Los Angeles", "Liwa", "Hong Kong"]
 
 
-PY3 = sys.version_info.major >= 3
-
-
 def translate(text):
-    return addon.getLocalizedString(text).encode('utf-8')
+    return addon.getLocalizedString(text)
 
 
 def notification(header, message, time=2000, icon=addon.getAddonInfo('icon'),

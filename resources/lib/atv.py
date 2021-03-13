@@ -71,7 +71,7 @@ class Screensaver(xbmcgui.WindowXML):
                     if delta >= self.max_allowed_time:
                         self.activateDPMS()
                         break
-                    xbmc.sleep(1000)
+                    monitor.waitForAbort(1)
                     delta += 1
         else:
             self.novideos()

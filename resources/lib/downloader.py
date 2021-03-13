@@ -24,10 +24,7 @@ import hashlib
 
 from .commonatv import *
 
-if PY3:
-    from urllib.request import urlopen
-else:
-    from urllib2 import urlopen
+from urllib.request import urlopen
 
 
 class Downloader:
