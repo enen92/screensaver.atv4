@@ -1,38 +1,25 @@
-# -*- coding: utf-8 -*-
 """
-    screensaver.atv4
-    Copyright (C) 2015-2017 enen92
+   Copyright (C) 2015- enen92
+   This file is part of screensaver.atv4 - https://github.com/enen92/screensaver.atv4
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   SPDX-License-Identifier: GPL-2.0-only
+   See LICENSE for more information.
 """
+
 import json
 import xbmc
 import os
 import xbmcvfs
 from random import shuffle
-from .commonatv import applefeed, applelocalfeed, addon, PY3
+from .commonatv import applefeed, applelocalfeed, addon
 
-if PY3:
-    from urllib.request import Request, urlopen
-else:
-    from urllib2 import Request, urlopen
+from urllib.request import Request, urlopen
 
 
 class AtvPlaylist:
     def __init__(self, ):
         if not xbmc.getCondVisibility("Player.HasMedia"):
-            if addon.getSetting("force-offline") == "false":
+            if not addon.getSettingBool("force-offline"):
                 try:
                     req = Request(applefeed)
                     with urlopen(req) as response:
@@ -95,7 +82,7 @@ class AtvPlaylist:
 
                     # Continue to next item if the file is not in disk and the
                     # setting refuse-stream is enabled
-                    if not exists_on_disk and addon.getSetting("force-offline") == "true":
+                    if not exists_on_disk and addon.getSettingBool("force-offline"):
                         continue
 
                     # build setting
@@ -103,15 +90,15 @@ class AtvPlaylist:
 
                     if addon.getSetting(thisvideosetting) == "true":
                         if video['timeOfDay'] == 'day':
-                            if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '1':
+                            if addon.getSetting("time-of-day") == '0' or addon.getSettingInt("time-of-day") == 1:
                                 self.playlist.append(url)
-                            if addon.getSetting("time-of-day") == '3':
+                            if addon.getSettingInt("time-of-day") == 3:
                                 if day_night == 'day':
                                     self.playlist.append(url)
                         if video['timeOfDay'] == 'night':
-                            if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '2':
+                            if addon.getSetting("time-of-day") == '0' or addon.getSettingInt("time-of-day") == 2:
                                 self.playlist.append(url)
-                            if addon.getSetting("time-of-day") == '3':
+                            if addon.getSettingInt("time-of-day") == 3:
                                 if day_night == 'night':
                                     self.playlist.append(url)
 

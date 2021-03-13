@@ -1,21 +1,9 @@
-# -*- coding: utf-8 -*-
-
 """
-    screensaver.atv4
-    Copyright (C) 2015-2018 enen92
+   Copyright (C) 2015- enen92
+   This file is part of screensaver.atv4 - https://github.com/enen92/screensaver.atv4
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   SPDX-License-Identifier: GPL-2.0-only
+   See LICENSE for more information.
 """
 
 import json
@@ -23,7 +11,7 @@ import xbmc
 import xbmcgui
 import threading
 from .playlist import AtvPlaylist
-from .offline import offline as off
+from .offline import offline
 from .commonatv import translate, addon, addon_path
 from .trans import ScreensaverTrans
 
@@ -36,9 +24,10 @@ class Screensaver(xbmcgui.WindowXML):
         self.DPMStime = json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.GetSettingValue","params":{"setting":"powermanagement.displaysoff"},"id":2}'))['result']['value'] * 60
         self.isDPMSactive = bool(self.DPMStime > 0)
         self.active = True
+        self.atv4player = None
         self.videoplaylist = AtvPlaylist().getPlaylist()
-        xbmc.log(msg="kodi dpms time:" + str(self.DPMStime), level=xbmc.LOGDEBUG)
-        xbmc.log(msg="kodi dpms active:" + str(self.isDPMSactive), level=xbmc.LOGDEBUG)
+        xbmc.log(msg=f"kodi dpms time: {self.DPMStime}", level=xbmc.LOGDEBUG)
+        xbmc.log(msg=f"kodi dpms active: {self.isDPMSactive}", level=xbmc.LOGDEBUG)
 
     def onInit(self):
         self.getControl(32502).setLabel(translate(32008))
@@ -54,15 +43,15 @@ class Screensaver(xbmcgui.WindowXML):
             # DPMS logic
             self.max_allowed_time = None
 
-            if self.isDPMSactive and addon.getSetting("check-dpms") == "1":
+            if self.isDPMSactive and addon.getSettingInt("check-dpms") == 1:
                 self.max_allowed_time = self.DPMStime
 
-            elif addon.getSetting("check-dpms") == "2":
-                self.max_allowed_time = int(addon.getSetting("manual-dpms")) * 60
+            elif addon.getSettingInt("check-dpms") == 2:
+                self.max_allowed_time = addon.getSettingInt("manual-dpms") * 60
 
-            xbmc.log(msg="check dpms:" + str(addon.getSetting("check-dpms")),
+            xbmc.log(msg=f"check dpms: {addon.getSetting('check-dpms')}",
                      level=xbmc.LOGDEBUG)
-            xbmc.log(msg="before supervision:" + str(self.max_allowed_time),
+            xbmc.log(msg=f"before supervision: {self.max_allowed_time}",
                      level=xbmc.LOGDEBUG)
 
             if self.max_allowed_time:
@@ -71,7 +60,7 @@ class Screensaver(xbmcgui.WindowXML):
                     if delta >= self.max_allowed_time:
                         self.activateDPMS()
                         break
-                    xbmc.sleep(1000)
+                    monitor.waitForAbort(1)
                     delta += 1
         else:
             self.novideos()
@@ -82,27 +71,28 @@ class Screensaver(xbmcgui.WindowXML):
 
         # Take action on the video
         enable_window_placeholder = False
-        if addon.getSetting("dpms-action") == "0":
+        if addon.getSettingInt("dpms-action") == 0:
             self.atv4player.pause()
         else:
             self.clearAll()
             enable_window_placeholder = True
 
-        if addon.getSetting("toggle-displayoff") == "true" or addon.getSetting("toggle-cecoff") == "true":
+        if addon.getSettingBool("toggle-displayoff") or addon.getSettingBool("toggle-cecoff"):
             monitor.waitForAbort(1)
 
-        if addon.getSetting("toggle-displayoff") == "true":
+        if addon.getSettingBool("toggle-displayoff"):
             try:
                 xbmc.executebuiltin('ToggleDPMS')
             except Exception as e:
-                xbmc.log(msg="[Aerial Screensaver] Failed to toggle DPMS: %s" %
-                         (str(e)), level=xbmc.LOGDEBUG)
+                xbmc.log(msg=f"[Aerial Screensaver] Failed to toggle DPMS: {e}",
+                         level=xbmc.LOGDEBUG)
 
         if addon.getSetting("toggle-cecoff") == "true":
             try:
                 xbmc.executebuiltin('CECStandby')
             except Exception as e:
-                xbmc.log(msg="[Aerial Screensaver] Failed to toggle device off via CEC: %s" % (str(e)), level=xbmc.LOGDEBUG)
+                xbmc.log(msg=f"[Aerial Screensaver] Failed to toggle device off via CEC: {e}",
+                         level=xbmc.LOGDEBUG)
 
         # Enable placeholder window
         if enable_window_placeholder:
@@ -110,8 +100,8 @@ class Screensaver(xbmcgui.WindowXML):
 
     def novideos(self):
         self.setProperty("screensaver-atv4-loading", "false")
+        self.getControl(32503).setLabel(translate(32048))
         self.getControl(32503).setVisible(True)
-        self.getControl(32503).setLabel(translate(32007))
 
     @classmethod
     def toTransparent(self):
@@ -127,11 +117,12 @@ class Screensaver(xbmcgui.WindowXML):
 
     def clearAll(self, close=True):
         self.active = False
-        self.atv4player.stop()
+        if self.atv4player:
+            self.atv4player.stop()
         self.close()
 
     def onAction(self, action):
-        addon.setSetting("is_locked", "false")
+        addon.setSettingBool("is_locked", False)
         self.clearAll()
 
     def start_playback(self):
@@ -149,7 +140,7 @@ class Screensaver(xbmcgui.WindowXML):
 
 def run(params=False):
     if not params:
-        addon.setSetting("is_locked", "true")
+        addon.setSettingBool("is_locked", True)
         screensaver = Screensaver(
             'screensaver-atv4.xml',
             addon_path,
@@ -161,4 +152,4 @@ def run(params=False):
         del screensaver
 
     else:
-        off.offline()
+        offline()

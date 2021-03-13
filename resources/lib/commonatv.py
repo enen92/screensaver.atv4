@@ -1,30 +1,18 @@
-# -*- coding: utf-8 -*-
-
 """
-    screensaver.atv4
-    Copyright (C) 2015-2018 enen92
+   Copyright (C) 2015- enen92
+   This file is part of screensaver.atv4 - https://github.com/enen92/screensaver.atv4
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   SPDX-License-Identifier: GPL-2.0-only
+   See LICENSE for more information.
 """
 
 import os
-import sys
 import xbmcaddon
 import xbmcgui
 
 addon = xbmcaddon.Addon()
 addon_path = addon.getAddonInfo('path')
+addon_icon = addon.getAddonInfo('icon')
 dialog = xbmcgui.Dialog()
 
 applefeed = "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/entries.json"
@@ -33,13 +21,10 @@ places = ["All", "London", "Hawaii", "New York City", "San Francisco",
           "China", "Greenland", "Dubai", "Los Angeles", "Liwa", "Hong Kong"]
 
 
-PY3 = sys.version_info.major >= 3
-
-
 def translate(text):
-    return addon.getLocalizedString(text).encode('utf-8')
+    return addon.getLocalizedString(text)
 
 
-def notification(header, message, time=2000, icon=addon.getAddonInfo('icon'),
+def notification(header, message, time=2000, icon=addon_icon,
                  sound=True):
     xbmcgui.Dialog().notification(header, message, icon, time, sound)

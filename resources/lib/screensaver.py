@@ -1,21 +1,11 @@
-# -*- coding: utf-8 -*-
 """
-    screensaver.atv4
-    Copyright (C) 2015-2017 enen92
+   Copyright (C) 2015- enen92
+   This file is part of screensaver.atv4 - https://github.com/enen92/screensaver.atv4
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   SPDX-License-Identifier: GPL-2.0-only
+   See LICENSE for more information.
 """
+
 import xbmc
 import xbmcgui
 from .trans import ScreensaverTrans
@@ -37,7 +27,7 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
         self.exit_monitor = self.ExitMonitor(self.exit)
         self.getControl(32502).setLabel(translate(32025))
         self.setProperty("screensaver-atv4-loading", "1")
-        self.exit_monitor.waitForAbort(1)
+        self.exit_monitor.waitForAbort(0.2)
         self.send_input()
 
     @staticmethod
@@ -57,11 +47,11 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
 
 def run():
     if not xbmc.getCondVisibility("Player.HasMedia"):
-        if addon.getSetting("is_locked") == "false":
-            if addon.getSetting("show-notifications") == "true":
+        if not addon.getSettingBool("is_locked"):
+            if addon.getSettingBool("show-notifications"):
                 notification(translate(32000), translate(32017))
 
-            if addon.getSetting("show-previewwindow") == "true":
+            if addon.getSettingBool("show-previewwindow"):
                 # Start window
                 screensaver = ScreensaverPreview(
                     'screensaver-atv4.xml',
