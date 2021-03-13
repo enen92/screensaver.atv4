@@ -41,9 +41,8 @@ class Downloader:
 
                 if xbmcvfs.exists(localfile):
                     if addon.getSettingBool("enable-checksums"):
-                        f = xbmcvfs.File(xbmcvfs.translatePath(localfile))
-                        file_checksum = hashlib.md5(f.read()).hexdigest()
-                        f.close()
+                        with xbmcvfs.File(xbmcvfs.translatePath(localfile)) as f:
+                            file_checksum = hashlib.md5(f.read()).hexdigest()
 
                         if video_file in checksums.keys() and checksums[video_file] != file_checksum:
                             self.download(localfile,url,url.split("/")[-1])
@@ -73,7 +72,7 @@ class Downloader:
             file_size = int(meta_length[0])
 
         file_size_dl = 0
-        with  xbmcvfs.File(self.path, 'wb') as f:
+        with xbmcvfs.File(self.path, 'wb') as f:
             numblocks = 0
             while not self.stop:
                 buffer = u.read(block_sz)
@@ -88,7 +87,7 @@ class Downloader:
 
     def dialogdown(self, name, numblocks, blocksize, filesize, dp, start_time):
         try:
-            percent = min(numblocks * blocksize * 100 / filesize, 100)
+            percent = int(min(numblocks * blocksize * 100 / filesize, 100))
             currently_downloaded = float(numblocks) * blocksize / (1024 * 1024)
             kbps_speed = numblocks * blocksize / (time.time() - start_time)
             if kbps_speed > 0:
@@ -100,7 +99,7 @@ class Downloader:
             mbs = '%.02f MB %s %.02f MB' % (currently_downloaded, translate(32015), total)
             e = ' (%.0f Kb/s) ' % kbps_speed
             tempo = translate(32016) + ' %02d:%02d' % divmod(eta, 60)
-            dp.update(percent, name + ' - ' + mbs + e, tempo)
+            dp.update(percent, f"{name} - {mbs}{e}\n{tempo}")
         except Exception:
             percent = 100
             dp.update(percent)
