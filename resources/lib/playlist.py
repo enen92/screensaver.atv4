@@ -15,7 +15,7 @@ from urllib import request
 import xbmc
 import xbmcvfs
 
-from .commonatv import addon, addon_path
+from .commonatv import addon, addon_path, find_ranked_key_in_dict, compute_block_key_list
 
 # Apple's URL of the resources.tar file containing entries.json
 apple_resources_tar_url = "http://sylvan.apple.com/Aerials/resources.tar"
@@ -81,6 +81,12 @@ class AtvPlaylist:
 
     def compute_playlist_array(self):
         if self.top_level_json:
+
+            # Parse the H264, HDR, and 4K settings to determine URL preference.
+            block_key_list = compute_block_key_list(addon.getSettingBool("enable-4k"),
+                                                    addon.getSettingBool("enable-hdr"),
+                                                    addon.getSettingBool("enable-hevc"))
+
             # Top-level JSON has assets array, initialAssetCount, version. Inspect each block in "assets"
             for block in self.top_level_json["assets"]:
                 # Each block contains a location/scene whose name is stored in accessibilityLabel. These may recur
@@ -98,8 +104,7 @@ class AtvPlaylist:
                 if not current_location_enabled:
                     continue
 
-                # TODO grab only 4K SDR for now, but later fall back to others
-                url = block["url-4K-SDR"]
+                url = find_ranked_key_in_dict(block, block_key_list)
 
                 # If the URL contains HTTPS, we need revert to HTTP to avoid bad SSL cert
                 # NOTE: Old Apple URLs were HTTP, new URLs are HTTPS with a bad cert

@@ -13,6 +13,21 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="enable-4k" type="boolean" label="32075" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-hdr" type="boolean" label="32076" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="enable-hevc" type="boolean" label="32077" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="2" label="32026">
 				<setting id="check-dpms" type="integer" label="32027" help="">

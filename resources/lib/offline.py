@@ -8,7 +8,7 @@
 
 import xbmcvfs
 
-from .commonatv import dialog, addon, translate
+from .commonatv import dialog, addon, translate, find_ranked_key_in_dict, compute_block_key_list
 from .downloader import Downloader
 from .playlist import AtvPlaylist
 
@@ -34,6 +34,12 @@ def offline():
             top_level_json = AtvPlaylist().get_playlist_json()
             download_list = []
             if top_level_json:
+
+                # Parse the H264, HDR, and 4K settings to determine URL preference.
+                block_key_list = compute_block_key_list(addon.getSettingBool("enable-4k"),
+                                                        addon.getSettingBool("enable-hdr"),
+                                                        addon.getSettingBool("enable-hevc"))
+
                 # Top-level JSON has assets array, initialAssetCount, version. Inspect each block in assets
                 for block in top_level_json["assets"]:
 
@@ -48,8 +54,7 @@ def offline():
                             print("Current location {} is not chosen location, skipping download".format(location))
                             continue
 
-                    # TODO grab only 4K SDR for now, but later fall back to others
-                    url = block["url-4K-SDR"]
+                    url = find_ranked_key_in_dict(block, block_key_list)
 
                     # If the URL contains HTTPS, we need revert to HTTP to avoid bad SSL cert
                     # NOTE: Old Apple URLs were HTTP, new URLs are HTTPS with a bad cert
