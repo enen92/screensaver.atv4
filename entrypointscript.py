@@ -9,4 +9,4 @@
 import sys
 from resources.lib import atv
 
-atv.run(bool(len(sys.argv)>1))
+atv.run(len(sys.argv) > 1)
