@@ -51,7 +51,7 @@ class Downloader:
 
                 if xbmcvfs.exists(localfile):
                     if addon.getSetting("enable-checksums") == "true":
-                        f = xbmcvfs.File(xbmc.translatePath(localfile))
+                        f = xbmcvfs.File(xbmcvfs.translatePath(localfile))
                         file_checksum = hashlib.md5(f.read()).hexdigest()
                         f.close()
 
@@ -69,7 +69,7 @@ class Downloader:
             xbmcvfs.delete(path)
 
         self.dp.update(0,name)
-        self.path = xbmc.translatePath(path)
+        self.path = xbmcvfs.translatePath(path)
         xbmc.sleep(500)
         start_time = time.time()
 
