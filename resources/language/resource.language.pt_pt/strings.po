@@ -19,8 +19,8 @@ msgid "Aerial Screensavers"
 msgstr "Aerial Screensavers"
 
 msgctxt "#32001"
-msgid "Enable Hawaai"
-msgstr "Ativar Hawaai"
+msgid "Enable Hawaii"
+msgstr "Ativar Hawaii"
 
 msgctxt "#32002"
 msgid "Enable London"

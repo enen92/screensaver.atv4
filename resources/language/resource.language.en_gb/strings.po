@@ -19,7 +19,7 @@ msgid "Aerial Screensavers"
 msgstr ""
 
 msgctxt "#32001"
-msgid "Enable Hawaai"
+msgid "Enable Hawaii"
 msgstr ""
 
 msgctxt "#32002"
