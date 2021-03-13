@@ -24,32 +24,39 @@ class Downloader:
         self.dp = None
         self.path = None
 
+    # Given a list of URLs, attempt to download them into the download folder
     def downloadall(self,urllist):
         self.dp = xbmcgui.DialogProgress()
         self.dp.create(translate(32000), translate(32019))
-        # video checksums - download only the videos that were not downloaded previously
+
+        # Get a dict of checksums (key=filename, value=checksum) if the setting is enabled
         if addon.getSettingBool("enable-checksums"):
             with open(os.path.join(addon_path, "resources", "checksums.json")) as f:
                 checksums = f.read()
-
             checksums = json.loads(checksums)
+        else:
+            # If the setting was disabled, initialize an empty dict
+            checksums = {}
 
         for url in urllist:
             if not self.stop:
+                # Parse out the file name and construct its expected download location
                 video_file = url.split("/")[-1]
-                localfile = os.path.join(addon.getSetting("download-folder"), video_file)
+                localfile = os.path.join(addon.getSetting("download-folder"),video_file)
 
+                # If the file exists at the download location, get its checksum
                 if xbmcvfs.exists(localfile):
                     if addon.getSettingBool("enable-checksums"):
                         with xbmcvfs.File(xbmcvfs.translatePath(localfile)) as f:
                             file_checksum = hashlib.md5(f.read()).hexdigest()
 
+                        # If the computed checksum does not match the expected checksum, redownload
                         if video_file in checksums.keys() and checksums[video_file] != file_checksum:
-                            self.download(localfile,url,url.split("/")[-1])
+                            self.download(localfile,url,video_file)
                     else:
-                        self.download(localfile,url,url.split("/")[-1])
+                        self.download(localfile,url,video_file)
                 else:
-                    self.download(localfile,url,url.split("/")[-1])
+                    self.download(localfile,url,video_file)
             else:
                 break
 
@@ -58,13 +65,13 @@ class Downloader:
             xbmcvfs.delete(path)
 
         self.dp.update(0,name)
-        self.path = xbmcvfs.translatePath(path)
+        self.path = xbmc.translatePath(path)
         xbmc.sleep(500)
         start_time = time.time()
 
         u = urlopen(url)
         meta = u.info()
-        meta_func = meta.getheaders if hasattr(meta, 'getheaders') else meta.get_all
+        meta_func = meta.getheaders if hasattr(meta, "getheaders") else meta.get_all
         meta_length = meta_func("Content-Length")
         file_size = None
         block_sz = 8192

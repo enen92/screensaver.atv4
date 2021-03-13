@@ -4,7 +4,7 @@
 
 ## Apple Aerial screensavers for Kodi
 
-This addon lets you add the apple tv 4 screensavers to Kodi Entertainment Center
+This addon lets you add the Apple Aerial screensavers to Kodi Entertainment Center
 
 ## Supported versions
 

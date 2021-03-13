@@ -11,21 +11,29 @@ from .commonatv import dialog, addon, translate, places
 from .playlist import AtvPlaylist
 from .downloader import Downloader
 
+
+# Parse the JSON to get a list of URLs and download the files to the download folder
 def offline():
     if addon.getSetting("download-folder") and xbmcvfs.exists(addon.getSetting("download-folder")):
-        choose = dialog.select(translate(32014),places)
+        choose = dialog.select(translate(32014), places)
         if choose > -1:
-            atv_playlist = AtvPlaylist()
-            playlist_dict = atv_playlist.getPlaylistJson()
+            # Initialize the Playlist class, and get the JSON containing URLs
+            top_level_json = AtvPlaylist().get_playlist_json()
             download_list = []
-            if playlist_dict:
-                for block in playlist_dict:
-                    for video in block['assets']:
-                        if places[choose].lower() == "all":
-                            download_list.append(video['url'])
-                        else:
-                            if places[choose].lower() == video['accessibilityLabel'].lower():
-                                download_list.append(video['url'])
+            if top_level_json:
+                # Top-level JSON has assets array, initialAssetCount, version. Inspect each block in assets
+                for block in top_level_json["assets"]:
+                    # Each block contains a location/scene whose name is stored in accessibilityLabel. These may recur
+                    # TODO grab only 4K SDR for now, but later fall back to others
+                    # TODO add place filtering here as well
+                    url = block["url-4K-SDR"]
+
+                    # If the URL contains HTTPS, we need revert to HTTP to avoid bad SSL cert
+                    # NOTE: Old Apple URLs were HTTP, new URLs are HTTPS with a bad cert
+                    if "https" in url:
+                        url = url.replace("https://", "http://")
+                    download_list.append(url)
+
             # call downloader
             if download_list:
                 down = Downloader()

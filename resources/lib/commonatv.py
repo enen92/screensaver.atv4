@@ -11,12 +11,20 @@ import xbmcaddon
 import xbmcgui
 
 addon = xbmcaddon.Addon()
-addon_path = addon.getAddonInfo('path')
-addon_icon = addon.getAddonInfo('icon')
+addon_path = addon.getAddonInfo("path")
+addon_icon = addon.getAddonInfo("icon")
 dialog = xbmcgui.Dialog()
 
-applefeed = "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/entries.json"
-applelocalfeed = os.path.join(addon_path, "resources", "entries.json")
+# Apple's URL of the resources.tar file containing entries.json
+apple_resources_tar_url = "http://sylvan.apple.com/Aerials/resources.tar"
+
+# Local temporary save location of the Apple TAR file
+apple_local_tar_path = os.path.join(addon_path, "resources.tar")
+
+# Local save location of the entries.json file containing video URLs
+local_entries_json_path = os.path.join(addon_path, "resources", "entries.json")
+
+# Array of "All" plus each unique "accessibilityLabel" in entries.json
 places = ["All", "London", "Hawaii", "New York City", "San Francisco",
           "China", "Greenland", "Dubai", "Los Angeles", "Liwa", "Hong Kong"]
 

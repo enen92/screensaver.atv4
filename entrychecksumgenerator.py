@@ -4,126 +4,130 @@
 
    SPDX-License-Identifier: GPL-2.0-only
    See LICENSE for more information.
-"""
 
-import os
-import json
+   Note: This is a standalone script to update the offline video entries and
+    their checksums
+"""
 import hashlib
-import shutil
+import json
+import os
 import sys
 from urllib import request
+import tarfile
 
-applefeed = "http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/entries.json"
-applelocalfeed = os.path.join("resources", "entries.json")
-tmpfolder = "tmpvideos"
-
-
-def generate_entries():
-    try:
-        req = request.Request(applefeed)
-        response = request.urlopen(req)
-    except Exception:
-        print("Failed to open Apple Feed, aborting")
-        return
-
-    if response.getcode() == 200:
-        html = response.read()
-        print("Updating offline local video feed file...")
-        with open(applelocalfeed, "wb") as f:
-            f.write(html)
-        print("Offline feed file updated!")
-    else:
-        print("Failed to open Apple Feed - Wrong status code, aborting")
+apple_local_feed = os.path.join("resources", "entries.json")
+tmp_folder = "tmpvideos"
+apple_resources_tar = "https://sylvan.apple.com/Aerials/resources.tar"
+local_tar = "resources.tar"
 
 
-def generate_checksums():
-    with open(applelocalfeed, "rb") as f:
-        html = f.read()
+# Fetch the TAR file containing the latest entries.json and overwrite the local copy
+def get_latest_entries_from_apple():
+    print("Downloading the Apple Aerials resources.tar to disk")
 
-    # generating checksums
-    print("Starting checksum generator...")
-    if not os.path.exists(tmpfolder):
-        os.mkdir(tmpfolder)
-    checksums = {}
-    failed = []
+    # # Setup for disabling SSL cert verification, as the Apple cert is bad
+    # # https://stackoverflow.com/questions/43204012/how-to-disable-ssl-verification-for-urlretrieve
+    # ssl._create_default_https_context = ssl._create_unverified_context
 
-    video_feed = json.loads(html)
-    for block in video_feed:
-        for asset in block["assets"]:
-            asset_url = asset["url"]
-            print(f"Processing video {asset_url}...")
-            file_name = tmpdownload(asset_url)
-            if file_name:
-                with open(os.path.join(tmpfolder, file_name), "rb") as f:
-                    checksum = hashlib.md5(f.read()).hexdigest()
-                    checksums[file_name] = checksum
-                    os.remove(os.path.join(tmpfolder, file_name))
-                    print(f"File processed. Checksum={checksum}")
-            else:
-                failed.append(asset_url)
-
-    shutil.rmtree(tmpfolder)
-    print("Updating checksum file")
-    with open(os.path.join("resources", "checksums.json"), "w") as f:
-        f.write(json.dumps(checksums))
-        print("All done")
-    print(f"Failed items: {failed}")
+    request.urlretrieve(apple_resources_tar, local_tar)
+    # https://www.tutorialspoint.com/How-are-files-extracted-from-a-tar-file-using-Python
+    apple_tar = tarfile.open(local_tar)
+    print("Extracting entries.json from resources.tar and placing in ./resources")
+    apple_tar.extract("entries.json", "resources")
+    apple_tar.close()
+    os.remove(local_tar)
 
 
-def get_locations():
-    try:
-        req = request.Request(applefeed)
-        response = request.urlopen(req)
-    except Exception:
-        print("Failed to open Apple Feed, aborting")
-        return
+def generate_entries_and_checksums():
+    with open(apple_local_feed) as feed_file:
 
-    if response.getcode() == 200:
-        locations = []
-        html = response.read()
-        video_feed = json.loads(html)
-        for block in video_feed:
-            for asset in block["assets"]:
-                if asset["accessibilityLabel"].lower() not in locations:
-                    locations.append(asset["accessibilityLabel"].lower())
+        print("Starting checksum generator...")
+        # Create the local directory we'll temporarily store videos for checksumming
+        if not os.path.exists(tmp_folder):
+            os.mkdir(tmp_folder)
+        # Dictionary to store the filenames and checksum for each
+        checksums = {}
+        # Dictionary to store the quality levels and the size in megabytes for each
+        # Within each scene, there may be: H264/HEVC, 1080p/4K, SDR/HDR
+        quality_total_size_megabytes = {"url-1080-H264": 0,
+                                        "url-1080-SDR": 0,
+                                        "url-1080-HDR": 0,
+                                        "url-4K-SDR": 0,
+                                        "url-4K-HDR": 0}
+
+        # Define the locations as a set so we get deduping
+        locations = set()
+
+        top_level = json.load(feed_file)
+        # Top-level JSON has assets array, initialAssetCount, version. Inspect each block in assets
+        for block in top_level["assets"]:
+            # Each block contains a location/scene whose name is stored in accessibilityLabel. These may recur
+            current_scene = block["accessibilityLabel"]
+            print("Processing videos for scene:", current_scene)
+            locations.add(current_scene)
+
+            # https://realpython.com/iterate-through-dictionary-python/#iterating-through-keys
+            for video_version in quality_total_size_megabytes.keys():
+                try:
+                    # Try to look up the URL, but catch the KeyError and continue if it wasn't available
+                    asset_url = block[video_version]
+
+                    # If the URL contains HTTPS, we need revert to HTTP to avoid bad SSL cert
+                    # NOTE: Old Apple URLs were HTTP, new URLs are HTTPS with a bad cert
+                    if "https" in asset_url:
+                        asset_url = asset_url.replace("https://", "http://")
+
+                    print("Downloading video:", asset_url)
+
+                    # Construct the name and path of the local file
+                    local_file_name = asset_url.split("/")[-1]
+                    local_file_path = os.path.join(tmp_folder, local_file_name)
+
+                    # # Setup for disabling SSL cert verification, as the Apple cert is bad
+                    # # https://stackoverflow.com/questions/43204012/how-to-disable-ssl-verification-for-urlretrieve
+                    # ssl._create_default_https_context = ssl._create_unverified_context
+
+                    # Download the file to local storage
+                    request.urlretrieve(asset_url, local_file_path)
+
+                    # Get the size of the file in bytes and add it to an overall size counter
+                    quality_total_size_megabytes[video_version] += os.path.getsize(local_file_path) / 1000 / 1000
+
+                    # Try to open the file
+                    with open(local_file_path, "rb") as f:
+                        # Compute the checksum
+                        checksum = hashlib.md5(f.read()).hexdigest()
+                        # Add the checksum to the dict of checksums we're keeping
+                        checksums[local_file_name] = checksum
+
+                    # Delete the local copy of the file
+                    os.remove(local_file_path)
+                    print("File processed. Checksum:", checksum)
+                except KeyError:
+                    print("Can't find URL for asset type:", video_version)
+
+        # Now that we've processed all videos, delete the temp directory
+        os.rmdir(tmp_folder)
+
+        # Then write the checksums to file
+        with open(os.path.join("resources", "checksums.json"), "w") as f:
+            print("Writing checksums to disk")
+            f.write(json.dumps(checksums))
+
+        print("Total Megabytes of all video files, per quality:")
+        print(quality_total_size_megabytes)
+        print("Locations seen:")
         print(locations)
-
-    else:
-        print("Failed to open Apple Feed - Wrong status code, aborting")
-
-
-def tmpdownload(url):
-    file_name = url.split('/')[-1]
-    req = request.Request(url)
-    u = request.urlopen(req)
-
-    file_size = int(u.headers.get("Content-Length"))
-    print(f"Downloading: {file_name} Bytes: {file_size}")
-
-    file_size_dl = 0
-    block_sz = 8192
-    with open(os.path.join(tmpfolder, file_name), 'wb') as f:
-        while True:
-            _buffer = u.read(block_sz)
-            if not _buffer:
-                return file_name
-            file_size_dl += len(_buffer)
-            f.write(_buffer)
-            status = r"%10d [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
-            status = status + chr(8) * (len(status) + 1)
-            print(status)
-
-    return False
+        print("Stopping checksum generator...")
 
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         if sys.argv[1] == "1":
-            generate_checksums()
-        if sys.argv[1] == "2":
-            generate_entries()
-            generate_checksums()
-        elif sys.argv[1] == "3":
-            get_locations()
+            generate_entries_and_checksums()
+        elif sys.argv[1] == "2":
+            get_latest_entries_from_apple()
     else:
-        print("Please specify option.\n 1) update checksums based on the already existing entries.json file 2) update entries and checksums \n 3) Get locations")
+        print("Please specify option:\n "
+              "1) Update checksums based on existing entries.json \n "
+              "2) Update entries.json from Apple")
