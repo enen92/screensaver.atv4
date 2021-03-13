@@ -25,7 +25,7 @@ class ScreensaverTrans(xbmcgui.WindowXMLDialog):
         self.exit_monitor = self.ExitMonitor(self.exit)
 
     def exit(self):
-        addon.setSetting("is_locked", "false")
+        addon.setSettingBool("is_locked", False)
         self.close()
 
     def onAction(self, action):

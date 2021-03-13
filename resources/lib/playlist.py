@@ -19,7 +19,7 @@ from urllib.request import Request, urlopen
 class AtvPlaylist:
     def __init__(self, ):
         if not xbmc.getCondVisibility("Player.HasMedia"):
-            if addon.getSetting("force-offline") == "false":
+            if not addon.getSettingBool("force-offline"):
                 try:
                     req = Request(applefeed)
                     with urlopen(req) as response:
@@ -82,7 +82,7 @@ class AtvPlaylist:
 
                     # Continue to next item if the file is not in disk and the
                     # setting refuse-stream is enabled
-                    if not exists_on_disk and addon.getSetting("force-offline") == "true":
+                    if not exists_on_disk and addon.getSettingBool("force-offline"):
                         continue
 
                     # build setting
@@ -90,15 +90,15 @@ class AtvPlaylist:
 
                     if addon.getSetting(thisvideosetting) == "true":
                         if video['timeOfDay'] == 'day':
-                            if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '1':
+                            if addon.getSetting("time-of-day") == '0' or addon.getSettingInt("time-of-day") == 1:
                                 self.playlist.append(url)
-                            if addon.getSetting("time-of-day") == '3':
+                            if addon.getSettingInt("time-of-day") == 3:
                                 if day_night == 'day':
                                     self.playlist.append(url)
                         if video['timeOfDay'] == 'night':
-                            if addon.getSetting("time-of-day") == '0' or addon.getSetting("time-of-day") == '2':
+                            if addon.getSetting("time-of-day") == '0' or addon.getSettingInt("time-of-day") == 2:
                                 self.playlist.append(url)
-                            if addon.getSetting("time-of-day") == '3':
+                            if addon.getSettingInt("time-of-day") == 3:
                                 if day_night == 'night':
                                     self.playlist.append(url)
 

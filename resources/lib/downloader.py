@@ -28,7 +28,7 @@ class Downloader:
         self.dp = xbmcgui.DialogProgress()
         self.dp.create(translate(32000), translate(32019))
         # video checksums - download only the videos that were not downloaded previously
-        if addon.getSetting("enable-checksums") == "true":
+        if addon.getSettingBool("enable-checksums"):
             with open(os.path.join(addon_path, "resources", "checksums.json")) as f:
                 checksums = f.read()
 
@@ -37,10 +37,10 @@ class Downloader:
         for url in urllist:
             if not self.stop:
                 video_file = url.split("/")[-1]
-                localfile = os.path.join(addon.getSetting("download-folder"),video_file)
+                localfile = os.path.join(addon.getSetting("download-folder"), video_file)
 
                 if xbmcvfs.exists(localfile):
-                    if addon.getSetting("enable-checksums") == "true":
+                    if addon.getSettingBool("enable-checksums"):
                         f = xbmcvfs.File(xbmcvfs.translatePath(localfile))
                         file_checksum = hashlib.md5(f.read()).hexdigest()
                         f.close()
@@ -73,21 +73,18 @@ class Downloader:
             file_size = int(meta_length[0])
 
         file_size_dl = 0
-        f = xbmcvfs.File(self.path, 'wb')
-        numblocks = 0
+        with  xbmcvfs.File(self.path, 'wb') as f:
+            numblocks = 0
+            while not self.stop:
+                buffer = u.read(block_sz)
+                if not buffer:
+                    break
 
-        while not self.stop:
-            buffer = u.read(block_sz)
-            if not buffer:
-                break
+                f.write(buffer)
+                file_size_dl += len(buffer)
+                numblocks += 1
+                self.dialogdown(name, numblocks, block_sz, file_size, self.dp, start_time)
 
-            f.write(buffer)
-            file_size_dl += len(buffer)
-            numblocks += 1
-            self.dialogdown(name, numblocks, block_sz, file_size, self.dp, start_time)
-
-        f.close()
-        return
 
     def dialogdown(self, name, numblocks, blocksize, filesize, dp, start_time):
         try:

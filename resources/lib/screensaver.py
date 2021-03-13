@@ -27,7 +27,7 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
         self.exit_monitor = self.ExitMonitor(self.exit)
         self.getControl(32502).setLabel(translate(32025))
         self.setProperty("screensaver-atv4-loading", "1")
-        self.exit_monitor.waitForAbort(1)
+        self.exit_monitor.waitForAbort(0.2)
         self.send_input()
 
     @staticmethod
@@ -48,10 +48,10 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
 def run():
     if not xbmc.getCondVisibility("Player.HasMedia"):
         if addon.getSetting("is_locked") == "false":
-            if addon.getSetting("show-notifications") == "true":
+            if addon.getSettingBool("show-notifications"):
                 notification(translate(32000), translate(32017))
 
-            if addon.getSetting("show-previewwindow") == "true":
+            if addon.getSettingBool("show-previewwindow"):
                 # Start window
                 screensaver = ScreensaverPreview(
                     'screensaver-atv4.xml',

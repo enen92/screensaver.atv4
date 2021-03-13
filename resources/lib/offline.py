@@ -12,7 +12,7 @@ from .playlist import AtvPlaylist
 from .downloader import Downloader
 
 def offline():
-    if addon.getSetting("download-folder") != "" and xbmcvfs.exists(addon.getSetting("download-folder")):
+    if addon.getSetting("download-folder") and xbmcvfs.exists(addon.getSetting("download-folder")):
         choose = dialog.select(translate(32014),places)
         if choose > -1:
             atv_playlist = AtvPlaylist()
