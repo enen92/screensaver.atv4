@@ -43,7 +43,7 @@ def get_latest_entries_from_apple():
     apple_tar.extract("entries.json", os.path.join(addon_path, "resources"))
 
     apple_tar.close()
-    print("Cleaning up resources.tar now that we've grabbed entries.json from it")
+    print("Deleting resources.tar now that we've grabbed entries.json from it")
     os.remove(apple_local_tar_path)
 
 
@@ -84,12 +84,18 @@ class AtvPlaylist:
             # Top-level JSON has assets array, initialAssetCount, version. Inspect each block in "assets"
             for block in self.top_level_json["assets"]:
                 # Each block contains a location/scene whose name is stored in accessibilityLabel. These may recur
-                # Retrieve a copy of the location
+                # Retrieve the location name
                 location = block["accessibilityLabel"]
-                # Construct the corresponding setting name with "enable-" plus all lowercase with whitespace stripped
-                # Skip the rest of the loop if the current block's location setting has been disabled
-                if not addon.getSettingBool("enable-" + location.lower().replace(" ", "")):
-                    print("Location {} was disabled, not adding it to playlist".format(location))
+                try:
+                    # Get the corresponding setting Bool by adding "enable-" + lowercase + no whitespace
+                    current_location_enabled = addon.getSettingBool("enable-" + location.lower().replace(" ", ""))
+                except TypeError:
+                    print("Location {} did not have a matching enable/disable setting".format(location))
+                    # Leave the location in the rotation if we couldn't find a corresponding setting disabling it
+                    current_location_enabled = True
+
+                # Skip the rest of the loop if the current block's location setting has been explicitly disabled
+                if not current_location_enabled:
                     continue
 
                 # TODO grab only 4K SDR for now, but later fall back to others
@@ -112,9 +118,11 @@ class AtvPlaylist:
                     exists_on_disk = True
                     # Overwrite the Apple URL with the path to the file on disk
                     url = local_file_path
+                    print("Video available locally, path is: {}".format(local_file_path))
 
                 # If the file exists locally or we're not in offline mode, add it to the playlist
                 if exists_on_disk or not self.force_offline:
+                    print("Adding video for location {} to playlist".format(location))
                     self.playlist.append(url)
 
             # Now that we're done building the playlist, shuffle and return to the caller
