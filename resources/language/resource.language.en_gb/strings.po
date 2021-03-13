@@ -316,14 +316,14 @@ msgid "Enable West Africa to the Alps"
 msgstr ""
 
 msgctxt "#32075"
-msgid "Disabled: 1080p. Enabled: 4K"
+msgid "Enable 4K (default 1080p)"
 msgstr ""
 
 msgctxt "#32076"
-msgid "Disabled: SDR. Enabled: HDR"
+msgid "Enable HDR"
 msgstr ""
 
 msgctxt "#32077"
-msgid "Disabled: H264. Enabled: H265"
+msgid "Enable HEVC (required for 4K/HDR)"
 msgstr ""
 
