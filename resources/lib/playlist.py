@@ -57,6 +57,7 @@ class AtvPlaylist:
             if not self.force_offline:
                 try:
                     # Overwrite the local entries.json from Apple servers
+                    # TODO create setting for disabling JSON updates (in the event of local updates to the JSON)
                     get_latest_entries_from_apple()
                     # Load the local JSON into this class instantiation
                     self.local_feed()
