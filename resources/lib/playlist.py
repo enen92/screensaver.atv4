@@ -7,15 +7,24 @@
 """
 
 import json
-import xbmc
 import os
-import xbmcvfs
 import tarfile
-from urllib import request
 from random import shuffle
-from .commonatv import apple_resources_tar_url, apple_local_tar_path, local_entries_json_path, addon, addon_path
+from urllib import request
 
-from urllib.request import Request, urlopen
+import xbmc
+import xbmcvfs
+
+from .commonatv import addon, addon_path
+
+# Apple's URL of the resources.tar file containing entries.json
+apple_resources_tar_url = "http://sylvan.apple.com/Aerials/resources.tar"
+
+# Local temporary save location of the Apple TAR file
+apple_local_tar_path = os.path.join(addon_path, "resources.tar")
+
+# Local save location of the entries.json file containing video URLs
+local_entries_json_path = os.path.join(addon_path, "resources", "entries.json")
 
 
 # Fetch the TAR file containing the latest entries.json and overwrite the local copy

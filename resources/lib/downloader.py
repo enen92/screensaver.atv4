@@ -6,26 +6,27 @@
    See LICENSE for more information.
 """
 
+import hashlib
+import json
+import os
+import time
+from urllib.request import urlopen
+
 import xbmc
 import xbmcvfs
-import time
-import json
-import hashlib
 
 from .commonatv import *
-
-from urllib.request import urlopen
 
 
 class Downloader:
 
-    def __init__(self,):
+    def __init__(self, ):
         self.stop = False
         self.dp = None
         self.path = None
 
     # Given a list of URLs, attempt to download them into the download folder
-    def downloadall(self,urllist):
+    def download_videos_from_urls(self, urllist):
         self.dp = xbmcgui.DialogProgress()
         self.dp.create(translate(32000), translate(32019))
 
@@ -42,7 +43,7 @@ class Downloader:
             if not self.stop:
                 # Parse out the file name and construct its expected download location
                 video_file = url.split("/")[-1]
-                localfile = os.path.join(addon.getSetting("download-folder"),video_file)
+                localfile = os.path.join(addon.getSetting("download-folder"), video_file)
 
                 # If the file exists at the download location, get its checksum
                 if xbmcvfs.exists(localfile):
@@ -52,19 +53,19 @@ class Downloader:
 
                         # If the computed checksum does not match the expected checksum, redownload
                         if video_file in checksums.keys() and checksums[video_file] != file_checksum:
-                            self.download(localfile,url,video_file)
+                            self.download(localfile, url, video_file)
                     else:
-                        self.download(localfile,url,video_file)
+                        self.download(localfile, url, video_file)
                 else:
-                    self.download(localfile,url,video_file)
+                    self.download(localfile, url, video_file)
             else:
                 break
 
-    def download(self,path,url,name):
+    def download(self, path, url, name):
         if xbmcvfs.exists(path):
             xbmcvfs.delete(path)
 
-        self.dp.update(0,name)
+        self.dp.update(0, name)
         self.path = xbmc.translatePath(path)
         xbmc.sleep(500)
         start_time = time.time()
@@ -90,7 +91,6 @@ class Downloader:
                 file_size_dl += len(buffer)
                 numblocks += 1
                 self.dialogdown(name, numblocks, block_sz, file_size, self.dp, start_time)
-
 
     def dialogdown(self, name, numblocks, blocksize, filesize, dp, start_time):
         try:

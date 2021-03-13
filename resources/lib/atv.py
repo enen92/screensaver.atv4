@@ -7,12 +7,14 @@
 """
 
 import json
+import threading
+
 import xbmc
 import xbmcgui
-import threading
-from .playlist import AtvPlaylist
-from .offline import offline
+
 from .commonatv import translate, addon, addon_path
+from .offline import offline
+from .playlist import AtvPlaylist
 from .trans import ScreensaverTrans
 
 monitor = xbmc.Monitor()
@@ -21,7 +23,9 @@ monitor = xbmc.Monitor()
 class Screensaver(xbmcgui.WindowXML):
 
     def __init__(self, *args, **kwargs):
-        self.DPMStime = json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.GetSettingValue","params":{"setting":"powermanagement.displaysoff"},"id":2}'))['result']['value'] * 60
+        self.DPMStime = json.loads(xbmc.executeJSONRPC(
+            '{"jsonrpc":"2.0","method":"Settings.GetSettingValue","params":{"setting":"powermanagement.displaysoff"},"id":2}'))[
+                            'result']['value'] * 60
         self.isDPMSactive = bool(self.DPMStime > 0)
         self.active = True
         self.atv4player = None
@@ -127,19 +131,21 @@ class Screensaver(xbmcgui.WindowXML):
 
     def start_playback(self):
         self.playindex = 0
-        file = self.video_playlist[self.playindex]
         # If SSL cert issues are seen and we must use HTTPS, disable SSL verification
         # https://kodi.wiki/view/SSL_certificates#Disabling_the_check
         # file = file + "|verifypeer=false"
-        self.atv4player.play(file, windowed=True)
+        self.atv4player.play(self.video_playlist[self.playindex], windowed=True)
         while self.active and not monitor.abortRequested():
             monitor.waitForAbort(1)
+            # If we finish playing the video
             if not self.atv4player.isPlaying() and self.active:
+                # Increment the iterator used to access the array or reset to 0
                 if self.playindex < len(self.video_playlist) - 1:
                     self.playindex += 1
                 else:
                     self.playindex = 0
-                self.atv4player.play(file, windowed=True)
+                # Using the updated iterator, start playing the next video
+                self.atv4player.play(self.video_playlist[self.playindex], windowed=True)
 
 
 def run(params=False):

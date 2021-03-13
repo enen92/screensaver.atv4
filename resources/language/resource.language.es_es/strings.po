@@ -135,8 +135,8 @@ msgid "Put playing device on standby via a CEC"
 msgstr "Poner el dispositivo en modo espera a través de CEC"
 
 msgctxt "#32030"
-msgid "Disable checksum verification"
-msgstr "Deshabilitar verificación checksum"
+msgid "Checksum verification"
+msgstr "Verificación checksum"
 
 msgctxt "#32031"
 msgid "Videos"
