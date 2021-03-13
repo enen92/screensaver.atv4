@@ -66,7 +66,7 @@ class Downloader:
             xbmcvfs.delete(path)
 
         self.dp.update(0, name)
-        self.path = xbmc.translatePath(path)
+        self.path = xbmcvfs.translatePath(path)
         xbmc.sleep(500)
         start_time = time.time()
 
