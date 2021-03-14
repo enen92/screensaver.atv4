@@ -121,13 +121,31 @@ def generate_entries_and_checksums():
         print("Stopping checksum generator...")
 
 
+def get_locations():
+    with open(apple_local_feed) as feed_file:
+        # Define the locations as a set so we get deduping
+        locations = set()
+
+        top_level = json.load(feed_file)
+        # Top-level JSON has assets array, initialAssetCount, version. Inspect each block in assets
+        for block in top_level["assets"]:
+            # Each block contains a location/scene whose name is stored in accessibilityLabel. These may recur
+            locations.add(block["accessibilityLabel"])
+        # Now that all locations are added, sort in place and print
+        print("Locations seen:")
+        print(sorted(locations))
+
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         if sys.argv[1] == "1":
             generate_entries_and_checksums()
         elif sys.argv[1] == "2":
             get_latest_entries_from_apple()
+        elif sys.argv[1] == "3":
+            get_locations()
     else:
         print("Please specify option:\n "
               "1) Update checksums based on existing entries.json \n "
-              "2) Update entries.json from Apple")
+              "2) Update entries.json from Apple \n"
+              "3) Print all locations in entries.json")
