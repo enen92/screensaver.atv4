@@ -12,8 +12,8 @@ import hashlib
 import json
 import os
 import sys
-from urllib import request
 import tarfile
+from urllib import request
 
 apple_local_feed = os.path.join("resources", "entries.json")
 tmp_folder = "tmpvideos"

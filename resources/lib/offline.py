@@ -16,10 +16,11 @@ from .playlist import AtvPlaylist
 # Used in a popup to allow the user to choose what to download
 # Sort the locations list alphabetically and in place
 locations = sorted(["All", "Italy to Asia", "Iran and Afghanistan", "Dubai", "Africa and the Middle East",
-             "California to Vegas", "Southern California to Baja", "China", "Antarctica", "Liwa", "Sahara and Italy",
-             "Los Angeles", "San Francisco", "London", "Ireland to Asia", "New York", "West Africa to the Alps",
-             "New Zealand", "Caribbean Day", "Hawaii", "Caribbean", "Africa Night", "North America Aurora",
-             "New York Night", "Greenland", "Hong Kong", "Korean and Japan Night"])
+                    "California to Vegas", "Southern California to Baja", "China", "Antarctica", "Liwa",
+                    "Sahara and Italy",
+                    "Los Angeles", "San Francisco", "London", "Ireland to Asia", "New York", "West Africa to the Alps",
+                    "New Zealand", "Caribbean Day", "Hawaii", "Caribbean", "Africa Night", "North America Aurora",
+                    "New York Night", "Greenland", "Hong Kong", "Korean and Japan Night"])
 
 
 # Parse the JSON to get a list of URLs and download the files to the download folder
