@@ -55,18 +55,18 @@ class Downloader:
                             if video_file in checksums.keys():
                                 expected_checksum = checksums[video_file]
                                 if expected_checksum == file_checksum:
-                                    print("Checksum of already-downloaded file {} matched, skipping download".format(
-                                        video_file))
+                                    xbmc.log("Checksum of already-downloaded file {} matched, skipping download".format(
+                                        video_file), level=xbmc.LOGDEBUG)
                                     continue
-                                print("Calculated checksum {} did not match expected {} for file {}".format(
-                                    file_checksum, expected_checksum, video_file))
+                                xbmc.log("Calculated checksum {} did not match expected {} for file {}".format(
+                                    file_checksum, expected_checksum, video_file), level=xbmc.LOGDEBUG)
                 # If the file didn't exist, the checksum was disabled, or the checksum didn't match, download video
                 self.download(local_video_path, url, video_file)
             else:
                 break
 
     def download(self, path, url, name):
-        print("Downloading {}".format(url))
+        xbmc.log("Downloading {}".format(url), level=xbmc.LOGDEBUG)
         if xbmcvfs.exists(path):
             xbmcvfs.delete(path)
 

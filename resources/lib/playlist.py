@@ -29,17 +29,17 @@ local_entries_json_path = os.path.join(addon_path, "resources", "entries.json")
 
 # Fetch the TAR file containing the latest entries.json and overwrite the local copy
 def get_latest_entries_from_apple():
-    print("Downloading the Apple Aerials resources.tar to disk")
+    xbmc.log("Downloading the Apple Aerials resources.tar to disk", level=xbmc.LOGDEBUG)
 
     # Alternatively, just use the HTTP link instead of HTTPS to download the TAR locally
     request.urlretrieve(apple_resources_tar_url, apple_local_tar_path)
     # https://www.tutorialspoint.com/How-are-files-extracted-from-a-tar-file-using-Python
     apple_tar = tarfile.open(apple_local_tar_path)
-    print("Extracting entries.json from resources.tar and placing in ./resources")
+    xbmc.log("Extracting entries.json from resources.tar and placing in ./resources", level=xbmc.LOGDEBUG)
     apple_tar.extract("entries.json", os.path.join(addon_path, "resources"))
 
     apple_tar.close()
-    print("Deleting resources.tar now that we've grabbed entries.json from it")
+    xbmc.log("Deleting resources.tar now that we've grabbed entries.json from it", level=xbmc.LOGDEBUG)
     os.remove(apple_local_tar_path)
 
 
@@ -84,7 +84,8 @@ class AtvPlaylist:
                     # Get the corresponding setting Bool by adding "enable-" + lowercase + no whitespace
                     current_location_enabled = addon.getSettingBool("enable-" + location.lower().replace(" ", ""))
                 except TypeError:
-                    print("Location {} did not have a matching enable/disable setting".format(location))
+                    xbmc.log("Location {} did not have a matching enable/disable setting".format(location),
+                             level=xbmc.LOGDEBUG)
                     # Leave the location in the rotation if we couldn't find a corresponding setting disabling it
                     current_location_enabled = True
 
@@ -111,11 +112,11 @@ class AtvPlaylist:
                     exists_on_disk = True
                     # Overwrite the network URL with the local path to the file
                     url = local_file_path
-                    print("Video available locally, path is: {}".format(local_file_path))
+                    xbmc.log("Video available locally, path is: {}".format(local_file_path), level=xbmc.LOGDEBUG)
 
                 # If the file exists locally or we're not in offline mode, add it to the playlist
                 if exists_on_disk or not self.force_offline:
-                    print("Adding video for location {} to playlist".format(location))
+                    xbmc.log("Adding video for location {} to playlist".format(location), level=xbmc.LOGDEBUG)
                     self.playlist.append(url)
 
             # Now that we're done building the playlist, shuffle and return to the caller

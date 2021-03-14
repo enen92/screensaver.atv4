@@ -6,6 +6,7 @@
    See LICENSE for more information.
 """
 
+import xbmc
 import xbmcvfs
 
 from .commonatv import dialog, addon, translate, find_ranked_key_in_dict, compute_block_key_list
@@ -51,7 +52,8 @@ def offline():
                         # Exit block processing early if the location didn't match our preference.
                         # This prevents the location from being added to the download list
                         if not locations[locations_chosen_index] == location:
-                            print("Current location {} is not chosen location, skipping download".format(location))
+                            xbmc.log("Current location {} is not chosen location, skipping download".format(location),
+                                     level=xbmc.LOGDEBUG)
                             continue
 
                     # Get the URL to download
