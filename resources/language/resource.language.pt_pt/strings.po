@@ -135,7 +135,7 @@ msgid "Put playing device on standby via a CEC"
 msgstr "Colocar dispositivo em standby via CEC"
 
 msgctxt "#32030"
-msgid "Checksum verification"
+msgid "Enable checksum validation of pre-existing files"
 msgstr "Verficação de checksums"
 
 msgctxt "#32031"
