@@ -187,7 +187,7 @@ msgid "Show preview window"
 msgstr "Mostrar ventana de vista previa"
 
 msgctxt "#32043"
-msgid "Use local files only (avoid external requests)"
+msgid "Enable offline mode (no video/JSON download)"
 msgstr "Usar solo archivos locales (evita solicitudes externas)"
 
 msgctxt "#32044"
@@ -321,3 +321,7 @@ msgstr "Habilitar HDR"
 msgctxt "#32077"
 msgid "Enable HEVC (required for 4K/HDR)"
 msgstr "Habilitar HEVC"
+
+msgctxt "#32078"
+msgid "Enable custom JSON (no updates from Apple)"
+msgstr "Habilitar custom JSON (no updates from Apple)"

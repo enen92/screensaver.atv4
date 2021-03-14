@@ -271,6 +271,11 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="enable-custom-json" type="boolean" label="32078" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="enable-checksums" type="boolean" label="32030" help="">
 					<level>0</level>
 					<default>true</default>

@@ -187,7 +187,7 @@ msgid "Show preview window"
 msgstr ""
 
 msgctxt "#32043"
-msgid "Use local files only (avoid external requests)"
+msgid "Enable offline mode (no video/JSON download)"
 msgstr ""
 
 msgctxt "#32044"
@@ -207,7 +207,7 @@ msgid "Smart mode"
 msgstr ""
 
 msgctxt "#32048"
-msgid "Offline mode is enforced but there are no videos on disk"
+msgid "Offline mode but no downloaded videos!"
 msgstr ""
 
 
@@ -325,5 +325,9 @@ msgstr ""
 
 msgctxt "#32077"
 msgid "Enable HEVC (required for 4K/HDR)"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Enable custom JSON (no updates from Apple)"
 msgstr ""
 

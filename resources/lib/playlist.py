@@ -53,29 +53,20 @@ class AtvPlaylist:
         # Set a class variable as the string response of our Setting. "True" or "False" expected
         self.force_offline = addon.getSettingBool("force-offline")
         if not xbmc.getCondVisibility("Player.HasMedia"):
-            # If we're not forcing offline state, update the local JSON with the copy from Apple
-            if not self.force_offline:
+            # If we're not forcing offline state and not using custom JSON:
+            if not self.force_offline and not addon.getSettingBool("enable-custom-json"):
                 try:
-                    # Overwrite the local entries.json from Apple servers
-                    # TODO create setting for disabling JSON updates (in the event of local updates to the JSON)
+                    # Update local JSON with the copy from Apple
                     get_latest_entries_from_apple()
-                    # Load the local JSON into this class instantiation
-                    self.local_feed()
                 except Exception:
-                    # If we hit an exception: ignore, log, and load the local JSON instead
+                    # If we hit an exception: ignore, log, and continue
                     xbmc.log(msg="Caught an exception while retrieving Apple's resources.tar to extract entries.json",
                              level=xbmc.LOGWARNING)
-                    self.local_feed()
-            else:
-                # If we're in offline mode, go directly to loading local JSON
-                self.local_feed()
+            # Regardless of if we grabbed new Apple JSON, hit an exception, or are in offline mode, load the local copy
+            with open(local_entries_json_path, "r") as f:
+                self.top_level_json = json.loads(f.read())
         else:
             self.top_level_json = {}
-
-    # Create a class variable with the JSON loaded and parseable
-    def local_feed(self):
-        with open(local_entries_json_path, "r") as f:
-            self.top_level_json = json.loads(f.read())
 
     def get_playlist_json(self):
         return self.top_level_json
