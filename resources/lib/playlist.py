@@ -50,7 +50,7 @@ def get_latest_entries_from_apple():
 class AtvPlaylist:
     def __init__(self, ):
         self.playlist = []
-        # Set a class variable as the string response of our Setting. "True" or "False" expected
+        # Set a class variable as the Bool response of our Setting.
         self.force_offline = addon.getSettingBool("force-offline")
         if not xbmc.getCondVisibility("Player.HasMedia"):
             # If we're not forcing offline state and not using custom JSON:
@@ -113,7 +113,7 @@ class AtvPlaylist:
                 if xbmcvfs.exists(local_file_path):
                     # Mark that the file exists on disk
                     exists_on_disk = True
-                    # Overwrite the Apple URL with the path to the file on disk
+                    # Overwrite the network URL with the local path to the file
                     url = local_file_path
                     print("Video available locally, path is: {}".format(local_file_path))
 

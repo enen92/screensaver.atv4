@@ -207,7 +207,7 @@ msgid "Smart mode"
 msgstr ""
 
 msgctxt "#32048"
-msgid "Offline mode but no downloaded videos!"
+msgid "No downloaded videos for offline mode!"
 msgstr ""
 
 

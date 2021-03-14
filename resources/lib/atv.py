@@ -131,9 +131,6 @@ class Screensaver(xbmcgui.WindowXML):
 
     def start_playback(self):
         self.playindex = 0
-        # If SSL cert issues are seen and we must use HTTPS, disable SSL verification
-        # https://kodi.wiki/view/SSL_certificates#Disabling_the_check
-        # file = file + "|verifypeer=false"
         self.atv4player.play(self.video_playlist[self.playindex], windowed=True)
         while self.active and not monitor.abortRequested():
             monitor.waitForAbort(1)

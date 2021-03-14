@@ -14,18 +14,17 @@ from .playlist import AtvPlaylist
 
 # Array of "All" plus each unique "accessibilityLabel" in entries.json
 # Used in a popup to allow the user to choose what to download
-locations = ["All", "Italy to Asia", "Iran and Afghanistan", "Dubai", "Africa and the Middle East",
+# Sort the locations list alphabetically and in place
+locations = sorted(["All", "Italy to Asia", "Iran and Afghanistan", "Dubai", "Africa and the Middle East",
              "California to Vegas", "Southern California to Baja", "China", "Antarctica", "Liwa", "Sahara and Italy",
              "Los Angeles", "San Francisco", "London", "Ireland to Asia", "New York", "West Africa to the Alps",
              "New Zealand", "Caribbean Day", "Hawaii", "Caribbean", "Africa Night", "North America Aurora",
-             "New York Night", "Greenland", "Hong Kong", "Korean and Japan Night"]
-# Sort the locations list alphabetically and in place
-locations.sort()
+             "New York Night", "Greenland", "Hong Kong", "Korean and Japan Night"])
 
 
 # Parse the JSON to get a list of URLs and download the files to the download folder
-# NOTE: the download folder must be saved by pushing OK in the settings dialog before this will succeed
 def offline():
+    # NOTE: the download folder must be saved by pushing OK in the settings dialog before this will succeed
     if addon.getSetting("download-folder") and xbmcvfs.exists(addon.getSetting("download-folder")):
         # Present a popup to the user and allow them to select a single location to download, or all
         locations_chosen_index = dialog.select(translate(32014), locations)
@@ -54,6 +53,7 @@ def offline():
                             print("Current location {} is not chosen location, skipping download".format(location))
                             continue
 
+                    # Get the URL to download
                     url = find_ranked_key_in_dict(block, block_key_list)
 
                     # If the URL contains HTTPS, we need revert to HTTP to avoid bad SSL cert
