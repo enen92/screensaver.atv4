@@ -49,11 +49,15 @@ class Downloader:
                 if xbmcvfs.exists(local_video_path):
                     if addon.getSettingBool("enable-checksums"):
                         with xbmcvfs.File(xbmcvfs.translatePath(local_video_path)) as f:
-                            # Compute the checksum
-                            file_checksum = hashlib.md5(f.read()).hexdigest()
+                            # Compute the checksum in hex format from the bytes of the file
+                            file_checksum = hashlib.md5(f.readBytes()).hexdigest()
                             # Look up its checksum if it exists and skip download if the checksum matches
-                            if video_file in checksums.keys() and checksums[video_file] == file_checksum:
-                                continue
+                            if video_file in checksums.keys():
+                                expected_checksum = checksums[video_file]
+                                if expected_checksum == file_checksum:
+                                    continue
+                                print("Calculated checksum {} did not match expected {} for file {}".format(
+                                    file_checksum, expected_checksum, video_file))
                 # If the file didn't exist, the checksum was disabled, or the checksum didn't match, download video
                 self.download(local_video_path, url, video_file)
             else:
