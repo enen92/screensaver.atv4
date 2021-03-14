@@ -43,21 +43,19 @@ class Downloader:
             if not self.stop:
                 # Parse out the file name and construct its expected download location
                 video_file = url.split("/")[-1]
-                localfile = os.path.join(addon.getSetting("download-folder"), video_file)
+                local_video_path = os.path.join(addon.getSetting("download-folder"), video_file)
 
-                # If the file exists at the download location, get its checksum
-                if xbmcvfs.exists(localfile):
+                # If the file exists at the download location and checksums are enabled:
+                if xbmcvfs.exists(local_video_path):
                     if addon.getSettingBool("enable-checksums"):
-                        with xbmcvfs.File(xbmcvfs.translatePath(localfile)) as f:
+                        with xbmcvfs.File(xbmcvfs.translatePath(local_video_path)) as f:
+                            # Compute the checksum
                             file_checksum = hashlib.md5(f.read()).hexdigest()
-
-                        # If the computed checksum does not match the expected checksum, redownload
-                        if video_file in checksums.keys() and checksums[video_file] != file_checksum:
-                            self.download(localfile, url, video_file)
-                    else:
-                        self.download(localfile, url, video_file)
-                else:
-                    self.download(localfile, url, video_file)
+                            # Look up its checksum if it exists and skip download if the checksum matches
+                            if video_file in checksums.keys() and checksums[video_file] == file_checksum:
+                                continue
+                # If the file didn't exist, the checksum was disabled, or the checksum didn't match, download video
+                self.download(local_video_path, url, video_file)
             else:
                 break
 
