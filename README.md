@@ -22,6 +22,12 @@ This addon adds the Apple Aerial screensavers to Kodi Entertainment Center. It c
   - Download scene by scene or all at once
   - Full offline mode to prevent all network calls, using only local videos and JSON
   - Checksum validation to prevent unnecessary re-downloading of cached videos
+- Custom JSON file count and gigabytes per quality level:
+  - H.264 1080P SDR: 71 files, 17.3GB
+  - H.265 1080P SDR: 90 files, 15.5GB
+  - H.265 1080P HDR: 90 files, 19.9GB
+  - H.265 4K SDR: 90 files, 31.0GB
+  - H.265 4K HDR: 90 files, 39.5GB
 
 ## Aerials History
 - When the Apple TV first came out with Aerials screensavers, Apple published a [JSON manifest](http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/entries.json) with all the different videos. Locations featured San Francisco, New York, China, Hong Kong, Greenland, Dubai, Los Angeles, and others. They were published in 1080p H.264 format

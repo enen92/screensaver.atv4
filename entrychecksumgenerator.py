@@ -6,7 +6,8 @@
    See LICENSE for more information.
 
    Note: This is a standalone script to update the offline video entries and
-    their checksums
+   their checksums. Extra modes allow for Apple JSON download and simple
+   printing of the different locations available in the JSON.
 """
 import hashlib
 import json
@@ -24,10 +25,6 @@ local_tar = "resources.tar"
 # Fetch the TAR file containing the latest entries.json and overwrite the local copy
 def get_latest_entries_from_apple():
     print("Downloading the Apple Aerials resources.tar to disk")
-
-    # # Setup for disabling SSL cert verification, as the Apple cert is bad
-    # # https://stackoverflow.com/questions/43204012/how-to-disable-ssl-verification-for-urlretrieve
-    # ssl._create_default_https_context = ssl._create_unverified_context
 
     request.urlretrieve(apple_resources_tar, local_tar)
     # https://www.tutorialspoint.com/How-are-files-extracted-from-a-tar-file-using-Python
@@ -50,6 +47,11 @@ def generate_entries_and_checksums():
         # Dictionary to store the quality levels and the size in megabytes for each
         # Within each scene, there may be: H264/HEVC, 1080p/4K, SDR/HDR
         quality_total_size_megabytes = {"url-1080-H264": 0,
+                                        "url-1080-SDR": 0,
+                                        "url-1080-HDR": 0,
+                                        "url-4K-SDR": 0,
+                                        "url-4K-HDR": 0}
+        quality_total_video_count = {"url-1080-H264": 0,
                                         "url-1080-SDR": 0,
                                         "url-1080-HDR": 0,
                                         "url-4K-SDR": 0,
@@ -83,15 +85,13 @@ def generate_entries_and_checksums():
                     local_file_name = asset_url.split("/")[-1]
                     local_file_path = os.path.join(tmp_folder, local_file_name)
 
-                    # # Setup for disabling SSL cert verification, as the Apple cert is bad
-                    # # https://stackoverflow.com/questions/43204012/how-to-disable-ssl-verification-for-urlretrieve
-                    # ssl._create_default_https_context = ssl._create_unverified_context
-
                     # Download the file to local storage
                     request.urlretrieve(asset_url, local_file_path)
 
                     # Get the size of the file in bytes and add it to an overall size counter
                     quality_total_size_megabytes[video_version] += os.path.getsize(local_file_path) / 1000 / 1000
+                    # We found a valid file for the given version, update the count
+                    quality_total_video_count[video_version] += 1
 
                     # Try to open the file
                     with open(local_file_path, "rb") as f:
@@ -116,6 +116,8 @@ def generate_entries_and_checksums():
 
         print("Total Megabytes of all video files, per quality:")
         print(quality_total_size_megabytes)
+        print("Total count of all video files, per quality:")
+        print(quality_total_video_count)
         print("Locations seen:")
         print(locations)
         print("Stopping checksum generator...")
@@ -147,5 +149,5 @@ if __name__ == '__main__':
     else:
         print("Please specify option:\n "
               "1) Update checksums based on existing entries.json \n "
-              "2) Update entries.json from Apple \n"
+              "2) Update entries.json from Apple \n "
               "3) Print all locations in entries.json")

@@ -31,10 +31,6 @@ local_entries_json_path = os.path.join(addon_path, "resources", "entries.json")
 def get_latest_entries_from_apple():
     print("Downloading the Apple Aerials resources.tar to disk")
 
-    # Setup for disabling SSL cert verification, as the Apple cert is bad
-    # https://stackoverflow.com/questions/43204012/how-to-disable-ssl-verification-for-urlretrieve
-    # ssl._create_default_https_context = ssl._create_unverified_context
-
     # Alternatively, just use the HTTP link instead of HTTPS to download the TAR locally
     request.urlretrieve(apple_resources_tar_url, apple_local_tar_path)
     # https://www.tutorialspoint.com/How-are-files-extracted-from-a-tar-file-using-Python
