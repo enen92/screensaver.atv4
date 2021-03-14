@@ -55,6 +55,8 @@ class Downloader:
                             if video_file in checksums.keys():
                                 expected_checksum = checksums[video_file]
                                 if expected_checksum == file_checksum:
+                                    print("Checksum of already-downloaded file {} matched, skipping download".format(
+                                        video_file))
                                     continue
                                 print("Calculated checksum {} did not match expected {} for file {}".format(
                                     file_checksum, expected_checksum, video_file))
@@ -64,6 +66,7 @@ class Downloader:
                 break
 
     def download(self, path, url, name):
+        print("Downloading {}".format(url))
         if xbmcvfs.exists(path):
             xbmcvfs.delete(path)
 
