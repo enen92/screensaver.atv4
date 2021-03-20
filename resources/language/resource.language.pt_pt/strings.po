@@ -187,7 +187,7 @@ msgid "Show preview window"
 msgstr "Mostrar janela de pre-visualização"
 
 msgctxt "#32043"
-msgid "Enable offline mode (no video/JSON download)"
+msgid "Local files only"
 msgstr "Usar apenas ficheiros locais (evitar pedidos externos)"
 
 msgctxt "#32044"
@@ -328,5 +328,13 @@ msgid "Enable HEVC (required for 4K/HDR)"
 msgstr "Ativar HEVC"
 
 msgctxt "#32078"
-msgid "Enable custom JSON (no updates from Apple)"
-msgstr "Ativar custom JSON (no updates from Apple)"
+msgid "Try to update the video list from Apple"
+msgstr "Obter update a lista de videos a partir dos servidores da Apple"
+
+msgctxt "#32079"
+msgid "This setting will make the addon update the video list remotely from Apple servers. If disabled, the addon will use the included video list."
+msgstr "Esta definição irá fazer com que o addon tente obter uma lista de vídeos atualizados a partir dos servidores da Apple. Se desativado, o addon irá utilizar a lista de vídeos incluida no addon."
+
+msgctxt "#32080"
+msgid "The addon will use only the videos locally available videos, without attempting to connect to the Apple servers. You need to download the videos first"
+msgstr "O addon irá utilizar apenas os vídeos disponíveis localmente, sem tentar contactar os servidores da Apple. Necessita de transferir os vídeos primeiro"

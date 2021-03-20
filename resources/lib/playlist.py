@@ -50,7 +50,7 @@ class AtvPlaylist:
         self.force_offline = addon.getSettingBool("force-offline")
         if not xbmc.getCondVisibility("Player.HasMedia"):
             # If we're not forcing offline state and not using custom JSON:
-            if not self.force_offline and not addon.getSettingBool("enable-custom-json"):
+            if not self.force_offline and addon.getSettingBool("get-videos-from-apple"):
                 try:
                     # Update local JSON with the copy from Apple
                     get_latest_entries_from_apple()

@@ -15,7 +15,7 @@
 				</setting>
 				<setting id="enable-4k" type="boolean" label="32075" help="">
 					<level>0</level>
-					<default>true</default>
+					<default>false</default>
 					<control type="toggle"/>
 				</setting>
 				<setting id="enable-hdr" type="boolean" label="32076" help="">
@@ -25,7 +25,7 @@
 				</setting>
 				<setting id="enable-hevc" type="boolean" label="32077" help="">
 					<level>0</level>
-					<default>true</default>
+					<default>false</default>
 					<control type="toggle"/>
 				</setting>
 			</group>
@@ -266,15 +266,22 @@
 						<heading>32010</heading>
 					</control>
 				</setting>
-				<setting id="force-offline" type="boolean" label="32043" help="">
+				<setting id="force-offline" type="boolean" label="32043" help="32080">
 					<level>0</level>
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable-custom-json" type="boolean" label="32078" help="">
+				<setting id="get-videos-from-apple" type="boolean" label="32078" help="32079">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
+					<dependencies>
+						<dependency type="visible">
+							<or>
+								<condition operator="is" setting="force-offline">false</condition>
+							</or>
+						</dependency>
+					</dependencies>
 				</setting>
 				<setting id="enable-checksums" type="boolean" label="32030" help="">
 					<level>0</level>
