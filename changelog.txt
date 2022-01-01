@@ -1,3 +1,7 @@
+v3.0.3  (2022-01-01)
+- New scenes added (Patagonia, Yosemite, Grand Canyon, Iceland, Scotland)
+- Updated Apple resources.tar entries.json URL
+
 v3.0.2  (2021-03-20)
 - 4K, HDR, and HEVC versions available
 - New scenes added (ISS, undersea, recolored, extended)
