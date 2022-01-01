@@ -18,7 +18,7 @@ import xbmcvfs
 from .commonatv import addon, addon_path, find_ranked_key_in_dict, compute_block_key_list
 
 # Apple's URL of the resources.tar file containing entries.json
-apple_resources_tar_url = "http://sylvan.apple.com/Aerials/resources.tar"
+apple_resources_tar_url = "http://sylvan.apple.com/Aerials/resources-15.tar"
 
 # Local temporary save location of the Apple TAR file
 apple_local_tar_path = os.path.join(addon_path, "resources.tar")

@@ -40,6 +40,8 @@ This addon adds the Apple Aerial screensavers to Kodi Entertainment Center. It c
   - As part of this update, Apple removed the `timeOfDay` key so this plugin's filtering based on time of day is no longer possible without manually adding JSON keys for each scene
   - The new JSON contained new URLs for the original videos, possibly behind a Content Delivery Network (CDN). For example, a Greenland video's URL changed from http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/comp_GL_G004_C010_v03_6Mbps.mov to http://a1.v2.phobos.apple.com.edgesuite.net/us/r1000/000/Features/atv/AutumnResources/videos/comp_GL_G004_C010_v03_6Mbps.mov (adding `.v2` and `.edgesuite.net`)
 - [Benjamin Mayo](https://github.com/benjaminmayo) published a [Google Doc](https://docs.google.com/spreadsheets/d/1bboTohF06r-fafrImTExAPqM9m6h2m2lgJyAkQuYVJI/edit?usp=sharing) with a historical record of all the Aerials videos and links to all their different variants (H264, HDR, 4K, etc.) and also hosts a [website](https://bzamayo.com/watch-all-the-apple-tv-aerial-video-screensavers) for streaming all the different options
+- Apple started appending the tvOS version number to the URL of the tarball, so as of 2022-01-01 [this URL](https://sylvan.apple.com/Aerials/resources-15.tar) is  the link to get the latest `entries.json` 
+ - The Google Doc mentioned above doesn't seem to be up to date for any videos added after January 2020
 
 # Screenshots
 
