@@ -93,7 +93,12 @@ class AtvPlaylist:
                 if not current_location_enabled:
                     continue
 
+                # Get the URL from the current block to download
                 url = find_ranked_key_in_dict(block, block_key_list)
+
+                # If the URL is empty/None, skip the rest of the loop
+                if not url:
+                    continue
 
                 # If the URL contains HTTPS, we need revert to HTTP to avoid bad SSL cert
                 # NOTE: Old Apple URLs were HTTP, new URLs are HTTPS with a bad cert
