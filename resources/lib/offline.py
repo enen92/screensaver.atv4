@@ -16,12 +16,16 @@ from .playlist import AtvPlaylist
 # Array of "All" plus each unique "accessibilityLabel" in entries.json
 # Used in a popup to allow the user to choose what to download
 # Sort the locations list alphabetically and in place
-locations = sorted(["All", "Italy to Asia", "Iran and Afghanistan", "Dubai", "Africa and the Middle East",
-                    "California to Vegas", "Southern California to Baja", "China", "Antarctica", "Liwa",
-                    "Sahara and Italy",
-                    "Los Angeles", "San Francisco", "London", "Ireland to Asia", "New York", "West Africa to the Alps",
-                    "New Zealand", "Caribbean Day", "Hawaii", "Caribbean", "Africa Night", "North America Aurora",
-                    "New York Night", "Greenland", "Hong Kong", "Korean and Japan Night"])
+locations = sorted(["All", "Africa and the Middle East", "Africa Night", "Alaskan Jellies", "Antarctica",
+                    "Atlantic Ocean to Spain and France", "Australia", "Barracuda", "Bumpheads", "California Dolphins",
+                    "California Kelp Forest", "California to Vegas", "Caribbean Day", "Caribbean", "China",
+                    "Costa Rica Dolphins", "Cownose Rays", "Dubai", "Grand Canyon", "Gray Reef Sharks", "Greenland",
+                    "Hawaii", "Hong Kong", "Humpback Whale", "Iceland", "Iran and Afghanistan", "Ireland to Asia",
+                    "Italy to Asia", "Jacks", "Kelp", "Korea and Japan Night", "Liwa", "London", "Los Angeles",
+                    "New York Night", "New York", "New Zealand", "Nile Delta", "North America Aurora", "Palau Coral",
+                    "Palau Jellies", "Patagonia", "Red Sea Coral", "Sahara and Italy", "San Francisco", "Scotland",
+                    "Sea Stars", "Seals", "South Africa to North Asia", "Southern California to Baja", "Tahiti Waves",
+                    "West Africa to the Alps", "Yosemite"])
 
 
 # Parse the JSON to get a list of URLs and download the files to the download folder
