@@ -18,7 +18,7 @@ from urllib import request
 
 apple_local_feed = os.path.join("resources", "entries.json")
 tmp_folder = "tmpvideos"
-apple_resources_tar = "https://sylvan.apple.com/Aerials/resources.tar"
+apple_resources_tar = "https://sylvan.apple.com/Aerials/resources-15.tar"
 local_tar = "resources.tar"
 
 
