@@ -36,7 +36,7 @@ def find_ranked_key_in_dict(dict, key_list):
 # Compute the struct where we'll keep the preferred URL key ordering. The earlier we append, the higher the priority
 def compute_block_key_list(enable_4k, enable_hdr, enable_hevc):
     block_key_list = []
-    # Possible URL keys are "url-1080-H264","url-1080-SDR","url-1080-HDR","url-4K-SDR","url-4K-HDR"
+    # Possible URL keys are "url-1080-H264","url-1080-SDR","url-1080-HDR","url-4K-SDR","url-4K-HDR", "url-4K-SDR-240FPS"
     if enable_hevc:
         if enable_hdr and enable_4k:
             # We have all features. Get 4K HDR/SDR first, then 1080 HDR/SDR, then H264
@@ -47,7 +47,8 @@ def compute_block_key_list(enable_4k, enable_hdr, enable_hevc):
             # We have all HDR but not 4K. Get 1080 HDR/SDR, then H264
             block_key_list.append("url-1080-HDR")
         if enable_4k and not enable_hdr:
-            # We have all 4K but not HDR. Get 4K SDR, then 1080 SDR, then H264
+            # We have all 4K but not HDR. Get 4K SDR 240FPS, then 4K SDR, then 1080 SDR, then H264
+            block_key_list.append("url-4K-SDR-240FPS")
             block_key_list.append("url-4K-SDR")
         # We don't have 4K or HDR. Get 1080 SDR, then H264
         block_key_list.append("url-1080-SDR")
