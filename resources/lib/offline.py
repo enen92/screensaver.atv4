@@ -18,15 +18,23 @@ from .playlist import AtvPlaylist
 # Sort the locations list alphabetically and in place
 locations = ["All"] + sorted(["Africa and the Middle East", "Africa Night", "Alaskan Jellies", "Antarctica",
                               "Atlantic Ocean to Spain and France", "Australia", "Barracuda", "Bumpheads",
-                              "California Dolphins", "California Kelp Forest", "California to Vegas", "Caribbean Day",
-                              "Caribbean", "China", "Costa Rica Dolphins", "Cownose Rays", "Dubai", "Grand Canyon",
-                              "Gray Reef Sharks", "Greenland", "Hawaii", "Hong Kong", "Humpback Whale", "Iceland",
-                              "Iran and Afghanistan", "Ireland to Asia", "Italy to Asia", "Jacks", "Kelp",
-                              "Korea and Japan Night", "Liwa", "London", "Los Angeles", "New York Night", "New York",
-                              "New Zealand", "Nile Delta", "North America Aurora", "Palau Coral", "Palau Jellies",
-                              "Patagonia", "Red Sea Coral", "Sahara and Italy", "San Francisco", "Scotland",
-                              "Sea Stars", "Seals", "South Africa to North Asia", "Southern California to Baja",
-                              "Tahiti Waves", "West Africa to the Alps", "Yosemite"])
+                              "California Dolphins", "California Kelp Forest",
+                              "California State Route 58, Carrizo Plain, California", "California to Vegas",
+                              "California Wildflowers", "Caribbean Day", "Caribbean",
+                              "Cathedral Canyon, Lake Powell, Utah", "Cazadero", "China Beach, Curry County, Oregon",
+                              "China", "Coal Mine Canyon, Arizona", "Costa Rica Dolphins", "Cownose Rays",
+                              "Del Norte Coast Redwoods State Park, California", "Dubai",
+                              "Factory Butte, Wayne County, Utah", "Grand Canyon", "Gray Reef Sharks", "Greenland",
+                              "Hawaii", "Hong Kong", "Humpback Whale", "Iceland", "Iran and Afghanistan",
+                              "Ireland to Asia", "Italy to Asia", "Jacks", "Kelp", "Korea and Japan Night", "Liwa",
+                              "London", "Los Angeles", "Monument Valley, Utah", "New York Night", "New York",
+                              "New Zealand", "Nile Delta", "North America Aurora", "Olympia Bar, Lake Powell, Utah",
+                              "Palau Coral", "Palau Jellies", "Patagonia", "Red Sea Coral", "Redwoods",
+                              "Sahara and Italy", "San Francisco", "Scotland", "Sea Stars", "Seals",
+                              "Secret Beach, Brookings, Oregon", "South Africa to North Asia",
+                              "Southern California to Baja", "Tahiti Waves",
+                              "Twilight, Forbidding, and Cascade Canyon, Lake Powell, Utah", "West Africa to the Alps",
+                              "Yosemite"])
 
 
 # Parse the JSON to get a list of URLs and download the files to the download folder

@@ -18,6 +18,8 @@ from urllib import request
 
 apple_local_feed = os.path.join("resources", "entries.json")
 tmp_folder = "tmpvideos"
+# A new resources file exists as of 2023-09-29, but only has 4K SDR 240FPS links
+# http://sylvan.apple.com/itunes-assets/Aerials126/v4/82/2e/34/822e344c-f5d2-878c-3d56-508d5b09ed61/resources-14-0-10.tar
 apple_resources_tar = "https://sylvan.apple.com/Aerials/resources-15.tar"
 local_tar = "resources.tar"
 
@@ -49,12 +51,12 @@ def generate_entries_and_checksums():
         quality_total_size_megabytes = {"url-1080-H264": 0,
                                         "url-1080-SDR": 0,
                                         "url-1080-HDR": 0,
-                                        "url-4K-SDR": 0,
+                                        "url-4K-SDR-240FPS": 0,
                                         "url-4K-HDR": 0}
         quality_total_video_count = {"url-1080-H264": 0,
                                         "url-1080-SDR": 0,
                                         "url-1080-HDR": 0,
-                                        "url-4K-SDR": 0,
+                                        "url-4K-SDR-240FPS": 0,
                                         "url-4K-HDR": 0}
 
         # Define the locations as a set so we get deduping
