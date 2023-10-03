@@ -418,6 +418,11 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="disable-ssl" type="boolean" label="32049" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="run-downloader" type="action" label="32011" help="">
 					<level>0</level>
 					<data>RunAddon(screensaver.atv4,offline)</data>
