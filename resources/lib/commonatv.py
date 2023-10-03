@@ -9,6 +9,9 @@
 import xbmcaddon
 import xbmcgui
 
+import ssl
+from urllib.request import build_opener, install_opener, HTTPSHandler
+
 addon = xbmcaddon.Addon()
 addon_path = addon.getAddonInfo("path")
 addon_icon = addon.getAddonInfo("icon")
@@ -55,3 +58,14 @@ def compute_block_key_list(enable_4k, enable_hdr, enable_hevc):
     # Always check H264 as the default option
     block_key_list.append("url-1080-H264")
     return block_key_list
+
+if addon.getSettingBool("disable-ssl"):
+    # Create an opener with the custom SSL context
+    context = ssl.create_default_context()
+    context.check_hostname = False
+    context.verify_mode = ssl.CERT_NONE
+    https_handler = HTTPSHandler(context=context)
+    opener = build_opener(https_handler)
+
+    # Install the opener
+    install_opener(opener)

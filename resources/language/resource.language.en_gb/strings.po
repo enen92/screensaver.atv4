@@ -210,6 +210,10 @@ msgctxt "#32048"
 msgid "No downloaded videos for offline mode!"
 msgstr ""
 
+msgctxt "#32049"
+msgid "Disable SSL Authentication"
+msgstr ""
+
 msgctxt "#32075"
 msgid "Enable 4K (default 1080p)"
 msgstr ""

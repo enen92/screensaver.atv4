@@ -210,6 +210,10 @@ msgctxt "#32048"
 msgid "No downloaded videos for offline mode!"
 msgstr ""
 
+msgctxt "#32049"
+msgid "Disable SSL Authentication"
+msgstr "Deshabilitar la autenticación SSL"
+
 msgctxt "#32075"
 msgid "Enable 4K (default 1080p)"
 msgstr "Habilitar 4K"
@@ -441,4 +445,3 @@ msgstr "Habilitar West Africa to the Alps"
 msgctxt "#32132"
 msgid "Enable Yosemite"
 msgstr "Habilitar Yosemite"
-
