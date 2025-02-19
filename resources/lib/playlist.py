@@ -7,6 +7,7 @@
 """
 
 import json
+import plistlib
 import os
 import tarfile
 from random import shuffle
@@ -26,6 +27,18 @@ apple_local_tar_path = os.path.join(addon_path, "resources.tar")
 # Local save location of the entries.json file containing video URLs
 local_entries_json_path = os.path.join(addon_path, "resources", "entries.json")
 
+# Path to the local file where we store the plist with video descriptions
+local_plist_path_parts = [addon_path, "resources", "TVIdleScreenStrings.bundle", "{}.lproj", "Localizable.nocache.strings"]
+
+# location in the tar file for the plist file with descriptions
+language_description_format_str = "TVIdleScreenStrings.bundle/{}.lproj/Localizable.nocache.strings"
+
+def tar_has_member(tar, key):
+    try:
+        tar.getmember(key)
+        return True
+    except KeyError:
+        return False
 
 # Fetch the TAR file containing the latest entries.json and overwrite the local copy
 def get_latest_entries_from_apple():
@@ -35,13 +48,32 @@ def get_latest_entries_from_apple():
     request.urlretrieve(apple_resources_tar_url, apple_local_tar_path)
     # https://www.tutorialspoint.com/How-are-files-extracted-from-a-tar-file-using-Python
     apple_tar = tarfile.open(apple_local_tar_path)
-    xbmc.log("Extracting entries.json from resources.tar and placing in ./resources", level=xbmc.LOGDEBUG)
-    apple_tar.extract("entries.json", os.path.join(addon_path, "resources"))
+    xbmc.log("Extracting entries.json and video descriptions from resources.tar and placing in ./resources", level=xbmc.LOGDEBUG)
+    dest_dir = os.path.join(addon_path, "resources")
+    apple_tar.extract("entries.json", dest_dir)
+    language = xbmc.getLanguage(xbmc.ISO_639_1)
+    if tar_has_member(apple_tar, language_description_format_str.format(language)):
+        apple_tar.extract(language_description_format_str.format(language), dest_dir)
+    else:
+        xmbc.log("No descriptions for language {}, defaulting to English", level=xbmc.LOGWARNING)
+        apple_tar.extract(language_description_format_str.format('en'), dest_dir)
 
     apple_tar.close()
-    xbmc.log("Deleting resources.tar now that we've grabbed entries.json from it", level=xbmc.LOGDEBUG)
+    xbmc.log("Deleting resources.tar now that we've grabbed what we need from it", level=xbmc.LOGDEBUG)
     os.remove(apple_local_tar_path)
 
+class PlaylistEntry:
+    def __init__(self, url, location, pois):
+        self.url = url
+        self.location = location
+        self.pois = pois
+
+class POI:
+    def __init__(self, secs, description):
+        self.secs = secs
+        self.description = description
+    def __repr__(self):
+        return "POI secs:{}, description: {}".format(self.secs, self.description)
 
 class AtvPlaylist:
     def __init__(self, ):
@@ -61,6 +93,21 @@ class AtvPlaylist:
             # Regardless of if we grabbed new Apple JSON, hit an exception, or are in offline mode, load the local copy
             with open(local_entries_json_path, "r") as f:
                 self.top_level_json = json.loads(f.read())
+
+            language = xbmc.getLanguage(xbmc.ISO_639_1)
+            plist_language_parts = local_plist_path_parts.copy()
+            plist_language_parts[3] = plist_language_parts[3].format(language)
+            plist_path = os.path.join(*plist_language_parts)
+            if not xbmcvfs.exists(plist_path):
+                xbmc.log("No descriptions for language {}, defaulting to English", level=xbmc.LOGWARNING)
+                plist_language_parts[3] = "en.lproj"
+                plist_path = os.path.join(*plist_language_parts)
+            if xbmcvfs.exists(plist_path):
+                with open(plist_path, "rb") as f:
+                    self.plist = plistlib.loads(f.read())
+            else:
+                xbmc.log("Could not find description file, cannot enable subtitles", level=xbmc.LOGWARNING)
+                self.plist = None
         else:
             self.top_level_json = {}
 
@@ -122,7 +169,18 @@ class AtvPlaylist:
                 # If the file exists locally or we're not in offline mode, add it to the playlist
                 if exists_on_disk or not self.force_offline:
                     xbmc.log("Adding video for location {} to playlist".format(location), level=xbmc.LOGDEBUG)
-                    self.playlist.append(url)
+                    pois = []
+                    if self.plist:
+                        if "pointsOfInterest" in block:
+                            for secs, key in block["pointsOfInterest"].items():
+                                if key in self.plist:
+                                    pois.append(POI(int(secs), self.plist[key]))
+                        elif "shotID" in block and block["shotID"] in self.plist:
+                            pois.append(POI(0,self.plist[block["shotID"]]))
+                        else:
+                            xbmc.log("Could not find any descriptions for {}".format(url), level=xbmc.LOGWARNING)
+                        pois.sort(key=lambda poi: poi.secs, reverse=False)
+                    self.playlist.append(PlaylistEntry(url, location, pois))
 
             # Now that we're done building the playlist, shuffle and return to the caller
             shuffle(self.playlist)

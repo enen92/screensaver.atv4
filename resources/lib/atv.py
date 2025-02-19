@@ -7,7 +7,10 @@
 """
 
 import json
+import os
+import tempfile
 import threading
+import time
 
 import xbmc
 import xbmcgui
@@ -129,9 +132,42 @@ class Screensaver(xbmcgui.WindowXML):
         addon.setSettingBool("is_locked", False)
         self.clearAll()
 
+    def create_sub(self, pois):
+        subfile = tempfile.NamedTemporaryFile(suffix=".srt", delete=False)
+        cursec = 0
+        for i, poi in enumerate(pois, start=1):
+            subfile.write("{}\n".format(i).encode())
+            start_ts = time.strftime('%H:%M:%S,000', time.gmtime(poi.secs))
+            if i < len(pois):
+                end_ts = time.strftime('%H:%M:%S,000', time.gmtime(pois[i].secs))
+            else:
+                end_ts = "99:59:59,999"
+            subfile.write("{} --> {}\n".format(start_ts, end_ts).encode())
+            subfile.write("{}\n\n".format(poi.description).encode())
+        subfile.close()
+        return subfile.name
+
+    def do_play(self, url, pois):
+        do_subs = addon.getSettingBool("show-subtitles")
+        if do_subs:
+            subfile_path = self.create_sub(pois)
+        else:
+            subfile_path = None
+
+        self.atv4player.play(url, windowed=True)
+
+        if do_subs:
+            while not self.atv4player.isPlaying():
+                xbmc.sleep(100)
+            self.atv4player.setSubtitles(subfile_path)
+            self.atv4player.showSubtitles(True)
+
+        return subfile_path
+
     def start_playback(self):
         self.playindex = 0
-        self.atv4player.play(self.video_playlist[self.playindex], windowed=True)
+        playlist_item = self.video_playlist[self.playindex]
+        subfile_path = self.do_play(playlist_item.url, playlist_item.pois)
         while self.active and not monitor.abortRequested():
             monitor.waitForAbort(1)
             # If we finish playing the video
@@ -142,8 +178,10 @@ class Screensaver(xbmcgui.WindowXML):
                 else:
                     self.playindex = 0
                 # Using the updated iterator, start playing the next video
-                self.atv4player.play(self.video_playlist[self.playindex], windowed=True)
-
+                playlist_item = self.video_playlist[self.playindex]
+                if subfile_path:
+                    os.remove(subfile_path)
+                subfile_path = self.do_play(playlist_item.url, playlist_item.pois)
 
 def run(params=False):
     if not params:

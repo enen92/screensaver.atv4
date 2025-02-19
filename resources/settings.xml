@@ -13,6 +13,11 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+                                <setting id="show-subtitles" type="boolean" label="32049" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="enable-4k" type="boolean" label="32075" help="">
 					<level>0</level>
 					<default>false</default>
