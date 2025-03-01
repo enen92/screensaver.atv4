@@ -11,6 +11,7 @@ import json
 import os
 import time
 from urllib.request import urlopen
+from urllib.error import URLError, HTTPError
 
 import xbmc
 import xbmcvfs
@@ -61,7 +62,14 @@ class Downloader:
                                 xbmc.log("Calculated checksum {} did not match expected {} for file {}".format(
                                     file_checksum, expected_checksum, video_file), level=xbmc.LOGDEBUG)
                 # If the file didn't exist, the checksum was disabled, or the checksum didn't match, download video
-                self.download(local_video_path, url, video_file)
+                try:
+                    self.download(local_video_path, url, video_file)
+                except (URLError, HTTPError) as e:
+                    xbmc.log("Error downloading {}: {}. Skipping to next file.".format(url, str(e)), level=xbmc.LOGWARNING)
+                    # Display message in progress dialog that file is being skipped
+                    self.dp.update(0, "Failed to download {}. Skipping...".format(video_file))
+                    xbmc.sleep(1500)  # Brief pause to show the message
+                    continue
             else:
                 break
 
