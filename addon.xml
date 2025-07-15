@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.atv4" name="Aerial" version="3.0.3" provider-name="enen92">
+<addon id="screensaver.localvideo" name="Local Video" version="0.0.2" provider-name="ggggg">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>

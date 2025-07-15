@@ -1,13 +1,8 @@
 """
-   Copyright (C) 2017- enen92
-   This file is part of screensaver.atv4 - https://github.com/enen92/screensaver.atv4
-
-   SPDX-License-Identifier: GPL-2.0-only
-   See LICENSE for more information.
+This script is a placeholder.
+Its previous functionality for triggering offline downloads has been removed
+as the addon now focuses on local file playback only.
 """
-
-import sys
-
-from resources.lib import atv
-
-atv.run(len(sys.argv) > 1)
+import xbmc
+xbmc.log("[screensaver.localvideo] entrypointscript.py executed (now a placeholder)", level=xbmc.LOGDEBUG)
+pass

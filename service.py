@@ -1,12 +1,8 @@
 """
-   Copyright (C) 2015- enen92
-   This file is part of screensaver.atv4 - https://github.com/enen92/screensaver.atv4
-
-   SPDX-License-Identifier: GPL-2.0-only
-   See LICENSE for more information.
+This script is a placeholder.
+Its previous functionality for resetting the 'is_locked' setting has been removed
+as the setting itself is no longer used.
 """
-
-from resources.lib.commonatv import addon
-
-# set locked setting back to false on startup just in case kodi had crashed during playback
-addon.setSettingBool("is_locked", False)
+import xbmc
+xbmc.log("[screensaver.localvideo] service.py executed (now a placeholder)", level=xbmc.LOGDEBUG)
+pass

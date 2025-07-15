@@ -6,6 +6,8 @@
    See LICENSE for more information.
 """
 
-from resources.lib import screensaver
+from resources.lib import atv
+import xbmc
 
-screensaver.run()
+xbmc.log("[screensaver.localvideo] entrypointscreensaver.py invoking resources.lib.atv.run()", level=xbmc.LOGDEBUG)
+atv.run()
