@@ -1,6 +1,6 @@
 # screensaver.atv4
 
-## Apple Aerial screensavers for Kodi 19 (Matrix)
+## Apple Aerial screensavers for Kodi 19+
 
 This addon adds the Apple Aerial screensavers to Kodi Entertainment Center. It can be installed via the Kodi official repository.
 
@@ -26,6 +26,23 @@ This addon adds the Apple Aerial screensavers to Kodi Entertainment Center. It c
   - H.265 1080P HDR: 116 files, 37.8GB
   - H.265 4K SDR: 116 files, 48.9GB
   - H.265 4K HDR: 116 files, 75.3GB
+
+## Seamless transitions on LibreELEC
+
+Aerial can keep one Kodi playback session open across videos to eliminate the blank frame, blue loading spinner, and frozen outgoing frame that can otherwise appear between Aerials. This mode remuxes the randomized playlist into one local stream without re-encoding the videos.
+
+Seamless mode is enabled automatically when the **FFmpeg Tools** add-on from the LibreELEC repository is installed at `/storage/.kodi/addons/tools.ffmpeg-tools/bin/ffmpeg`. No additional Aerial setting is required.
+
+The following configuration has been verified with both Apple-hosted online videos and locally cached videos:
+
+- Raspberry Pi 4
+- LibreELEC 12.2.1
+- Kodi 21 (Omega)
+- 1080p H.264 SDR Aerials
+
+Other LibreELEC hardware and video-quality combinations may work but have not yet been verified. On systems where FFmpeg Tools is unavailable, including non-LibreELEC platforms, Aerial automatically retains its original direct-playback behavior. If the continuous stream fails while Aerial is running, it also falls back to direct playback.
+
+The initial screensaver startup may still briefly show a dark screen and loading spinner while Kodi opens and buffers the continuous stream. Once playback begins, transitions between videos remain inside the same Kodi player session.
 
 ## Aerials History
 - When the Apple TV first came out with Aerials screensavers, Apple published a [V1 JSON manifest](http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/entries.json) with all the different videos. Locations featured San Francisco, New York, China, Hong Kong, Greenland, Dubai, Los Angeles, and others. They were published in 1080p H.264 format
